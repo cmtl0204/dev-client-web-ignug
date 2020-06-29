@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>icon-mainmenu</title>
+    <desc>Created with Sketch.</desc>
+    <g id="🚀-Template-Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing-/-mobile-/-menu" transform="translate(-330.000000, -27.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="topbar">
+                <g id="icon-mainmenu" transform="translate(322.000000, 18.000000)">
+                    <path d="M28,24.3 L28,26.1 C28,26.5921875 27.6223958,27 27.1666667,27 L8.83333333,27 C8.37760417,27 8,26.5921875 8,26.1 L8,24.3 C8,23.8078125 8.37760417,23.4 8.83333333,23.4 L27.1666667,23.4 C27.6223958,23.4 28,23.8078125 28,24.3 Z M28,17.1 L28,18.9 C28,19.3921875 27.6223958,19.8 27.1666667,19.8 L8.83333333,19.8 C8.37760417,19.8 8,19.3921875 8,18.9 L8,17.1 C8,16.6078125 8.37760417,16.2 8.83333333,16.2 L27.1666667,16.2 C27.6223958,16.2 28,16.6078125 28,17.1 Z M28,9.9 L28,11.7 C28,12.1921875 27.6223958,12.6 27.1666667,12.6 L8.83333333,12.6 C8.37760417,12.6 8,12.1921875 8,11.7 L8,9.9 C8,9.4078125 8.37760417,9 8.83333333,9 L27.1666667,9 C27.6223958,9 28,9.4078125 28,9.9 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

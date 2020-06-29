@@ -1,0 +1,399 @@
+.layout-sidebar {
+    width: 240px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    -webkit-transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    z-index: 999;
+    transform: translate3d(-180px, 0px, 0px);
+    @include transition(transform $transitionDuration);
+    @include shadow($menuShadow);
+
+    @if variable-exists(menuBgImage) {
+        background-size: 240px 100%;
+        background-repeat: no-repeat;
+    }
+
+    .sidebar-logo {
+        height: 76px;
+        @include flex();
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 8px;
+
+        .sidebar-pin {
+            display: none;
+            width: 30px;
+            height: 30px;
+            line-height: 29px;
+            text-align: center;
+            @include border-radius(50%);
+            @include transition(all $transitionDuration);
+
+            i {
+                line-height: inherit;
+                font-size: 18px;
+            }
+        }
+
+        img {
+            vertical-align: middle;
+            height: 45px;
+            width: 45px;
+            border: 0 none;
+        }
+
+        .app-name {
+            display: none;
+            vertical-align: middle;
+            font-size: 22.5px;
+            margin-left: 4px;
+        }
+    }
+
+    .layout-menu-container {
+        overflow: auto;
+        height: calc(100% - 72px);
+
+        .layout-menu {
+            list-style-type: none;
+            margin: 10px 0 0 0;
+            padding: 0;
+            padding-bottom: 120px;
+
+            li {
+                padding: 4px 10px;
+
+                &.active-menuitem {
+                    > a {
+                        i.layout-submenu-toggler {
+                            @include rotate(-180deg);
+                        }
+                    }
+                }
+
+                > a {
+                    padding: 10px;
+                    @include flex();
+                    @include border-radius(0);
+                    @include transition(all $transitionDuration);
+                    align-items: center;
+                    justify-content: space-between;
+                    position: relative;
+
+                    i {
+                        width: 22px;
+                        height: 22px;
+                        font-size: 22px;
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        margin-top: -.5em;
+
+                        &.layout-submenu-toggler {
+                            @include transition(all $transitionDuration);
+                            font-size: 22px;
+                            display: none;
+                            margin-right: 4px;
+                            right: 30px;
+                        }
+                    }
+
+                    .menuitem-badge {
+                        display: none;
+                        margin-left: auto;
+                    }
+                }
+
+                ul {
+                    overflow: hidden;
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        padding: 4px 0;
+
+                        a {
+                            padding-left: 20px;
+                        }
+
+                        ul {
+                            li {
+                                a {
+                                    padding-left: 30px;
+                                }
+
+                                ul {
+                                    li {
+                                        a {
+                                            padding-left: 40px;
+                                        }
+                                    }
+
+                                    ul {
+                                        li {
+                                            a {
+                                                padding-left: 50px;
+                                            }
+                                        }
+
+                                        ul {
+                                            li {
+                                                a {
+                                                    padding-left: 60px;
+                                                }
+                                            }
+
+                                            ul {
+                                                li {
+                                                    a {
+                                                        padding-left: 70px;
+                                                    }
+                                                }
+
+                                                ul {
+                                                    li {
+                                                        a {
+                                                            padding-left: 80px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            > li {
+                > a {
+                    @include border-radius(6px);
+                }
+
+                &.active-menuitem {
+                    > a {
+                        @include border-radius(6px);
+                        @include border-radius-bottom(0);
+                    }
+
+                    > ul {
+                        @include border-radius-bottom(6px);
+                    }
+                }
+            }
+
+            .menuitem-badge {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin-right: 6px;
+                text-align: center;
+                font-size: $fontSize - 2;
+                font-weight: 700;
+                line-height: 16px;
+                @include border-radius(50%);
+            }
+        }
+    }
+
+    &.layout-sidebar-active {
+            transform: translate3d(0px, 0px, 0px);
+
+            .sidebar-logo {
+                flex-flow: row-reverse;
+                justify-content: space-between;
+                padding: 0 14px;
+
+                img {
+                    display: inline;
+                }
+
+                .app-name {
+                    display: inline;
+                }
+
+                .sidebar-pin {
+                    display: inline-block;
+                }
+            }
+
+            .layout-menu {
+                li {
+                    a {
+                        i.layout-submenu-toggler {
+                            display: inline-block;
+                        }
+
+                        .menuitem-badge {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+}
+
+.layout-wrapper-static {
+    .layout-sidebar {
+        transform: translate3d(0px, 0px, 0px);
+
+        .sidebar-logo {
+            flex-flow: row-reverse;
+            justify-content: space-between;
+            padding: 0 14px;
+
+            img {
+                display: inline;
+            }
+
+            .app-name {
+                display: inline;
+            }
+
+            .sidebar-pin {
+                display: block;
+            }
+        }
+
+        .layout-menu {
+            li {
+            > a {
+                    i {
+                        &.layout-submenu-toggler {
+                            display: inline-block;
+                        }
+                    }
+            }
+            }
+        }
+    }
+
+    .layout-main {
+        margin-left: 240px;
+
+        .layout-topbar{
+            width: calc(100% - 240px);
+            @include transition(width $transitionDuration);
+        }
+    }
+
+}
+
+.layout-wrapper-static-restore {
+    .layout-sidebar {
+        @include transition(none);
+        transform: translate3d(0px, 0px, 0px);
+    }
+
+    .layout-main {
+        @include transition(none);
+        margin-left: 240px;
+    }
+}
+
+@media (max-width: $mobileBreakpoint) {
+    .layout-wrapper {
+        .layout-sidebar {
+            width: 240px;
+            top: 75px;
+            transform: translate3d(-240px, 0px, 0px);
+            @include shadow(3px 0 5px 0 rgba(33, 35, 39, 0.15));
+
+            .sidebar-logo {
+                display: none;
+            }
+        }
+
+        &.layout-wrapper-static{
+            .layout-main{
+                .layout-topbar{
+                    width: 100%;
+                }
+            }
+        }
+
+        &.layout-wrapper-static-restore {
+            .layout-sidebar {
+                @include transition(transform $transitionDuration);
+            }
+        }
+
+        .layout-main {
+            margin-left: 0px;
+        }
+
+        .layout-topbar {
+            width: 100%;
+
+            .topbar-logo {
+                margin-top: -10px;
+                margin-right: 20px;
+                display: block;
+
+                a{
+                    @include flex();
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .app-name {
+                        margin-left: 10px;
+                        color: $textColor;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+        &.layout-sidebar-mobile-active {
+            .layout-sidebar{
+                transform: translate3d(0px, 0px, 0px);
+
+                .layout-menu {
+                    li {
+                        a {
+                            i.layout-submenu-toggler {
+                                display: inline-block;
+                            }
+
+                            .menuitem-badge {
+                                display: inline-block;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .layout-topbar {
+                .layout-topbar-wrapper {
+                    .layout-topbar-left {
+                        .sidebar-menu-button {
+                            background-color: $textColor;
+                            @include transition(background-color $transitionDuration);
+
+                            i {
+                                color: $contentBgColor;
+                            }
+
+                            &:hover {
+                                background-color: $primaryColor;
+                                @include transition(background-color $transitionDuration);
+
+                                i {
+                                    color: $contentBgColor;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .layout-main-mask {
+                display: block;
+            }
+        }
+    }
+}

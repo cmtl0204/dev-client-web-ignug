@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+    <defs>
+        <circle id="a" cx="20" cy="20" r="20"/>
+        <filter id="c" width="372.7%" height="372.7%" x="-136.4%" y="-136.4%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <use fill="#2E3440" xlink:href="#a"/>
+        <path fill="#88C0D0" fill-rule="nonzero" d="M8.599 14.018c-.368-.81-1.116-1.388-1.994-1.413-.315-.01-.619.047-.896.158a2.307 2.307 0 0 0-.147-.909c-.316-.832-1.102-1.358-1.976-1.443a2.012 2.012 0 0 0-1.002.144c-.136.057-.132.261.008.31.637.219 1.201.706 1.543 1.528l.027.068a2.288 2.288 0 0 0-.534-.551c-.66-.482-1.54-.519-2.283-.185a2.08 2.08 0 0 0-.934.79c-.064.1.025.227.139.195.68-.182 1.444-.084 2.19.453.348.25.607.534.792.837a1.435 1.435 0 0 0-.885-.429c-.535-.049-1.049.243-1.343.7a1.344 1.344 0 0 0-.208.535c-.018.119.121.201.212.122.306-.27.725-.427 1.249-.382.432.037.77.198 1.02.43C3.541 15.009.132 18.096 0 24.8h1.384c-.297-7.294 3.027-9.218 3.028-9.23.276.165.517.426.683.802.217.49.21.946.057 1.328-.043.111.078.218.182.162.154-.083.3-.205.432-.38.326-.434.43-1.022.205-1.516a1.44 1.44 0 0 0-.692-.707c.344.077.695.231 1.04.481.736.53 1.082 1.215 1.143 1.913.013.131.174.182.252.077.214-.292.367-.656.404-1.13.064-.822-.259-1.654-.925-2.125a2.269 2.269 0 0 0-.69-.329c.024 0 .047 0 .072.003.865.055 1.502.425 1.918.953.096.123.299.057.305-.1a2.102 2.102 0 0 0-.2-.984z" mask="url(#b)" transform="matrix(-1 0 0 1 8.8 0)"/>
+        <text fill="#FFF" font-family="HiraMaruPro-W4, Hiragino Maru Gothic Pro" font-size="31.68" mask="url(#b)">
+            <tspan x="4.8" y="32">M</tspan>
+        </text>
+        <text fill="#FFF" font-family="HiraMaruPro-W4, Hiragino Maru Gothic Pro" font-size="31.68" mask="url(#b)" opacity=".2">
+            <tspan x="4" y="32.8">M</tspan>
+        </text>
+        <text fill="#FFF" font-family="HiraMaruPro-W4, Hiragino Maru Gothic Pro" font-size="31.68" mask="url(#b)">
+            <tspan x="4.8" y="32">M</tspan>
+        </text>
+        <text fill="#FFF" font-family="HiraMaruPro-W4, Hiragino Maru Gothic Pro" font-size="31.68" mask="url(#b)" opacity=".2">
+            <tspan x="4" y="32.8">M</tspan>
+        </text>
+        <path fill="#5E81AC" d="M5.354 20.8c2.447.044 1.555 4.762 7.247 6.044 5.693 1.282 6.15-4.376 11.6-3.2 3.55.766 1.6 5.6 7.2 5.6s14.131-7.515 17.244-1.852c2.075 3.776 2.075 8.013 0 12.713l-43.762.471c-1.318-13.213-1.16-19.805.47-19.776z" mask="url(#b)"/>
+        <path fill="#4C566A" d="M-1.648 25.556c1.214-3.156 3.248-5.99 8.941-4.709 5.693 1.282 4.432 7.77 9.882 8.947 5.45 1.176 8-3.767 14.116-3.767 6.118 0 7.24.458 10.353 6.121 2.075 3.775 2.075 8.013 0 12.713l-43.762.471c-.495-11.08-.338-17.672.47-19.776z" mask="url(#b)"/>
+        <circle cx="32" cy="16.8" r="8.8" fill="#E7983C" filter="url(#c)" mask="url(#b)" opacity=".5"/>
+        <circle cx="35.2" cy="14.4" r="6.4" fill="#D08770" mask="url(#b)"/>
+        <circle cx="35.2" cy="14.4" r="5.6" fill="#EBCB8B" mask="url(#b)"/>
+        <circle cx="35.2" cy="14.4" r="2.4" fill="#D08770" mask="url(#b)"/>
+    </g>
+</svg>

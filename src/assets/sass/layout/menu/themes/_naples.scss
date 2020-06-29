@@ -1,0 +1,23 @@
+.layout-menu-naples {
+    $menuBgColor: #312F3A;
+    $menuBgImage:'naples.jpg';
+    $horizontalMenuBgImage:'naples-horizontal.jpg';
+    $rootMenuitemTextColor:#eceff4;
+    $rootMenuitemIconColor:#eceff4;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#A3BE8C;
+    $activeRootMenuitemTextColor:#3b4252;
+    $activeRootMenuitemIconColor:#2e3440;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#eceff4;
+    $submenuItemIconColor:#eceff4;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.36);
+    $activeSubmenuItemTextColor:#A3BE8C;
+    $activeSubmenuItemIconColor:#A3BE8C;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+}

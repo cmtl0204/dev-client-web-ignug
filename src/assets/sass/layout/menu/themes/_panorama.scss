@@ -1,0 +1,23 @@
+.layout-menu-panorama {
+    $menuBgColor: #252E38;
+    $menuBgImage:'panorama.jpg';
+    $horizontalMenuBgImage:'panorama-horizontal.jpg';
+    $rootMenuitemTextColor:#eceff4;
+    $rootMenuitemIconColor:#eceff4;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#88C0D0;
+    $activeRootMenuitemTextColor:#3b4252;
+    $activeRootMenuitemIconColor:#2e3440;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#eceff4;
+    $submenuItemIconColor:#eceff4;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.32);
+    $activeSubmenuItemTextColor:#88C0D0;
+    $activeSubmenuItemIconColor:#88C0D0;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+}

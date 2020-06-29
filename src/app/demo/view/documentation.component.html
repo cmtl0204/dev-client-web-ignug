@@ -1,0 +1,868 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card docs no-margin">
+
+            <h1>Current Version</h1>
+            <p>Angular 9 and PrimeNG 9</p>
+
+            <h1>Dependencies</h1>
+            <p>Mirage has no direct dependency. More information about dependencies is available at <a href="https://www.primefaces.org/why-primeng-templates/">Why PrimeNG Templates</a> article.</p>
+
+            <h1>Getting Started</h1>
+            <p>Mirage is a true native application template for Angular and is distributed as a CLI project. In case CLI is not installed already, use
+                the command below to set it up.</p>
+
+<pre class="doc-command">
+npm install -g @angular/cli
+</pre>
+
+            <p>Once CLI is ready in your system, extract the contents of the Mirage zip file distribution, cd to the directory,
+            install the libraries from npm and then execute "ng serve" to run the application in your local environment.</p>
+<pre class="doc-command">
+cd mirage
+npm install
+ng serve
+</pre>
+
+            <p>The application should run at http://localhost:4200/, you may now start with the development of your application.</p>
+
+            <h1>Important CLI Commands</h1>
+            <p>Following commands are derived from CLI.</p>
+<pre class="doc-command">
+Run 'ng serve' for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+Run 'ng generate component component-name' to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+
+Run 'ng build' to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+Run 'ng test' to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Run 'ng e2e' to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+Run 'ng help' for more options.
+</pre>
+
+            <h1>Structure</h1>
+            <p>Mirage consists of 3 main parts; the application layout, layout resources and theme resources for PrimeNG components. <i>app.component.html</i> inside app folder is the html template for the base layout,
+                required resources for the layout are placed inside the <i>src/assets/layout</i> folder and similarly theme resources are inside <i>src/assets/theme</i> folder.
+            </p>
+
+            <h1>Template</h1>
+            <p>Main layout is the html template of the <i>app.main.component.ts</i>, it is divided into a couple of sections such as topbar, sidebar and footer. Here is the code for
+                the main template. The component class <i>app.main.component.ts</i> implements the logic such as opening menus and managing layout modes.
+            </p>
+<pre>
+<code class="language-markup" pCode>
+&lt;div class="layout-wrapper" (click)="onLayoutClick()"
+    [ngClass]="&#123;'layout-horizontal': horizontalMenu,
+               'layout-wrapper-static': staticMenuActive,
+               'layout-rightpanel-active': rightPanelActive,
+               'layout-topbar-mobile-active': topbarMobileMenuActive,
+               'layout-megamenu-mobile-active': megaMenuMobileActive,
+               'layout-sidebar-mobile-active': menuMobileActive&#125;" [class]="menuColor"&gt;
+
+   &lt;app-menu&gt;&lt;/app-menu&gt;
+
+   &lt;div class="layout-main"&gt;
+       &lt;app-topbar&gt;&lt;/app-topbar&gt;
+
+       &lt;app-rightpanel&gt;&lt;/app-rightpanel&gt;
+
+       &lt;app-breadcrumb&gt;&lt;/app-breadcrumb&gt;
+
+       &lt;div class="layout-content"&gt;
+           &lt;router-outlet&gt;&lt;/router-outlet&gt;
+       &lt;/div&gt;
+
+       &lt;app-footer&gt;&lt;/app-footer&gt;
+
+       &lt;app-config&gt;&lt;/app-config&gt;
+
+       &lt;div class="layout-main-mask"&gt;&lt;/div&gt;
+
+       &lt;div class="layout-config-mask" *ngIf="configDialogActive" [@mask-anim]="'visible'"&gt;&lt;/div&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+
+            <h1>Menu</h1>
+            <p>Menu is a separate component defined in <i>app.menu.component.ts</i> file based on PrimeNG MenuModel API. In order to define the menuitems,
+            navigate to this file and define your own model as a nested structure. Here is the menu component from the sample application.</p>
+
+<div style="height:400px;overflow: auto;">
+<pre>
+<code class="language-javascript" pCode>
+@Component(&#123;
+    selector: 'app-menu',
+    templateUrl: './app.menu.component.html'
+&#125;)
+export class AppMenuComponent implements OnInit &#123;
+
+    model: any[];
+
+    constructor(public app: AppMainComponent) &#123;&#125;
+
+    ngOnInit() &#123;
+        this.model = [
+            &#123;label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']&#125;,
+            &#123;
+                label: 'Components', icon: 'pi pi-fw pi-star', routerLink: ['/components'],
+                items: [
+                    &#123; label: 'Sample Page', icon: 'pi pi-fw pi-th-large', routerLink: ['/components/sample']  &#125;,
+                    &#123; label: 'Forms', icon: 'pi pi-fw pi-file', routerLink: ['/components/forms'] &#125;,
+                    &#123; label: 'Data', icon: 'pi pi-fw pi-table', routerLink: ['/components/data'] &#125;,
+                    &#123; label: 'Panels', icon: 'pi pi-fw pi-list', routerLink: ['/components/panels'] &#125;,
+                    &#123; label: 'Overlays', icon: 'pi pi-fw pi-clone', routerLink: ['/components/overlays'] &#125;,
+                    &#123; label: 'Menus', icon: 'pi pi-fw pi-plus', routerLink: ['/components/menus'] &#125;,
+                    &#123; label: 'Messages', icon: 'pi pi-fw pi-envelope', routerLink: ['/components/messages'] &#125;,
+                    &#123; label: 'Charts', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/components/charts'] &#125;,
+                    &#123; label: 'File', icon: 'pi pi-fw pi-upload', routerLink: ['/components/file'] &#125;,
+                    &#123; label: 'Misc', icon: 'pi pi-fw pi-spinner', routerLink: ['/components/misc'] &#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
+                items: [
+                    &#123; label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/pages/empty'] &#125;,
+                    &#123; label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'], target: '_blank' &#125;,
+                    &#123; label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank' &#125;,
+                    &#123; label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/error'], target: '_blank' &#125;,
+                    &#123; label: '404', icon: 'pi pi-fw pi-times', routerLink: ['/404'], target: '_blank' &#125;,
+                    &#123;
+                        label: 'Access Denied', icon: 'pi pi-fw pi-ban',
+                        routerLink: ['/accessdenied'], target: '_blank'
+                    &#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Hierarchy', icon: 'pi pi-fw pi-sitemap',
+                items: [
+                    &#123;
+                        label: 'Submenu 1', icon: 'pi pi-fw pi-sign-in',
+                        items: [
+                            &#123;
+                                label: 'Submenu 1.1', icon: 'pi pi-fw pi-sign-in',
+                                items: [
+                                    &#123; label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                    &#123; label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                    &#123; label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Submenu 1.2', icon: 'pi pi-fw pi-sign-in',
+                                items: [
+                                    &#123; label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-sign-in' &#125;
+                                ]
+                            &#125;,
+                        ]
+                    &#125;,
+                    &#123;
+                        label: 'Submenu 2', icon: 'pi pi-fw pi-sign-in',
+                        items: [
+                            &#123;
+                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-sign-in',
+                                items: [
+                                    &#123; label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                    &#123; label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-sign-in',
+                                items: [
+                                    &#123; label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-sign-in' &#125;,
+                                ]
+                            &#125;,
+                        ]
+                    &#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Docs', icon: 'pi pi-fw pi-file', routerLink: ['/documentation']
+            &#125;,
+            &#123;
+                label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
+            &#125;
+        ];
+    &#125;
+&#125;
+</code>
+</pre>
+</div>
+
+            <h1>Integration with an Existing CLI Project</h1>
+            <p>To setup Mirage in an existing project, follow the steps below;</p>
+
+<ul>
+    <li>Copy the <i>src/assets</i> folder to your projects folder with the same name.</li>
+    <li>Copy all app.* files and breadcrumb.service.ts to the <i>src/app</i> folder of your application.</li>
+</ul>
+
+          <p>Install PrimeNG</p>
+<pre class="doc-command">
+npm install primeng@latest --save
+npm install primeicons@latest --save
+</pre>
+
+          <p>Add PrimeNG CSS at styles section in angular.json.</p>
+
+<pre>
+<code class="language-json" pCode>
+"styles": [
+    "../node_modules/primeng/resources/primeng.min.css",        //required: PrimeNG components
+    "node_modules/primeicons/primeicons.css",                   //required: PrimeIcons
+    "styles.scss"                                               //your styles and overrides
+],
+</code>
+</pre>
+
+            <p>Last part is adding theme and layout css files, in the CLI app they are defined using link tags in index.html so the demo can switch them on
+            the fly by changing the path however if this is not a requirement, you may also add them to the styles configuration above or import them in <i>styles.scss </i>so they go inside the bundle.</p>
+
+            <h1>Component Themes</h1>
+
+            <h1>Component Theme</h1>
+            <p>Mirage provides 24 PrimeNG themes out of the box featuring light and dark alternatives.</p>
+
+            <ul>
+                <li>blue/theme-light.scss</li>
+                <li>blue/theme-dark.scss</li>
+                <li>brown/theme-light.scss</li>
+                <li>brown/theme-dark.scss</li>
+                <li>cyan/theme-light.scss</li>
+                <li>cyan/theme-dark.scss</li>
+                <li>green/theme-light.scss</li>
+                <li>green/theme-dark.scss</li>
+                <li>indigo/theme-light.scss</li>
+                <li>indigo/theme-dark.scss</li>
+                <li>lime/theme-light.scss</li>
+                <li>lime/theme-dark.scss</li>
+                <li>magenta/theme-light.scss</li>
+                <li>magenta/theme-dark.scss</li>
+                <li>orange/theme-light.scss</li>
+                <li>orange/theme-dark.scss</li>
+                <li>purple/theme-light.scss</li>
+                <li>purple/theme-dark.scss</li>
+                <li>red/theme-light.scss</li>
+                <li>red/theme-dark.scss</li>
+                <li>teal/theme-light.scss</li>
+                <li>teal/theme-dark.scss</li>
+                <li>yellow/theme-light.scss</li>
+                <li>yellow/theme-dark.scss</li>
+            </ul>
+
+            <p>A custom theme can be developed by the following steps.</p>
+            <ul>
+                <li>Choose a custom theme name such as "mytheme".</li>
+                <li>Create a folder named "mytheme" under <i>assets/theme folder</i>.</li>
+                <li>Create a file such as theme.scss under <i>assets/theme/mytheme folder</i>.</li>
+                <li>Define the variables listed below in your file.</li>
+                <li>Import either <i>../../sass/variables/_theme_light</i> or <i>../../sass/variables/_theme_dark</i> based on the type of your theme.</li>
+                <li>Import main <i>../../sass/theme/_theme</i> file.</li>
+                <li>Add the <i>theme.scss</i> to your project at <i>styles</i> section of angular.json or import via <i>styles.scss</i>.</li>
+            </ul>
+
+            <p>Here are the variables required to create a theme.</p>
+<div style="height:400px;overflow: auto;">
+<pre>
+<code class="language-css" pCode>
+//main
+$primaryColor:#5E81AC;
+$primaryTextColor:#ffffff;
+
+//highlight
+$highlightBgColor:$primaryColor;
+$highlightTextColor:$primaryTextColor;
+
+//input
+$inputFocusBorderColor:#9EB3CD;
+$inputFocusBorderShadowColor:rgba(22,107,212,.25);
+
+//primary button
+$primaryButtonTextColor:#ffffff;
+$primaryButtonBgColor:#5E81AC;
+$primaryButtonBorderColor:#5E81AC;
+$primaryButtonHoverBgColor:#466489;
+$primaryButtonHoverBorderColor:#466489;
+$primaryButtonActiveBgColor:#263951;
+$primaryButtonActiveBorderColor:#263951;
+$primaryButtonFocusBorderShadow:rgba(22,107,212,.5);
+
+@import '../../sass/variables/_theme_light';
+@import '../../sass/theme/_theme';
+</code>
+</pre>
+</div>
+
+            <p>In case you'd like to manually build the css instead of using CLI, an example sass command to compile the css would be;</p>
+
+<pre class="doc-command">
+sass src/assets/theme/mytheme/theme.scss src/assets/theme/mytheme/theme.css
+</pre>
+
+            <p>Watch mode is handy to avoid compiling everytime when a change is made, instead use the following command
+            so that sass generates the file whenever you make a customization. This builds all css files whenever a change is made to any scss file.</p>
+<pre class="doc-command">
+sass --watch src/:src/ --no-source-map
+</pre>
+
+            <h1>Layout Theme</h1>
+            <p>There are 24 layout colors in total with light and dark alternatives which is enabled by including the <i>layout-*.scss</i> file to the project such as <i>blue/layout-light.scss.</i>.
+            Note that the primary colors are not utilized when a custom menu theme is used.</p>
+
+            <ul>
+                <li>blue/layout-light.scss</li>
+                <li>blue/layout-dark.scss</li>
+                <li>brown/layout-light.scss</li>
+                <li>brown/layout-dark.scss</li>
+                <li>cyan/layout-light.scss</li>
+                <li>cyan/layout-dark.scss</li>
+                <li>green/layout-light.scss</li>
+                <li>green/layout-dark.scss</li>
+                <li>indigo/layout-light.scss</li>
+                <li>indigo/layout-dark.scss</li>
+                <li>lime/layout-light.scss</li>
+                <li>lime/layout-dark.scss</li>
+                <li>magenta/layout-light.scss</li>
+                <li>magenta/layout-dark.scss</li>
+                <li>orange/layout-light.scss</li>
+                <li>orange/layout-dark.scss</li>
+                <li>purple/layout-light.scss</li>
+                <li>purple/layout-dark.scss</li>
+                <li>red/layout-light.scss</li>
+                <li>red/layout-dark.scss</li>
+                <li>teal/layout-light.scss</li>
+                <li>teal/layout-dark.scss</li>
+                <li>yellow/layout-light.scss</li>
+                <li>yellow/layout-dark.scss</li>
+            </ul>
+
+            <p>Creating a custom layout theme is similar to creating a custom PrimeNG Component Theme.</p>
+            <ul>
+                <li>Choose a layout name such as layout-myown.</li>
+                <li>Create an empty file named layout-myown.scss inside <i>assets/layout/css</i> folder.</li>
+                <li>Define the variables listed below in your file.</li>
+                <li>Import either <i>../../../sass/variables/_layout_light</i> or <i>../../../sass/variables/_layout_dark</i> based on the type of your theme.</li>
+                <li>Import main <i>../../../sass/layout/_layout</i> file.</li>
+                <li>Add the <i>layout-myown.scss</i> to your project at <i>styles.scss</i> section of angular.json or import via <i>styles.scss</i>.</li>
+            </ul>
+
+            <p>Here are the variables required to create a layout.</p>
+<pre>
+<code class="language-css" pCode>
+$primaryColor:#5e81ac;
+$primaryLightColor:#809bbd;
+$primaryTextColor:#ffffff;
+
+@import '../../../sass/variables/_layout_light';
+@import '../../../sass/layout/_layout';
+</code>
+</pre>
+
+            <h1>Common SASS Variables</h1>
+            <p>In case you'd like to customize common variables, the <i>_common.scss</i> under sass variables folder is where the core variables (e.g. font size, paddings) for the layout are defined.</p>
+<pre>
+<code class="language-css" pCode>
+//general
+$fontSize:14px;
+$fontFamily:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$transitionDuration:.15s;
+$letterSpacing:normal;
+$borderRadius:4px;
+$mobileBreakpoint:991px;
+</code>
+</pre>
+
+            <p><i>_layout.scss</i> under variables define the shared variables of the layout.</p>
+<pre>
+<code class="language-css" pCode>
+@import './common';
+@import '../overrides/layout_variables';
+</code>
+</pre>
+
+            <p><i>_layout_light.scss</i> contains the shared variables of the layout themes with a light color scheme.</p>
+<pre>
+<code class="language-css" pCode>
+$bodyBgColor:#eceff4;
+$textColor:#4c566a;
+$textSecondaryColor:#9199a9;
+
+$topbarBgColor:#eceff4;
+$breadcrumbBgColor:#d8dee9;
+$contentBgColor:#ffffff;
+$contentAltBgColor:#f9fafb;
+$contentAltBorderColor:#e5e9f0;
+$dividerColor:rgba(145,153,169,0.3);
+$menuShadow:3px 0 5px 0 rgba(33, 35, 39, 0.15);
+
+@import './_layout';
+</code>
+</pre>
+
+            <p><i>_layout_dark.scss</i> contains the shared variables of the layout themes with a light color scheme.</p>
+<pre>
+<code class="language-css" pCode>
+$bodyBgColor:#eceff4;
+$textColor:#4c566a;
+$textSecondaryColor:#9199a9;
+
+$topbarBgColor:#eceff4;
+$breadcrumbBgColor:#d8dee9;
+$contentBgColor:#ffffff;
+$contentAltBgColor:#f9fafb;
+$contentAltBorderColor:#e5e9f0;
+$dividerColor:rgba(145,153,169,0.3);
+$menuShadow:3px 0 5px 0 rgba(33, 35, 39, 0.15);
+
+@import './_layout';
+</code>
+</pre>
+
+            <p>Shared variables of the components themes are available in the <i>_theme.scss</i> file.</p>
+
+<div style="max-height: 400px; overflow:auto">
+<pre>
+<code class="language-css" pCode>
+@import './common';
+
+/* panels */
+$headerPadding:10px 15px;
+$contentPadding:15px;
+$contentLineHeight:1.43;
+
+/* forms */
+$inputPadding:6px 12px;
+$inputGroupAddonMinWidth:2*$fontSize;
+$checkboxWidth:20px;
+$checkboxHeight:20px;
+
+/* list items */
+$listPadding:6px 0;
+$listItemPadding:8px 20px;
+
+/* datatable */
+$datatableCellPadding:.75em;
+
+/* buttons */
+$roundedButtonBorderRadius:15px;
+
+$secondaryButtonTextColor:#ffffff;
+$secondaryButtonBgColor:#6c757d;
+$secondaryButtonBorderColor:#6c757d;
+$secondaryButtonHoverBgColor:#5a6268;
+$secondaryButtonHoverBorderColor:#545b62;
+$secondaryButtonActiveBgColor:#545b62;
+$secondaryButtonActiveBorderColor:#4e555b;
+$secondaryButtonFocusBorderShadow:rgba(130,138,145,.5);
+
+$successButtonTextColor:#ffffff;
+$successButtonBgColor:#99CE6B;
+$successButtonBorderColor:#99CE6B;
+$successButtonHoverBgColor:#75A24D;
+$successButtonHoverBorderColor:#75A24D;
+$successButtonActiveBgColor:#4F7131;
+$successButtonActiveBorderColor:#4F7131;
+$successButtonFocusBorderShadow:rgba(72,180,97,.5);
+
+$infoButtonTextColor:#ffffff;
+$infoButtonBgColor:#88C0D0;
+$infoButtonBorderColor:#88C0D0;
+$infoButtonHoverBgColor:#6CA2B1;
+$infoButtonHoverBorderColor:#6CA2B1;
+$infoButtonActiveBgColor:#467481;
+$infoButtonActiveBorderColor:#467481;
+$infoButtonFocusBorderShadow:rgba(58,176,195,.5);
+
+$warningButtonTextColor:#ffffff;
+$warningButtonBgColor:#EBCB8B;
+$warningButtonBorderColor:#EBCB8B;
+$warningButtonHoverBgColor:#D2A956;
+$warningButtonHoverBorderColor:#D2A956;
+$warningButtonActiveBgColor:#A37518;
+$warningButtonActiveBorderColor:#A37518;
+$warningButtonFocusBorderShadow:rgba(222,170,12,.5);
+
+$dangerButtonTextColor:#ffffff;
+$dangerButtonBgColor:#F28686;
+$dangerButtonBorderColor:#F28686;
+$dangerButtonHoverBgColor:#D36161;
+$dangerButtonHoverBorderColor:#D36161;
+$dangerButtonActiveBgColor:#943F3F;
+$dangerButtonActiveBorderColor:#943F3F;
+$dangerButtonFocusBorderShadow:rgba(225,83,97,.5);
+
+$darkButtonTextColor:#ffffff;
+$darkButtonBgColor:#343a40;
+$darkButtonBorderColor:#343a40;
+$darkButtonHoverBgColor:#23272b;
+$darkButtonHoverBorderColor:#1d2124;
+$darkButtonActiveBgColor:#1d2124;
+$darkButtonActiveBorderColor:#171a1d;
+$darkButtonFocusBorderShadow:rgba(82,88,93,.5);
+
+$lightButtonTextColor:#212529;
+$lightButtonBgColor:#f8f9fa;
+$lightButtonBorderColor:#f8f9fa;
+$lightButtonHoverBgColor:#e2e6ea;
+$lightButtonHoverBorderColor:#dae0e5;
+$lightButtonActiveBgColor:#dae0e5;
+$lightButtonActiveBorderColor:#d3d9df;
+$lightButtonFocusBorderShadow:rgba(216,217,219,.5);
+
+/* Messages */
+$infoMessageBgColor:#D9EAF0;
+$infoMessageBorderColor:#C3DFE7;
+$infoMessageTextColor:#467481;
+$warnMessageBgColor:#F8EED9;
+$warnMessageBorderColor:#F5E5C5;
+$warnMessageTextColor:#A37518;
+$errorMessageBgColor:#FCE1E1;
+$errorMessageBorderColor:#F8C2C2;
+$errorMessageTextColor:#943F3F;
+$successMessageBgColor:#DFF0D1;
+$successMessageBorderColor:#C7DFB2;
+$successMessageTextColor:#799760;
+
+/* rating */
+$ratingStarColor:#f790c8;
+
+/* keyboard */
+$keyboardShiftColor:#3e9018;
+$keyboardBackColor:#007bff;
+$keyboardClearColor:#f790c8;
+$keyboardCloseColor:#9189fd;
+
+/* modal */
+$modalBgColor:#000000;
+$modalBgOpacity:.5;
+
+@import '../overrides/theme_variables';
+</code>
+</pre>
+</div>
+
+            <p><i>_theme_light.scss</i> contains the shared variables of the component themes with a light color scheme.</p>
+<div style="max-height: 400px; overflow:auto">
+<pre>
+<code class="language-css" pCode>
+@import '../variables/_theme';
+
+/* Common */
+$textColor:#4c566a;
+$textSecondaryColor:#9199a9;
+$disabledBgColor:#eeeeee;
+$dividerColor:rgba(145,153,169,0.3);
+
+/* Icons */
+$iconFontSize:1.25em;
+$iconWidth:16px;
+
+/* Error */
+$errorColor:#a94442;
+
+/* Headers */
+$headerBgColor:#f5f5f5;
+$headerHoverBgColor:#dcdcdc;
+$headerHoverBorderColor:#c4c4c4;
+$headerTextColor:#292B2C;
+$headerBorderColor:#dddddd;
+$headerIconColor:#999999;
+$headerIconHoverColor:#bd9090;
+
+/* Contents */
+$contentBorderColor:#dddddd;
+$contentBgColor:#ffffff;
+
+/* Forms */
+$inputBgColor:#ffffff;
+$inputBorderColor:#cccccc;
+$inputHoverBorderColor:#cccccc;
+$inputTextColor:#495057;
+
+//groups
+$inputGroupBorderColor:#cccccc;
+$inputGroupBgColor:#e9ecef;
+$inputGroupTextColor:$textColor;
+$inputGroupIconColor:$textSecondaryColor;
+
+/* Buttons */
+$toggleButtonBgColor:#eceff4;
+$toggleButtonBorderColor:#e5e9f0;
+$toggleButtonHoverBgColor:#e5e9f0;
+$toggleButtonHoverBorderColor:#d8dee9;
+
+/* List Items */
+$listItemHoverBgColor:#f7f7f9;
+$listItemHoverTextColor:#1d1e1f;
+
+/* Overlays */
+$overlayBorderColor:#cccccc;
+
+/* Data */
+$datatableCellBorderColor:#dddddd;
+$datableEvenRowBgColor:rgba(0,0,0,.05);
+$datatableHoverBgColor:rgba(0,0,0,.075);
+</code>
+</pre>
+</div>
+
+            <p><i>_theme_dark.scss</i> contains the shared variables of the component themes with a dark color scheme.</p>
+<div style="max-height: 400px; overflow:auto">
+<pre>
+<code class="language-css" pCode>
+@import '../variables/_theme';
+
+/* Common */
+$textColor:#d8dee9;
+$textSecondaryColor:#9199a9;
+$disabledBgColor:#2e3440;
+$dividerColor:rgba(90,101,124,0.3);
+
+/* Icons */
+$iconFontSize:1.25em;
+$iconWidth:16px;
+
+/* Error */
+$errorColor:#a94442;
+
+/* Headers */
+$headerBgColor:#2e3440;
+$headerHoverBgColor:#3b4252;
+$headerHoverBorderColor:#434c5e;
+$headerTextColor:#d8dee9;
+$headerBorderColor:#434c5e;
+$headerIconColor:#d8dee9;
+$headerIconHoverColor:#d8dee9;
+
+/* Contents */
+$contentBorderColor:#434c5e;
+$contentBgColor:#20252e;
+
+/* Forms */
+$inputBgColor:#20252e;
+$inputBorderColor:#5a657c;
+$inputHoverBorderColor:#5a657c;
+$inputTextColor:#d8dee9;
+
+//groups
+$inputGroupBorderColor:#5a657c;
+$inputGroupBgColor:#2e3440;
+$inputGroupTextColor:$textColor;
+$inputGroupIconColor:$textSecondaryColor;
+
+/* Buttons */
+$toggleButtonBgColor:#5a657c;
+$toggleButtonBorderColor:#4c566a;
+$toggleButtonHoverBgColor:#4c566a;
+$toggleButtonHoverBorderColor:#434c5e;
+
+/* List Items */
+$listItemHoverBgColor:#4c566a;
+$listItemHoverTextColor:#d8dee9;
+
+/* Overlays */
+$overlayBorderColor:#434c5e;
+
+/* Data */
+$datableEvenRowBgColor:#2e3440;
+$datatableHoverBgColor:#4c566a;
+$datatableCellBorderColor:#434c5e;
+</code>
+</pre>
+</div>
+
+            <h1>Menu Modes</h1>
+            <p>Menu has 3 modes; <b>static</b>, <b>overlay</b> and <b>horizontal</b>. Layout wrapper element in template.xhtml is used to define which mode to use by adding specific classes. Default
+            is overlay and adding <i>layout-menu-horizontal</i> enables horizontal menu whereas for static menu use <i>ayout-wrapper-static</i>.</p>
+
+<pre>
+<code class="language-markup" pCode>
+&lt;div class="layout-wrapper layout-menu-horizontal"&gt;
+</code>
+</pre>
+
+            <p>It is also possible to leave the choice to the user by keeping the preference at a component and using an ngClass expression so that user can switch between modes. Sample
+                    application has an example implementation of such use case. Refer to <i>app.main.component.ts</i> for an example.</p>
+
+            <h1>Light and Dark Menu</h1>
+            <p>Menu theme is defined at the main container element, template uses the default light menus whereas a dark theme can be applied using the <i>layout-menu-dark</i> style class.</p>
+<pre>
+<code class="language-markup" pCode>
+&lt;div class="layout-wrapper layout-menu-dark"&gt;
+...
+&lt;/div&gt;
+</code>
+</pre>
+
+            <h1>Custom Menu Themes</h1>
+            <p>Light and Dark menus utilize the primary color of the chosen layout whereas custom menu themes listed below define their own design. Apply
+                the following style classes for a custom menu theme.
+            </p>
+            <ul>
+                <li>layout-menu-chile</li>
+                <li>layout-menu-naples</li>
+                <li>layout-menu-georgia</li>
+                <li>layout-menu-infinity</li>
+                <li>layout-menu-chicago</li>
+                <li>layout-menu-majesty</li>
+                <li>layout-menu-fish</li>
+                <li>layout-menu-dawn</li>
+                <li>layout-menu-record</li>
+                <li>layout-menu-pool</li>
+                <li>layout-menu-metal</li>
+                <li>layout-menu-china</li>
+                <li>layout-menu-table</li>
+                <li>layout-menu-panorama</li>
+                <li>layout-menu-barcelona</li>
+                <li>layout-menu-underwater</li>
+                <li>layout-menu-symmetry</li>
+                <li>layout-menu-rain</li>
+                <li>layout-menu-utah</li>
+                <li>layout-menu-wave</li>
+                <li>layout-menu-flora</li>
+                <li>layout-menu-speed</li>
+                <li>layout-menu-canopy</li>
+                <li>layout-menu-sanpaolo</li>
+                <li>layout-menu-basketball</li>
+                <li>layout-menu-misty</li>
+                <li>layout-menu-summit</li>
+                <li>layout-menu-snow</li>
+                <li>layout-menu-wall</li>
+                <li>layout-menu-ferris</li>
+                <li>layout-menu-ship</li>
+                <li>layout-menu-ny</li>
+                <li>layout-menu-cyan</li>
+                <li>layout-menu-violet</li>
+                <li>layout-menu-red</li>
+                <li>layout-menu-blue</li>
+                <li>layout-menu-porsuk</li>
+                <li>layout-menu-pink</li>
+                <li>layout-menu-purple</li>
+                <li>layout-menu-orange</li>
+            </ul>
+
+<pre>
+<code class="language-javascript" pCode>
+&lt;div class="layout-wrapper layout-menu-chile"&gt;
+...
+&lt;/div&gt;
+</code>
+</pre>
+
+            <p>Creating a custom menu theme with the color scheme of your choice requires the following steps.</p>
+            <ul>
+                <li>Choose a menu theme such as myown.</li>
+                <li>Create an empty file named myown.scss inside assets/sass/layout/menu/themes/ folder.</li>
+                <li>Define the variables listed below and import the <i>/sass/layout/_layout.scss</i> file.</li>
+                <li>Import <i>_menu_theme.scss</i> file.</li>
+                <li>Import your file at <i>/assets/sass/layout/menu/_menu</i> file.</li>.
+            </ul>
+
+            <p>Here are the variables required to create a layout.</p>
+<pre>
+<code class="language-css" pCode>
+.layout-menu-myown &#123;
+    $menuBgColor: #222932;
+    $rootMenuitemTextColor:#eceff4;
+    $rootMenuitemIconColor:#eceff4;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#EBCB8B;
+    $activeRootMenuitemTextColor:#3b4252;
+    $activeRootMenuitemIconColor:#2e3440;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#eceff4;
+    $submenuItemIconColor:#eceff4;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.42);
+    $activeSubmenuItemTextColor:#EBCB8B;
+    $activeSubmenuItemIconColor:#EBCB8B;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+&#125;
+</code>
+</pre>
+
+            <p>An image can be used as the background of the menu using the menuBgImage variable.</p>
+<pre>
+<code class="language-css" pCode>
+.layout-menu-myown &#123;
+    $menuBgColor: #222932;
+    $menuBgImage:'myown.jpg';
+    $horizontalMenuBgImage:'myown-horizontal.jpg';
+    $rootMenuitemTextColor:#eceff4;
+    $rootMenuitemIconColor:#eceff4;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#EBCB8B;
+    $activeRootMenuitemTextColor:#3b4252;
+    $activeRootMenuitemIconColor:#2e3440;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#eceff4;
+    $submenuItemIconColor:#eceff4;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.42);
+    $activeSubmenuItemTextColor:#EBCB8B;
+    $activeSubmenuItemIconColor:#EBCB8B;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+&#125;
+</code>
+</pre>
+
+            <h1>Breadcrumb</h1>
+            <p>Mirage has an optional built-in breadcrumb section right below the topbar.
+                The items are dynamically generated using a BreadcrumbService where each main page that goes into the router-outlet should provide a collection of MenuItem instances.
+                Here is an example component that updates the breadcrumb.</p>
+<pre>
+<code class="language-javascript" pCode>
+import &#123;Component&#125; from '@angular/core';
+import &#123;BreadcrumbService&#125; from '../../breadcrumb.service';
+
+@Component(&#123;
+    templateUrl: './controlpanel.component.html'
+&#125;)
+export class ControlPanelComponent &#123;
+
+    constructor(private breadcrumbService: BreadcrumbService) &#123;
+        this.breadcrumbService.setItems([
+            &#123;label: 'Admin'&#125;,
+            &#123;label: 'Control Panel', routerLink: ['/controlpanel']&#125;
+        ]);
+    &#125;
+
+&#125;
+</code>
+</pre>
+
+            <h1>Grid CSS</h1>
+            <p>Mirage uses PrimeFlex CSS throughout the demos such as Dashboard, however any Grid library can be used with it since Mirage itself does not depend on PrimeFlex except demo pages.</p>
+
+            <h1>Customizing Styles</h1>
+            <p>It is suggested to add your customizations in the following sass files under the override folder instead of adding them to the
+                scss files under sass folder to avoid maintenance issues after an update.</p>
+
+            <ul>
+                <li><b>overrides/_layout_variables</b>: Variables of the layout.</li>
+                <li><b>overrides/_layout_styles</b>: Styles for the layout.</li>
+                <li><b>overrides/_theme_variables</b>: Variables of the theme.</li>
+                <li><b>overrides/_theme_styles</b>: Styles for the theme.</li>
+            </ul>
+
+            <h1>Migration Guide</h1>
+            <p>Angular 9 and PrimeNG 9</p>
+            <ul>
+                <li>Update dependencies with <a href="https://angular.io/cli/update">ng update</a>.</li>
+                <li>Update theme.css and layout.css files.</li>
+                <li>Update app.menu.component.ts and app.menu.component.html while retaining your MenuModel.</li>
+                <li>Include app.menuitem.component.ts under app folder and define it app.module.ts with declarations property.</li>
+                <li>Include app.menu.service.ts under app folder and define it app.module.ts with providers property.</li>
+            </ul>
+        </div>
+    </div>
+</div>

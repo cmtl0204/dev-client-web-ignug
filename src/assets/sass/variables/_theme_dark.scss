@@ -1,0 +1,57 @@
+@import '../variables/_theme';
+
+/* Common */
+$textColor:#d8dee9;
+$textSecondaryColor:#9199a9;
+$disabledBgColor:#2e3440;
+$dividerColor:rgba(90,101,124,0.3);
+
+/* Icons */
+$iconFontSize:1.25em;
+$iconWidth:16px;
+
+/* Error */
+$errorColor:#a94442;
+
+/* Headers */
+$headerBgColor:#2e3440;
+$headerHoverBgColor:#3b4252;
+$headerHoverBorderColor:#434c5e;
+$headerTextColor:#d8dee9;
+$headerBorderColor:#434c5e;
+$headerIconColor:#d8dee9;
+$headerIconHoverColor:#d8dee9;
+
+/* Contents */
+$contentBorderColor:#434c5e;
+$contentBgColor:#20252e;
+
+/* Forms */
+$inputBgColor:#20252e;
+$inputBorderColor:#5a657c;
+$inputHoverBorderColor:#5a657c;
+$inputTextColor:#d8dee9;
+
+//groups
+$inputGroupBorderColor:#5a657c;
+$inputGroupBgColor:#2e3440;
+$inputGroupTextColor:$textColor;
+$inputGroupIconColor:$textSecondaryColor;
+
+/* Buttons */
+$toggleButtonBgColor:#5a657c;
+$toggleButtonBorderColor:#4c566a;
+$toggleButtonHoverBgColor:#4c566a;
+$toggleButtonHoverBorderColor:#434c5e;
+
+/* List Items */
+$listItemHoverBgColor:#4c566a;
+$listItemHoverTextColor:#d8dee9;
+
+/* Overlays */
+$overlayBorderColor:#434c5e;
+
+/* Data */
+$datableEvenRowBgColor:#2e3440;
+$datatableHoverBgColor:#4c566a;
+$datatableCellBorderColor:#434c5e;

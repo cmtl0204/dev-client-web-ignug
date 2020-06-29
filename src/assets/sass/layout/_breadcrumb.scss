@@ -1,0 +1,66 @@
+.layout-breadcrumb {
+    background-color: $breadcrumbBgColor;
+    padding: 10px 30px;
+    @include flex();
+    align-items: center;
+    justify-content: space-between;
+
+    .breadcrumb{
+        .route-bar-breadcrumb {
+            list-style: none;
+            @include flex();
+            justify-content: space-around;
+            align-items: center;
+            padding: 0;
+
+            li {
+                padding: 0 5px;
+                font-size: 13px;
+                color: $textSecondaryColor;
+
+                &:first-child{
+                    padding-left: 0;
+                }
+
+                i{
+                    font-weight: bold;
+                    font-size: 10px;
+                }
+
+                .ui-link {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: $textColor;
+
+                    &:hover {
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width : $mobileBreakpoint){
+    .layout-breadcrumb {
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+
+        .breadcrumb{
+            width: 100%;
+            border-bottom: 1px solid $dividerColor;
+            @include flex();
+            justify-content: center;
+            padding: 0 30px;
+            padding-bottom: 10px;
+        }
+
+        .notification{
+            padding: 0 30px;
+            padding-top: 10px;
+            text-align: center;
+
+        }
+    }
+}

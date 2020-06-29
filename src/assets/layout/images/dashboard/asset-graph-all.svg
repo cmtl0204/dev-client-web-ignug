@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="568" height="233" viewBox="0 0 568 233">
+    <defs>
+        <linearGradient id="b" x1="50%" x2="50%" y1="4.251%" y2="214.11%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-color="#71B5C8"/>
+        </linearGradient>
+        <path id="a" d="M0 0h568v214H0z"/>
+        <linearGradient id="d" x1="100%" x2="0%" y1="48.434%" y2="51.551%">
+            <stop offset="0%" stop-color="#45B0D5"/>
+            <stop offset="100%" stop-color="#BCE4F2"/>
+        </linearGradient>
+        <linearGradient id="e" x1="100%" x2="0%" y1="49%" y2="50.991%">
+            <stop offset="0%" stop-color="#DD7251"/>
+            <stop offset="100%" stop-color="#E8BDB0"/>
+        </linearGradient>
+        <linearGradient id="f" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#45B0D5"/>
+            <stop offset="99.142%" stop-color="#59C7ED"/>
+        </linearGradient>
+        <filter id="g" width="475%" height="475%" x="-187.5%" y="-187.5%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+        </filter>
+        <filter id="h" width="475%" height="475%" x="-187.5%" y="-187.5%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+        </filter>
+        <rect id="j" width="69" height="40" rx="4"/>
+        <filter id="i" width="123.2%" height="140%" x="-11.6%" y="-17.5%" filterUnits="objectBoundingBox">
+            <feOffset dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="25" y="230">Jan</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="96" y="230">Feb</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="166" y="230">Mar</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="237" y="230">Apr</tspan>
+        </text>
+        <text fill="#3B4252" font-family="HelveticaNeue-Medium, Helvetica Neue" font-size="13" font-weight="400">
+            <tspan x="309" y="230">May</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="380" y="230">Jun</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="451" y="230">Jul</tspan>
+        </text>
+        <text fill="#4C566A" font-family="HelveticaNeue, Helvetica Neue" font-size="13">
+            <tspan x="524" y="230">Aug</tspan>
+        </text>
+        <g>
+            <mask id="c" fill="#fff">
+                <use xlink:href="#a"/>
+            </mask>
+            <use fill="url(#b)" opacity=".6" xlink:href="#a"/>
+            <path fill="#FFF" d="M71 0h1v214h-1zM142 0h1v214h-1zM213 0h1v214h-1zM284 0h1v214h-1zM355 0h1v214h-1zM426 0h1v214h-1zM497 0h1v214h-1z" mask="url(#c)"/>
+            <path stroke="url(#d)" stroke-linecap="round" stroke-width="3" d="M0 143c16 31.5 45.5 35.5 71 31.5s43.5-59.5 71-59.5 43 35 72 35 40-18.5 70-22 24 53.5 71 53.5 32.5-122 71-122 28.5 46.5 71.5 30c28.667-11 52.167-14.167 70.5-9.5" mask="url(#c)"/>
+            <path stroke="url(#e)" stroke-linecap="round" stroke-width="3" d="M0 204.5C24 194 46 190 71 190s44.5-25 71-25 40 25 71 25 31.5-21.5 71.5-21.5S308 107 355 107s32.5 35 71 35 33-32.5 71.5-32.5c25.667 0 49.167 17 70.5 51" mask="url(#c)"/>
+            <g fill="url(#f)" mask="url(#c)">
+                <g transform="translate(134 107)">
+                    <circle cx="8" cy="8" r="8" filter="url(#g)" opacity=".5"/>
+                    <circle cx="8" cy="8" r="7" stroke="#FFF" stroke-width="2"/>
+                </g>
+            </g>
+            <g fill="url(#f)" mask="url(#c)">
+                <g transform="translate(418 52)">
+                    <circle cx="8" cy="8" r="8" filter="url(#h)" opacity=".5"/>
+                    <circle cx="8" cy="8" r="7" stroke="#FFF" stroke-width="2"/>
+                </g>
+            </g>
+            <g mask="url(#c)">
+                <g transform="translate(394 2)">
+                    <use fill="#000" filter="url(#i)" xlink:href="#j"/>
+                    <use fill="#FFF" xlink:href="#j"/>
+                </g>
+                <text font-family="HelveticaNeue-Medium, Helvetica Neue" font-size="12" font-weight="400" transform="translate(394 2)">
+                    <tspan x="16" y="16" fill="#9199A9">30 Jun</tspan>
+                </text>
+                <text font-family="HelveticaNeue, Helvetica Neue" font-size="14" transform="translate(394 2)">
+                    <tspan x="12.5" y="33" fill="#4C566A">$569.0</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

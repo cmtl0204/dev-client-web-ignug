@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="72px" viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>icon-feature-2-hover</title>
+    <desc>Created with Sketch.</desc>
+    <g id="🚀-Template-Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing" transform="translate(-694.000000, -1477.000000)">
+            <g id="section-features-h" transform="translate(0.000000, 1178.000000)">
+                <g id="feature-2-/-active" transform="translate(670.000000, 275.000000)">
+                    <g id="icon-feature-2-hover" transform="translate(24.000000, 24.000000)">
+                        <circle id="bg-icon" fill="#EBCB8B" cx="36" cy="36" r="36"></circle>
+                        <path d="M48.0142097,24.6607163 L36.5856246,47.5178864 C36.3891958,47.910744 35.9963382,48.1428871 35.5677663,48.1428871 C35.4784805,48.1428871 35.3891946,48.12503 35.2999088,48.1071728 C34.7820511,47.9821726 34.4249078,47.5357435 34.4249078,47.0000286 L34.4249078,36.7143021 L24.1391812,36.7143021 C23.6034663,36.7143021 23.1570372,36.3571588 23.0320371,35.839301 C22.9070369,35.3214433 23.1570372,34.7857283 23.6213235,34.5535852 L46.4784936,23.1250001 C46.6392081,23.0357143 46.8177797,23 46.9963513,23 C47.2999231,23 47.5856378,23.107143 47.7999237,23.3392861 C48.157067,23.6785722 48.2463528,24.2142872 48.0142097,24.6607163 Z" id="icon-feature-2" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

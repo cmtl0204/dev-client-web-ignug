@@ -1,0 +1,22 @@
+.layout-menu-orange {
+    $menuBgColor:#9B6F61;
+    $rootMenuitemTextColor:#ffffff;
+    $rootMenuitemIconColor:#ffffff;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#88C0D0;
+    $activeRootMenuitemTextColor:#343a40;
+    $activeRootMenuitemIconColor:#343a40;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#ffffff;
+    $submenuItemIconColor:#ffffff;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.36);
+    $activeSubmenuItemTextColor:#88C0D0;
+    $activeSubmenuItemIconColor:#88C0D0;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+}
+

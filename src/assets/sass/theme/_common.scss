@@ -1,0 +1,88 @@
+body {
+    .ui-widget,
+    .ui-widget .ui-widget {
+        font-family: $fontFamily;
+        text-decoration: none;
+    }
+
+    .ui-widget-content {
+        background-color: $contentBgColor;
+        border: 1px solid $contentBorderColor;
+        font-size: $fontSize;
+    }
+
+    .ui-widget-header {
+        background: $headerBgColor;
+        color: $headerTextColor;
+        border: 1px solid $headerBorderColor;
+        font-weight: bold;
+        font-size: $fontSize;
+    }
+
+    .ui-state-active, .ui-state-highlight {
+        background-color: $highlightBgColor;
+        color: $highlightTextColor;
+    }
+
+    .ui-state-error, .ui-widget.ui-state-error {
+	    border: 1px solid $errorColor;
+    }
+
+    .ui-state-disabled,
+    .ui-widget:disabled {
+        opacity: .35;
+        filter: Alpha(Opacity=35);
+        background-image: none;
+        cursor: default !important;
+
+        * {
+            cursor: default !important;
+        }
+    }
+
+    .ui-corner-all {
+        @include border-radius($borderRadius);
+    }
+
+    .ui-corner-top {
+        @include border-radius-top($borderRadius);
+    }
+
+    .ui-corner-bottom {
+        @include border-radius-bottom($borderRadius);
+    }
+
+    .ui-corner-left {
+        @include border-radius-left($borderRadius);
+    }
+
+    .ui-corner-right {
+        @include border-radius-right($borderRadius);
+    }
+
+    .ui-widget-overlay {
+        background-color: rgb(0, 0, 0, 0.4);
+    }
+
+    .ui-shadow {
+        @include shadow(none);
+    }
+
+    a {
+        color: darken($primaryColor,10%);
+        text-decoration: none;
+
+        &:hover {
+            color: darken($primaryColor,5%);
+        }
+    }
+
+    .ajax-loader {
+        font-size: 28px;
+        color: $primaryColor;
+    }
+
+    .pi {
+        font-size: $iconFontSize;
+    }
+}

@@ -1,0 +1,54 @@
+<div class="login-body" [ngClass]="{'layout-dark': dark, 'layout-light': !dark}">
+
+    <div class="login-content">
+        <div class="night-switch">
+            <p-button styleClass="dark-switch" icon="pi pi-circle-on" (click)="dark = true"></p-button>
+            <p-button styleClass="light-switch" icon="pi pi-circle-off" (click)="dark = false"></p-button>
+        </div>
+        <div class="login-panel">
+            <div class="login-panel-content">
+                <div class="logo">
+                    <img id="logo-login" src="assets/layout/images/logo-login.png" alt="mirage-layout"/>
+                </div>
+                <h1>IGNUG</h1>
+                <p>Sistema de Gestión Académica</p>
+                <div class="forms">
+                    <div class="login-input-wrapper">
+                        <label for="username">Correo Electrónico Institucional</label>
+                        <input id="username" pInputText pTooltip="@yavirac.edu.ec"
+                               [(ngModel)]="userName"
+                               placeholder="Ingrese su correo electrónico institucional"
+                               tooltipEvent="focus"/>
+                        <i class="pi pi-envelope" style="font-size: 2em"></i>
+                    </div>
+
+                    <div class="login-input-wrapper">
+                        <label for="password">Contraseña</label>
+                        <input [type]="flagPassword" id="password" placeholder="Ingrese su contraseña" pPassword
+                               [(ngModel)]="password" [pTooltip]="toolTipPoliticasPassword"
+                               tooltipEvent="focus"
+                               (keyup)="validarPolitasPassword()"
+                               [feedback]="false"/>
+                        <i class="pi pi-eye" (click)="flagPassword='text'" *ngIf="flagPassword=='password'"
+                           style="font-size: 2em"></i>
+                        <i class="pi pi-eye-slash" (click)="flagPassword='password'" *ngIf="flagPassword=='text'"
+                           style="font-size: 2em"></i>
+                    </div>
+
+                    <!--                    <div class="p-col-12">-->
+                    <!--                        <p-checkbox [(ngModel)]="checked" label="Remember me" value="SaveInfo"-->
+                    <!--                                    binary="true"></p-checkbox>-->
+                    <!--                    </div>-->
+
+
+                    <div class="buttons">
+                        <button pButton type="button" [routerLink]="['/']" label="Login" icon="pi pi-sign-in"></button>
+                        <a href="#" class="secondary-button">¿Olvidó su contraseña?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="desert"></div>
+    </div>
+</div>

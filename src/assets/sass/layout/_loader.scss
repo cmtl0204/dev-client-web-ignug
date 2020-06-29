@@ -1,0 +1,54 @@
+$colors:
+		#5E81AC,
+		#81A1C1,
+		#88C0D0,
+		#8FBCBB,
+		#D08770,
+		#EBCB8B,
+		#A3BE8C,
+		#B48EAD;
+
+.splash-screen {
+	width: 100%;
+	min-height: 100vh;
+	background-color: #F4F7F7;
+}
+
+.spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 1;
+	height: 40px;
+	width: 40px;
+	transform: translate(-50%, -50%);
+}
+
+[class^="ball-"] {
+	position: absolute;
+	display: block;
+	left: 30px;
+	width: 12px;
+	height: 12px;
+	border-radius: 6px;
+	transition: all 0.5s;
+	animation: circleRotate 4s both infinite;
+	transform-origin: 0 250% 0;
+}
+
+@keyframes circleRotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(1440deg);
+	}
+}
+
+@for $i from 1 through 8 {
+	.ball-#{$i} {
+		z-index: -#{$i};
+		background-color: nth($colors, $i);
+		animation-timing-function: cubic-bezier(0.5, 0.3 * $i, 0.9, 0.9);
+	}
+}

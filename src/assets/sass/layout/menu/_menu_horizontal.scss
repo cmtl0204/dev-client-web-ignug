@@ -1,0 +1,221 @@
+@media (min-width: $mobileBreakpoint + 1) {
+	.layout-wrapper {
+		&.layout-horizontal {
+			.layout-sidebar {
+				width: 100%;
+				height: 50px;
+				top: 75px;
+				left: 0;
+				z-index: 99;
+				transform: none;
+				box-shadow: 3px 0 5px 0 rgba(33, 35, 39, 0.15);
+
+				.sidebar-logo {
+					display: none;
+				}
+
+				.layout-menu-container {
+					overflow: visible;
+					height: 100%;
+
+					.layout-menu {
+						margin: 0px 15px;
+						padding-bottom: 0;
+
+						@include flex();
+
+						> li {
+							width: auto;
+							padding: 0;
+							position: relative;
+
+
+							> a {
+								height: 35px;
+								margin: 8px 3px;
+								padding: 7px 12px;
+								@include flex();
+								align-items: center;
+								@include box-sizing(border-box);
+								@include border-radius(0);
+								@include border-radius-top(3px);
+								justify-content: space-between;
+
+
+								.menuitem-text {
+									vertical-align: middle;
+									margin-left: 8px;
+									order: 2;
+								}
+
+								i {
+									position: static;
+									vertical-align: middle;
+									margin-top: 0;
+									top: auto;
+									right: auto;
+									margin-right: 5px;
+									order: 1;
+
+									&.layout-submenu-toggler {
+										order: 3;
+										display: inline-block;
+										margin-top: 2px;
+									}
+								}
+							}
+
+							> ul {
+								top: 41px;
+								left: 3px;
+								width: 230px;
+								position: absolute;
+								padding: 0;
+								margin: 0;
+								z-index: 100;
+								overflow: auto;
+								max-height: 450px;
+								@include multi-shadow(0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23));
+
+								li {
+									a {
+										padding-top: 5px;
+										padding-bottom: 5px;
+										flex-flow: row-reverse;
+										justify-content: flex-end;
+
+										.menuitem-text {
+											vertical-align: middle;
+											margin-left: 8px;
+										}
+
+										i {
+											position: relative;
+											right: 0;
+										}
+
+										.layout-submenu-toggler {
+											display: block;
+											left: auto;
+											right: 10px;
+											position: absolute;
+										}
+									}
+								}
+							}
+
+							&.active-menuitem {
+								> ul {
+									@include border-radius-bottom(3px);
+									box-shadow: 0 2px 6px 0 rgba(29, 29, 33, 0.22);
+								}
+							}
+						}
+
+						li {
+							ul {
+								li {
+									a {
+										padding-left: 12px;
+									}
+
+									ul {
+										li {
+											a {
+												padding-left: 24px;
+											}
+
+											ul {
+												li {
+													a {
+														padding-left: 36px;
+													}
+												}
+
+												ul {
+													li {
+														a {
+															padding-left: 48px;
+														}
+													}
+
+													ul {
+														li {
+															a {
+																padding-left: 60px;
+															}
+														}
+
+														ul {
+															li {
+																a {
+																	padding-left: 72px;
+																}
+															}
+
+															ul {
+																li {
+																	a {
+																		padding-left: 84px;
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+
+
+							a {
+								.menuitem-badge {
+									left: 18px;
+									top: 15px;
+									display: block;
+								}
+							}
+						}
+					}
+
+				}
+			}
+
+			.layout-main {
+				margin-left: 0px;
+				padding-top: 125px;
+			}
+
+			.layout-topbar {
+				width: 100%;
+				@include no-shadow();
+
+				.layout-topbar-logo-wrapper {
+					@include flex();
+					margin-right: 8%;
+
+					.layout-topbar-logo {
+						@include flex();
+						@include flex-align-center;
+
+						.app-name {
+							font-size: 22.5px;
+							color: $textColor;
+							margin: 0 10px;
+						}
+
+						img {
+							height: 45px;
+							width: 45px;
+						}
+					}
+				}
+			}
+
+			.layout-breadcrumb {
+			}
+		}
+	}
+}

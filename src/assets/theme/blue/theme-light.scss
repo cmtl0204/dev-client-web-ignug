@@ -1,0 +1,24 @@
+//main
+$primaryColor:#5E81AC;
+$primaryTextColor:#ffffff;
+
+//highlight
+$highlightBgColor:$primaryColor;
+$highlightTextColor:$primaryTextColor;
+
+//input
+$inputFocusBorderColor:#9EB3CD;
+$inputFocusBorderShadowColor:rgba(22,107,212,.25);
+
+//primary button
+$primaryButtonTextColor:#ffffff;
+$primaryButtonBgColor:#5E81AC;
+$primaryButtonBorderColor:#5E81AC;
+$primaryButtonHoverBgColor:#466489;
+$primaryButtonHoverBorderColor:#466489;
+$primaryButtonActiveBgColor:#263951;
+$primaryButtonActiveBorderColor:#263951;
+$primaryButtonFocusBorderShadow:rgba(22,107,212,.5);
+
+@import '../../sass/variables/_theme_light';
+@import '../../sass/theme/_theme';

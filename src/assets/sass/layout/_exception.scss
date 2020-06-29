@@ -1,0 +1,213 @@
+.exception-body{
+    &::after{
+        content:" ";
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        opacity: .7;;
+
+    }
+
+    .exception-content{
+        @include flex();
+        @include flex-align-center();
+        @include flex-justify-center();
+        position: relative;
+
+        .moon{
+            width: 100%;
+            @include flex();
+            justify-content: flex-end;
+            align-items: flex-start;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .exception-panel {
+            height: 100vh;
+            @include flex();
+            justify-content: center;
+            align-items: center;
+            border: 1px solid;
+            border-top: none;
+            width: 50%;
+
+            .exception-panel-content{
+                z-index: 100;
+                height: 50%;
+                width: 50%;
+
+                h1{
+                    font-size: 42px;
+                    font-weight: 100;
+                    letter-spacing: 1px;
+                    margin: 20px 0;
+                }
+
+                .seperator{
+                    width: 99px;
+                    height: 1px;
+                    background-color: #9199a9;
+                }
+
+                .tag{
+                    font-size: 14px;
+                    font-weight: 500;
+                    border-radius: 4px;
+                    padding: 3px 6px;
+                    margin-bottom: 20px;
+                }
+
+                p{
+                    margin-top: 25px;
+                    font-size: 16px;
+                }
+
+                button{
+                    margin-top: 30px;
+                    background-color: #5e81ac;
+                    border: none;
+                }
+            }
+        }
+
+        .desert{
+            width: 100%;
+            height: 30vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+    &.notfound{
+        background-color: #20252e;
+
+        &::after{
+            @include background-gradient-top2bottom(#444c5b -9%, #20252e);
+        }
+
+        .exception-content{
+            .exception-panel{
+                border-color:rgba(76,86,106,.3);
+                background-color: rgba(0, 0, 0, 0.3);
+
+                .exception-panel-content{
+
+                    h1{
+                        color: #9199a9;
+                    }
+
+                    .tag{
+                        background-color: #eceff4;
+                    }
+
+                    p{
+                        color: #c3ccdd;
+                    }
+                }
+            }
+
+            .desert{
+                background-image: url("../../images/pages/asset-desert-night.svg");
+            }
+
+        }
+    }
+    &.error{
+        background-color: #d07b70;
+
+        &::after{
+            @include background-gradient-top2bottom(#5b4444 -9%, #20262e);
+        }
+
+        .exception-content{
+            .exception-panel{
+                border-color: rgba(195,204,221,.3);
+                background-color: rgba(255,255,255,0.3);
+
+                .exception-panel-content{
+
+                    h1{
+                        color: #c3ccdd;
+                    }
+
+                    .tag{
+                        background-color: #bf616a;
+                        color: #ffffff;
+
+                    }
+
+                    p{
+                        color: #c3ccdd;
+                    }
+                }
+            }
+
+            .desert{
+                background-image: url("../../images/pages/asset-desert-error.svg");
+            }
+
+        }
+    }
+    &.access{
+       background-color: #d08770;
+
+        &::after{
+            @include background-gradient-top2bottom (#5b5544 -9%, #20262e);
+        }
+
+
+        .exception-content{
+            .exception-panel{
+                border-color:rgba(76,86,106,.3);
+                background-color: rgba(255,255,255,0.3);
+
+                .exception-panel-content{
+
+
+                    h1{
+                        color: #c3ccdd;
+                    }
+
+                    .tag{
+                        background-color: #ebcb8b;
+                    }
+
+                    p{
+                        color: #c3ccdd;
+                    }
+                }
+            }
+
+            .desert{
+                background-image: url("../../images/pages/asset-desert-night-orange.svg");
+            }
+
+        }
+    }
+}
+
+@media (max-width : 740px){
+    .exception-body{
+        .exception-content{
+            .exception-panel{
+                width: 100%;
+
+                .exception-panel-content{
+                    width: 90%;
+                }
+            }
+            .desert{
+                background-position: right;
+                height: 50vh;
+            }
+        }
+    }
+}

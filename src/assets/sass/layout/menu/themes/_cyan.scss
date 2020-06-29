@@ -1,0 +1,22 @@
+.layout-menu-cyan {
+    $menuBgColor:#3C5259;
+    $rootMenuitemTextColor:#ffffff;
+    $rootMenuitemIconColor:#ffffff;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#D08770;
+    $activeRootMenuitemTextColor:#343a40;
+    $activeRootMenuitemIconColor:#343a40;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#ffffff;
+    $submenuItemIconColor:#ffffff;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.36);
+    $activeSubmenuItemTextColor:#D08770;
+    $activeSubmenuItemIconColor:#D08770;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+}
+

@@ -1,0 +1,114 @@
+@import './common';
+
+/* panels */
+$headerPadding:10px 15px;
+$contentPadding:15px;
+$contentLineHeight:1.43;
+
+/* forms */
+$inputPadding:6px 12px;
+$inputGroupAddonMinWidth:2*$fontSize;
+$checkboxWidth:20px;
+$checkboxHeight:20px;
+
+/* list items */
+$listPadding:6px 0;
+$listItemPadding:8px 20px;
+
+/* datatable */
+$datatableCellPadding:.75em;
+
+/* buttons */
+$roundedButtonBorderRadius:15px;
+
+$secondaryButtonTextColor:#ffffff;
+$secondaryButtonBgColor:#6c757d;
+$secondaryButtonBorderColor:#6c757d;
+$secondaryButtonHoverBgColor:#5a6268;
+$secondaryButtonHoverBorderColor:#545b62;
+$secondaryButtonActiveBgColor:#545b62;
+$secondaryButtonActiveBorderColor:#4e555b;
+$secondaryButtonFocusBorderShadow:rgba(130,138,145,.5);
+
+$successButtonTextColor:#ffffff;
+$successButtonBgColor:#99CE6B;
+$successButtonBorderColor:#99CE6B;
+$successButtonHoverBgColor:#75A24D;
+$successButtonHoverBorderColor:#75A24D;
+$successButtonActiveBgColor:#4F7131;
+$successButtonActiveBorderColor:#4F7131;
+$successButtonFocusBorderShadow:rgba(72,180,97,.5);
+
+$infoButtonTextColor:#ffffff;
+$infoButtonBgColor:#88C0D0;
+$infoButtonBorderColor:#88C0D0;
+$infoButtonHoverBgColor:#6CA2B1;
+$infoButtonHoverBorderColor:#6CA2B1;
+$infoButtonActiveBgColor:#467481;
+$infoButtonActiveBorderColor:#467481;
+$infoButtonFocusBorderShadow:rgba(58,176,195,.5);
+
+$warningButtonTextColor:#ffffff;
+$warningButtonBgColor:#EBCB8B;
+$warningButtonBorderColor:#EBCB8B;
+$warningButtonHoverBgColor:#D2A956;
+$warningButtonHoverBorderColor:#D2A956;
+$warningButtonActiveBgColor:#A37518;
+$warningButtonActiveBorderColor:#A37518;
+$warningButtonFocusBorderShadow:rgba(222,170,12,.5);
+
+$dangerButtonTextColor:#ffffff;
+$dangerButtonBgColor:#F28686;
+$dangerButtonBorderColor:#F28686;
+$dangerButtonHoverBgColor:#D36161;
+$dangerButtonHoverBorderColor:#D36161;
+$dangerButtonActiveBgColor:#943F3F;
+$dangerButtonActiveBorderColor:#943F3F;
+$dangerButtonFocusBorderShadow:rgba(225,83,97,.5);
+
+$darkButtonTextColor:#ffffff;
+$darkButtonBgColor:#343a40;
+$darkButtonBorderColor:#343a40;
+$darkButtonHoverBgColor:#23272b;
+$darkButtonHoverBorderColor:#1d2124;
+$darkButtonActiveBgColor:#1d2124;
+$darkButtonActiveBorderColor:#171a1d;
+$darkButtonFocusBorderShadow:rgba(82,88,93,.5);
+
+$lightButtonTextColor:#212529;
+$lightButtonBgColor:#f8f9fa;
+$lightButtonBorderColor:#f8f9fa;
+$lightButtonHoverBgColor:#e2e6ea;
+$lightButtonHoverBorderColor:#dae0e5;
+$lightButtonActiveBgColor:#dae0e5;
+$lightButtonActiveBorderColor:#d3d9df;
+$lightButtonFocusBorderShadow:rgba(216,217,219,.5);
+
+/* Messages */
+$infoMessageBgColor:#D9EAF0;
+$infoMessageBorderColor:#C3DFE7;
+$infoMessageTextColor:#467481;
+$warnMessageBgColor:#F8EED9;
+$warnMessageBorderColor:#F5E5C5;
+$warnMessageTextColor:#A37518;
+$errorMessageBgColor:#FCE1E1;
+$errorMessageBorderColor:#F8C2C2;
+$errorMessageTextColor:#943F3F;
+$successMessageBgColor:#DFF0D1;
+$successMessageBorderColor:#C7DFB2;
+$successMessageTextColor:#799760;
+
+/* rating */
+$ratingStarColor:#f790c8;
+
+/* keyboard */
+$keyboardShiftColor:#3e9018;
+$keyboardBackColor:#007bff;
+$keyboardClearColor:#f790c8;
+$keyboardCloseColor:#9189fd;
+
+/* modal */
+$modalBgColor:#000000;
+$modalBgOpacity:.5;
+
+@import '../overrides/theme_variables';

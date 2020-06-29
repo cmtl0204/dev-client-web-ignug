@@ -1,0 +1,348 @@
+.login-body {
+
+    .login-content {
+        @include flex();
+        @include flex-justify-center();
+        @include flex-align-center();
+
+        .night-switch {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+
+            .ui-button {
+                background-color: transparent;
+                border-color: transparent;
+                @include shadow(none);
+                width: 60px;
+                height: 60px;
+                @include border-radius(50%);
+                position: relative;
+                outline: none;
+                z-index: 101;
+
+                .pi{
+                    width: 32px;
+                    height: 32px;
+                    font-size: 32px;
+                    font-weight: bold;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    margin-top: -16px;
+                    margin-left: -16px;
+                }
+
+                .ui-button-text{
+                    display: none;
+                }
+
+                &:enabled:hover{
+                    border: none;
+                    opacity: .7;
+                    @include transition(opacity $transitionDuration);
+                }
+            }
+        }
+
+        .login-panel {
+            width: 40%;
+            height: 100vh;
+            text-align: center;
+            @include flex();
+            @include flex-justify-center();
+            @include flex-align-center();
+
+            .login-panel-content {
+                z-index: 100;
+                width: 80%;
+                padding: 0 6%;
+                text-align: center;
+
+                .logo {
+                    width: 100%;
+                    @include flex();
+                    @include flex-justify-center();
+                    @include flex-align-center();
+
+                    img {
+                        width: 80px;
+                    }
+                }
+
+                h1 {
+                    font-size: 42px;
+                    font-weight: 100;
+                    letter-spacing: 1px;
+                    margin: 20px 0;
+                    color: #ffffff;
+                }
+
+                p {
+                    margin-top: 10px;
+                    font-size: 16px;
+                    color: #d8dee9;
+                }
+
+                .forms {
+                    margin-top: 30px;
+                    text-align: left;
+
+                    .login-input-wrapper {
+                        position: relative;
+                        margin-bottom: 24px;
+                        text-align: center;
+                        margin-left: auto;
+                        margin-right: auto;
+                        text-align: left;
+
+                        input {
+                            width: 100%;
+                            padding-right: 16px;
+                            background-color: transparent;
+                            @include border-radius(4px);
+                            border: solid 1px #c3ccdd;
+                            color: #d8dee9;
+                            margin-top: 6px;
+                        }
+
+                        i {
+                            position: absolute;
+                            color: #d8dee9;
+                            font-size: 16px;
+                            top: 50%;
+                            right: .429em;
+                            margin-top: 3px;
+                        }
+                    }
+
+                    .ui-chkbox {
+                        &.ui-widget {
+                            margin-left: -6px;
+                        }
+                    }
+
+                    label {
+                        color: #c3ccdd;
+                    }
+                }
+
+                .buttons {
+                    @include flex();
+                    @include flex-align-center();
+                    @include flex-justify-between();
+
+                    .ui-button {
+                        margin-top:15px;
+                        background-color: #bd69ae;
+                        border: none;
+                        min-width: 100px;
+                        padding: 2px;
+                    }
+
+                    a{
+                        &.secondary-button {
+                            background-color: transparent;
+                            border: none;
+                            color: #c3ccdd;
+                            padding: 2px 0;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+
+        .desert {
+            width: 100%;
+            height: 30vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            bottom: 0;
+            background-image: url("../../images/pages/asset-desert.svg");
+        }
+    }
+
+    &.layout-light {
+        background-color: #eceff4;
+
+        .login-content {
+            .night-switch {
+                .ui-button{
+                    &.light-switch{
+                        display: none;
+                    }
+                    &.dark-switch{
+                        display: block;
+                    }
+                    color:#5a657c;
+                }
+
+            }
+            .login-panel {
+                background-color: rgba(216,222,233,.3);
+
+                .login-panel-content {
+                    h1 {
+                        color: #2e3440;
+                    }
+
+                    p {
+                        color: #5a657c;
+                    }
+
+                    .forms {
+                        .login-input-wrapper {
+                            input {
+                                border: solid 1px #cccccc;
+                                background-color: #ffffff;
+                                color: #9199a9;
+                            }
+
+                            i {
+                                color: #9199a9;
+                            }
+                        }
+
+                        label {
+                            color: #4c566a;
+                        }
+                    }
+
+                    .buttons {
+                        button, a {
+                            background-color: #5e81ac;
+
+                            &.secondary-button {
+                                background-color: transparent;
+                                color: #9199a9;
+
+                                &:enabled:hover{
+                                    background-color: transparent;
+                                    color: #636975;
+                                    @include transition (color $transitionDuration);
+                                }
+                            }
+
+                            &:enabled:hover{
+                                background-color: #76a1d6;
+                                @include transition (background-color $transitionDuration);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .desert {
+                display: block;
+            }
+        }
+    }
+
+    &.layout-dark {
+        background-image: url("../../images/pages/asset-login-bg@3x.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        .login-content {
+            .night-switch {
+                .ui-button{
+                    &.dark-switch{
+                        display: none;
+                    }
+                    &.light-switch{
+                        display: block;
+                    }
+                    color: #ffffff;
+                }
+
+            }
+            .login-panel {
+                background-color: rgba(32,37,46,.3);
+
+                .login-panel-content {
+                    h1 {
+                        color: #ffffff;
+                    }
+
+                    p {
+                        color: #d8dee9;
+                    }
+
+
+
+                    .forms {
+                        .login-input-wrapper {
+                            input {
+                                border: solid 1px #c3ccdd;
+                                color: #d8dee9;
+                            }
+
+                            i {
+                                color: #d8dee9;
+                            }
+                        }
+
+                        label {
+                            color: #c3ccdd;
+                        }
+                    }
+
+                    .buttons {
+                        button, a {
+                            background-color: #bd69ae;
+
+                            &.secondary-button {
+                                background-color: transparent;
+                                color: #c3ccdd;
+
+                                &:enabled:hover{
+                                    background-color: transparent;
+                                    color: #ffffff;
+                                    @include transition (color $transitionDuration);
+                                }
+                            }
+
+
+                            &:enabled:hover{
+                                background-color: #e27dd0;
+                                @include transition (background-color $transitionDuration);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .desert {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width : 740px) {
+    .login-body {
+        .login-content {
+            .login-panel {
+                width: 100%;
+
+                .login-panel-content {
+                    width: 85%;
+                    padding: 20px 15px 50px;
+
+                    h1 {
+                        font-size: 18px;
+                    }
+
+                    P {
+                        font-size: 16px;
+                    }
+                }
+            }
+            .desert {
+                background-position: right;
+            }
+        }
+    }
+}

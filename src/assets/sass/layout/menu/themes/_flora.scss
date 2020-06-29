@@ -1,0 +1,23 @@
+.layout-menu-flora {
+    $menuBgColor: #202422;
+    $menuBgImage:'flora.jpg';
+    $horizontalMenuBgImage:'flora-horizontal.jpg';
+    $rootMenuitemTextColor:#eceff4;
+    $rootMenuitemIconColor:#eceff4;
+    $rootMenuitemHoverBgColor:rgba(255, 255, 255, 0.24);
+    $activeRootMenuitemBgColor:#EBCB8B;
+    $activeRootMenuitemTextColor:#3b4252;
+    $activeRootMenuitemIconColor:#2e3440;
+    $submenuBgColor:rgba(255, 255, 255, 0.12);
+    $horizontalSubmenuBgColor:#2e3440;
+    $submenuItemTextColor:#eceff4;
+    $submenuItemIconColor:#eceff4;
+    $submenuItemHoverBgColor:rgba(0, 0, 0, 0.42);
+    $activeSubmenuItemTextColor:#EBCB8B;
+    $activeSubmenuItemIconColor:#EBCB8B;
+    $appNameTextColor:#ffffff;
+    $pinBgColor:#ffffff;
+    $pinIconColor:#2e3440;
+
+    @import '../_menu_theme';
+}

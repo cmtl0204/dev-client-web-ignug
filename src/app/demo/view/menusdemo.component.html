@@ -1,0 +1,90 @@
+<div class="p-grid ui-fluid">
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Breadcrumb</h1>
+            <p-breadcrumb [model]="breadcrumbItems" [home]="{icon: 'pi pi-home'}"></p-breadcrumb>
+        </div>
+    </div>
+
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>Steps</h1>
+            <p-steps [model]="stepsItems" [activeIndex]="1"></p-steps>
+        </div>
+    </div>
+
+    <div class="p-col-12">
+        <div class="card card-w-title">
+            <h1>MenuBar</h1>
+            <p-menubar [model]="tieredItems"></p-menubar>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-lg-6">
+        <!-- Left Colum -->
+        <div class="p-grid">
+            <div class="p-col-12">
+                <div class="card card-w-title">
+                    <h1>Plain Menu</h1>
+                    <p-menu #menu [model]="items" [style]="{'width':'250px'}"></p-menu>
+
+                    <p-menu #menu popup="popup" [model]="items" [style]="{'width':'250px'}"></p-menu>
+                    <button type="button" pButton icon="pi pi-external-link" label="Show" (click)="menu.toggle($event)"
+                            style="margin-top:20px;width:auto"></button>
+                </div>
+            </div>
+
+            <div class="p-col-12">
+                <div class="card card-w-title">
+                    <h1>TieredMenu</h1>
+                    <p-tieredMenu [model]="tieredItems"
+                                  [style]="{'width':'250px','margin-bottom':'20px'}"></p-tieredMenu>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12 p-lg-6">
+        <!-- Right Colum -->
+        <div class="p-grid">
+            <div class="p-col-12">
+                <div class="card card-w-title">
+                    <h1>ContextMenu</h1>
+                    Right click!
+
+                    <p-contextMenu [global]="true" [model]="tieredItems" [style]="{'width':'12.5em'}"></p-contextMenu>
+                </div>
+            </div>
+
+            <div class="p-col-12">
+                <div class="card">
+                    <h1>SlideMenu</h1>
+                    <p-slideMenu [model]="items" [style]="{'width':'260px'}" [menuWidth]="260"></p-slideMenu>
+                </div>
+            </div>
+
+            <div class="p-col-12">
+                <div class="card">
+                    <h1>PanelMenu</h1>
+                    <p-panelMenu [model]="panelMenuItems"></p-panelMenu>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-col-6">
+        <div class="card">
+            <h1>MegaMenu - Horizontal</h1>
+            <p-megaMenu [model]="megaMenuItems"></p-megaMenu>
+
+            <h1>MegaMenu - Vertical</h1>
+            <p-megaMenu [model]="megaMenuItems" orientation="vertical" [style]="{'width':'200px'}"></p-megaMenu>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-col-6">
+        <div class="card">
+            <h1>TabMenu</h1>
+            <p-tabMenu [model]="tabMenuItems" [activeItem]="tabMenuItems[3]"></p-tabMenu>
+        </div>
+    </div>
+</div>

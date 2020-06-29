@@ -1,0 +1,304 @@
+.layout-rightpanel {
+    position: fixed;
+    z-index: 999;
+    right: 0;
+    top:75px;
+    background-color: $contentBgColor;
+    height: calc(100% - 75px);
+    padding: 0;
+    min-width: 285px;
+    box-shadow: -3px 0 5px 0 rgba(33, 35, 39, 0.15);
+    overflow: auto;
+    transform: translate3d(400px, 0px, 0px);
+    @include transition(transform $transitionDuration);
+
+    .right-panel-header {
+        @include flex();
+        justify-content: space-between;
+        align-items: flex-start;
+        background-color: #20252e;
+        padding: 24px 18px;
+
+        .title {
+            span {
+                font-size: 14px;
+                padding: 2px 6px;
+                color: #ffffff;
+                border-radius: 4px;
+                background-color: #5e81ac;
+            }
+
+            h1 {
+                color: #ffffff;
+                font-size: 16px;
+                margin: 0;
+                margin-top: 12px;
+                font-weight: normal;
+            }
+        }
+
+        .rightpanel-exit-button {
+            &:hover {
+                i{
+                    color: $textSecondaryColor;
+                    @include transition(color $transitionDuration);
+                }
+            }
+            
+            i { 
+                font-size: 20px;
+                color: #eceff4;
+            }
+        }
+    }
+
+    .right-panel-content {
+        padding-bottom: 60px;
+
+        .right-panel-content-row {
+            border-bottom:1px solid $dividerColor;
+            padding:24px 0;
+
+            &:last-child{
+                border-bottom: none;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin: 0;
+                margin-bottom: 18px;
+                color: $textColor;
+                font-weight: normal;
+            }
+
+            .tasks {
+                padding: 0;
+
+                .tasks-header{
+                    @include flex();
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 18px;
+                    margin-bottom: 18px;
+
+                    .title{
+                        h1{
+                            margin-bottom: 0px;
+                        }
+                    }
+
+                    .tasks-info{
+                        span{
+                            font-size: 12px;
+                            color: $textColor;
+
+                            &.highlighted{
+                                color: $textColor;
+                                font-weight: 500;
+                             }
+                         }
+                    }
+                }
+
+
+
+                .tasks-list {
+                    list-style: none;
+                    padding:0;
+
+                    .tasks-list-item {
+                        @include flex();
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 12px 18px;
+
+                        &:nth-child(even) {
+                            background-color: $contentAltBgColor;
+                        }
+
+                        .checkbox {
+                            @include flex();
+                            align-items: center;
+
+                            p {
+                                margin: 0;
+                                color: $textColor;
+                                margin-left: 10px;
+                            }
+                        }
+
+                        .tasks-day {
+                            .time{
+                                border-radius: 2px;
+                                background-color: #88c0d0;
+                                color: #ffffff;
+                                font-size: 12px;
+                                padding: 3px 10px;
+                                text-align: center;
+                                min-width: 55px;
+
+                                &.later{
+                                    background-color: $textSecondaryColor;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .calendar{
+                padding: 18px;
+
+                .ui-datepicker-inline{
+                    background-color: $contentBgColor;
+                    border: none;
+
+                    .ui-datepicker-header {
+                        font-size: 13px;
+                        color: $textColor;
+
+                        .ui-datepicker-title{
+                            span{
+                                color: $textColor;
+                            }
+                        }
+                    }
+
+                    .ui-datepicker-calendar{
+                        th{
+                            color: $textSecondaryColor;
+                        }
+
+                        td{
+                            a{
+                                color: $textColor;
+
+                                &.ui-state-active {
+                                    color: #ffffff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .weather {
+                padding: 0;
+
+                h1{
+                    padding-left: 18px;
+                }
+
+                .weather-list {
+                    list-style: none;
+                    padding:0;
+
+                    .weather-list-item {
+                        @include flex();
+                        justify-content: space-between;
+                        align-items: center;
+                        padding:8px 18px;
+
+                        &:nth-child(even) {
+                            background-color: $contentAltBgColor;
+                        }
+
+                        .time-location {
+                            span {
+                                font-size: 12px;
+                                color: $textSecondaryColor;
+                            }
+
+                            p {
+                                font-weight: 500;
+                                margin: 0;
+                                margin-top: 6px;
+                                color: $textColor;
+                            }
+                        }
+
+                        .weather-info {
+                            @include flex();
+                            align-items: center;
+                            width: 75px;
+                            justify-content: flex-start;
+
+                            .weather-icon{
+                                height: 36px;
+                                width: 36px;
+                                @include border-radius(50%);
+                                @include flex();
+                                justify-content: center;
+                                align-items: center;
+                                margin-right: 10px;
+
+                                &.icon-1 {
+                                    background-color: #ebcb8b;
+                                }
+
+                                &.icon-2 {
+                                    background-color: #88c0d0;
+                                }
+
+                                &.icon-3 {
+                                    background-color: #5e81ac;
+                                }
+
+                                &.icon-4 {
+                                    background-color: #d08770;
+                                }
+                            }
+
+                            .weather-value{
+                                font-size: 18px;
+                                color: $textColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.layout-wrapper {
+    .layout-topbar {
+        .layout-topbar-wrapper {
+            .layout-rightpanel-button {
+                i {
+                    @include rotate(0deg);
+                    @include transition(transform $transitionDuration);
+                }
+            }
+        }
+    }
+    
+    &.layout-rightpanel-active {
+        .layout-topbar {
+            .layout-topbar-wrapper {
+                .layout-rightpanel-button {
+                    i {
+                        @include rotate(-180deg);
+                        @include transition(transform $transitionDuration);
+                    }
+                }
+            }
+        }
+
+        .layout-rightpanel {
+            transform: translate3d(0px, 0px, 0px);
+        }
+    }
+}
+
+@media (max-width:$mobileBreakpoint){
+    .layout-rightpanel-active{
+        .layout-rightpanel{
+            transform: translate3d(0px, 0px, 0px);
+        }
+        
+        .layout-main-mask {
+            display: block
+        }
+    }
+}

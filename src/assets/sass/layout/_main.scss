@@ -1,0 +1,106 @@
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    color: $textColor;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    background-color: $bodyBgColor;
+
+    .ajax-loader {
+        font-size: 32px;
+    }
+
+    &.hidden-overflow{
+        overflow: hidden;
+    }
+}
+
+.layout-main-mask {
+    display: none;
+    background-color: #2e3440;
+    position: fixed;
+    z-index: 997;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0.64;
+    animation-name: fadeinmask;
+    animation-duration: $transitionDuration;
+    @include opacity(.8);
+    cursor: pointer;
+}
+
+.layout-main {
+    margin-left: 60px;
+    padding-top: 75px;
+    @include transition(margin-left $transitionDuration);
+}
+
+.layout-footer{
+    background-color: $contentBgColor;;
+    padding: 10px 30px;
+    @include flex();
+    justify-content: space-between;
+    align-items: center;
+    height: 120px;
+
+
+    .logo-text{
+        @include flex();
+        align-items: center;
+        height: 100%;
+
+        img{
+            height: 50px;
+            width: 50px;
+        }
+
+        .text{
+            margin-left: 15px;
+
+            h1{
+                font-size: 18px;
+                color: $textColor;
+                font-weight: normal;
+                margin: 0;
+            }
+
+            span{
+                color: $textSecondaryColor;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .icons{
+        @include flex();
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 24px;
+        color: $textSecondaryColor;
+        height: 100%;
+
+        i{
+            margin-left: 20px;
+            cursor: pointer;
+
+            &:hover{
+                color: #5e81ac;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+body {
+    .ui-progressbar {
+        border: 0 none;
+        @include border-radius($borderRadius);
+        background-color: $dividerColor;
+
+        .ui-progressbar-value {
+            border: 0 none;
+            background: lighten($primaryColor,10%);
+            margin: 0;
+            @include border-radius($borderRadius);
+        }
+
+        .ui-progressbar-label {
+            margin-top: -1px;
+            color: $textColor;
+        }
+    }
+
+    .ui-galleria {
+        .ui-galleria-nav-prev {
+            font-size: 18px;
+            margin-bottom: -5px;
+            margin-left: -5px;
+            color: $textSecondaryColor;
+
+            &:hover {
+                color: darken($textColor, 15%);
+            }
+        }
+
+        .ui-galleria-nav-next {
+            font-size: 18px;
+            margin-bottom: -5px;
+            margin-right: -5px;
+            color: $textSecondaryColor;
+
+            &:hover {
+                color: darken($textColor, 15%);
+            }
+        }
+    }
+
+    .ui-terminal {
+        input {
+            font-family: $fontFamily;
+            font-size: $fontSize;
+        }
+    }
+}

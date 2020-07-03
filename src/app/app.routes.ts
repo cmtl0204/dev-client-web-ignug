@@ -39,11 +39,11 @@ export const routes: Routes = [
             {path: 'documentation', component: DocumentationComponent},
             {
                 path: 'cupo',
-                loadChildren: () => import('./pages/cupo/cupo.module').then(m => m.CupoModule)
+                loadChildren: () => import('./pages/matriculacion/cupo/cupo.module').then(m => m.CupoModule)
             },
             {
                 path: 'dashboard',
-                loadChildren: () => import('./pages/dashboards/dashboard.module').then(m => m.DashboardModule)
+                loadChildren: () => import('./pages/matriculacion/dashboards/dashboard.module').then(m => m.DashboardModule)
             },
         ]
     },

@@ -100,18 +100,18 @@ import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 
-// Demo services-matriculacion
+// Demo matriculacion
 import {CarService} from './demo/service/carservice';
 import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
 import {NodeService} from './demo/service/nodeservice';
 
-// Application services-matriculacion
+// Application matriculacion
 import {BreadcrumbService} from './shared/breadcrumb/breadcrumb.service';
 import {MenuService} from './shared/menu/app.menu.service';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {CookieService} from 'ngx-cookie-service';
-import {SettingsService} from './services/services-matriculacion/settings.service';
+import {SettingsService} from './services/matriculacion/settings.service';
 
 @NgModule({
     imports: [

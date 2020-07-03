@@ -2,7 +2,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 import {AppMainComponent} from '../../layouts/full/app.main.component';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 import {MenuService} from './app.menu.service';
-import {SettingsService} from '../../services/services-matriculacion/settings.service';
+import {SettingsService} from '../../services/matriculacion/settings.service';
 
 @Component({
     selector: 'app-menu',

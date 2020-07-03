@@ -4,7 +4,7 @@ import { CountryService } from '../service/countryservice';
 import { NodeService } from '../service/nodeservice';
 import { Car } from '../domain/car';
 import { SelectItem, MenuItem, TreeNode } from 'primeng/api';
-import { BreadcrumbService } from '../../shared/breadcrumb.service';
+import { BreadcrumbService } from '../../shared/breadcrumb/breadcrumb.service';
 
 @Component({
     templateUrl: './sampledemo.component.html',

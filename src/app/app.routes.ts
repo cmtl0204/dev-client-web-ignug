@@ -13,11 +13,12 @@ import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
-import {AppMainComponent} from './app.main.component';
-import {AppNotfoundComponent} from './pages/app.notfound.component';
-import {AppErrorComponent} from './pages/app.error.component';
-import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
-import {AppLoginComponent} from './pages/app.login.component';
+import {AppMainComponent} from './layouts/full/app.main.component';
+import {AppNotfoundComponent} from './pages/authentication/404/app.notfound.component';
+import {AppErrorComponent} from './pages/authentication/500/app.error.component';
+import {AppAccessdeniedComponent} from './pages/authentication/401/app.accessdenied.component';
+import {AppLoginComponent} from './pages/authentication/login/app.login.component';
+import {BlankComponent} from './layouts/blank/blank.component';
 
 export const routes: Routes = [
     {
@@ -46,11 +47,12 @@ export const routes: Routes = [
             },
         ]
     },
-    {path: 'error', component: AppErrorComponent},
-    {path: 'accessdenied', component: AppAccessdeniedComponent},
-    {path: 'notfound', component: AppNotfoundComponent},
-    {path: 'login', component: AppLoginComponent},
-    {path: '**', redirectTo: '/notfound'},
+    {
+        path: 'authentication',
+        component: BlankComponent,
+        loadChildren: () => import('./pages/authentication/authentication.module').then(m => m.AuthenticationModule)
+    },
+    {path: '**', redirectTo: '/authentication/404'},
 
 ];
 

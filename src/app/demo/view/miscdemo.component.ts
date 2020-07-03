@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TerminalService } from 'primeng/terminal';
 import { Subscription } from 'rxjs';
-import { BreadcrumbService } from '../../shared/breadcrumb.service';
+import { BreadcrumbService } from '../../shared/breadcrumb/breadcrumb.service';
 
 @Component({
     templateUrl: './miscdemo.component.html',

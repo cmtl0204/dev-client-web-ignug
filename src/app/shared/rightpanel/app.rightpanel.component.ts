@@ -1,5 +1,5 @@
 import {Component, Inject, forwardRef} from '@angular/core';
-import {AppMainComponent} from '../app.main.component';
+import {AppMainComponent} from '../../layouts/full/app.main.component';
 
 @Component({
     selector: 'app-rightpanel',

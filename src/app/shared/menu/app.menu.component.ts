@@ -1,16 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {AppMainComponent} from '../app.main.component';
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {AppMainComponent} from '../../layouts/full/app.main.component';
+import {trigger, state, style, transition, animate} from '@angular/animations';
+import {MenuService} from './app.menu.service';
+import {SettingsService} from '../../services/services-matriculacion/settings.service';
 
 @Component({
     selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+    templateUrl: './app.menu.component.html',
+    animations: [
+        trigger('mask-anim', [
+            state('void', style({
+                opacity: 0
+            })),
+            state('visible', style({
+                opacity: 0.8
+            })),
+            transition('* => *', animate('250ms cubic-bezier(0, 0, 0.2, 1)'))
+        ])
+    ]
 })
 export class AppMenuComponent implements OnInit {
-    urlLogo: string;
     model: any[];
 
-    constructor(public app: AppMainComponent) {
-        this.urlLogo = 'assets/layout/images/logo-mirage@2x.png';
+    constructor(public app: AppMainComponent, public ajustesService: SettingsService) {
     }
 
     ngOnInit() {
@@ -35,13 +47,13 @@ export class AppMenuComponent implements OnInit {
                 label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
                     {label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/pages/empty']},
-                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'], target: '_blank'},
+                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/authentication/login'], target: '_blank'},
                     {label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'},
-                    {label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/error'], target: '_blank'},
-                    {label: '404', icon: 'pi pi-fw pi-times', routerLink: ['/404'], target: '_blank'},
+                    {label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/authentication/500'], target: '_blank'},
+                    {label: '404', icon: 'pi pi-fw pi-times', routerLink: ['/authentication/404'], target: '_blank'},
                     {
                         label: 'Access Denied', icon: 'pi pi-fw pi-ban',
-                        routerLink: ['/accessdenied'], target: '_blank'
+                        routerLink: ['/authentication/401'], target: '_blank'
                     }
                 ]
             },

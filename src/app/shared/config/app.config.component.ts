@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {AppMainComponent} from '../app.main.component';
-import {AppMenuComponent} from './app.menu.component';
-import {CookieService} from 'ngx-cookie-service';
-import {SettingsService} from '../services/settings.service';
+import {AppMainComponent} from '../../layouts/full/app.main.component';
+import {AppMenuComponent} from '../menu/app.menu.component';
+import {SettingsService} from '../../services/services-matriculacion/settings.service';
+import {ChartsDemoComponent} from '../../demo/view/chartsdemo.component';
 
 @Component({
     selector: 'app-config',
@@ -118,7 +118,6 @@ import {SettingsService} from '../services/settings.service';
     ]
 })
 export class AppConfigComponent implements OnInit {
-
     darkColors: any;
 
     lightColors: any;
@@ -231,14 +230,16 @@ export class AppConfigComponent implements OnInit {
         ];
     }
 
+
     changeLayout(event, mode) {
         this.app.darkMode = mode;
         if (mode === true) {
-            this.ajustes.guardarAjustes({
-                urlLogoMenu: 'assets/layout/images/logo-menu-light.png',
-                urlLogoTopBar: 'assets/layout/images/logo-topbar-light.png',
-                urlLogoFooter: 'assets/layout/images/logo-footer-light.png',
-            });
+            this.changIconLogo('-light');
+            // this.ajustes.guardarAjustes({
+            //     urlLogoMenu: 'assets/layout/images/logo-menu-light.png',
+            //     urlLogoTopBar: 'assets/layout/images/logo-topbar-light.png',
+            //     urlLogoFooter: 'assets/layout/images/logo-footer-light.png',
+            // });
             this.app.menuColorMode = 'dark';
             this.app.menuColor = 'layout-menu-dark';
             this.selectedColorOptions = this.darkColors;
@@ -246,11 +247,12 @@ export class AppConfigComponent implements OnInit {
             this.changeLightDarkLayout('layout-css', this.selectedColorOptions[0].file, 'layout-dark');
             this.changeLightDarkTheme('theme-css', 'theme-dark');
         } else {
-            this.ajustes.guardarAjustes({
-                urlLogoMenu: 'assets/layout/images/logo-menu.png',
-                urlLogoTopBar: 'assets/layout/images/logo-topbar.png',
-                urlLogoFooter: 'assets/layout/images/logo-footer.png',
-            });
+            this.changIconLogo('');
+            // this.ajustes.guardarAjustes({
+            //     urlLogoMenu: 'assets/layout/images/logo-menu.png',
+            //     urlLogoTopBar: 'assets/layout/images/logo-topbar.png',
+            //     urlLogoFooter: 'assets/layout/images/logo-footer.png',
+            // });
             this.app.menuColorMode = 'light';
             this.app.menuColor = 'layout-menu-light';
             this.selectedColorOptions = this.lightColors;
@@ -277,7 +279,6 @@ export class AppConfigComponent implements OnInit {
         urlTokens[urlTokens.length - 2] = color;
         urlTokens[urlTokens.length - 1] = mode + '.css';
         const newURL = urlTokens.join('/');
-
         this.replaceLink(element, newURL);
     }
 
@@ -332,8 +333,14 @@ export class AppConfigComponent implements OnInit {
         const urlTokens = element.getAttribute('href').split('/');
         urlTokens[urlTokens.length - 2] = value;
         const newURL = urlTokens.join('/');
-
         this.replaceLink(element, newURL);
+    }
+
+    changIconLogo(value) {
+        document.getElementById('logo-menu').setAttribute('src', 'assets/layout/images/logo-menu' + value + '.png');
+        document.getElementById('logo-footer').setAttribute('src', 'assets/layout/images/logo-footer' + value + '.png');
+        document.getElementById('logo-topbar').setAttribute('src', 'assets/layout/images/logo-topbar' + value + '.png');
+
     }
 
     onConfigButtonClick(event) {

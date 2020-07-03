@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CountryService} from '../../../demo/service/countryservice';
 import {SelectItem, MenuItem} from 'primeng/api';
-import {BreadcrumbService} from '../../../shared/breadcrumb.service';
+import {BreadcrumbService} from '../../../shared/breadcrumb/breadcrumb.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({

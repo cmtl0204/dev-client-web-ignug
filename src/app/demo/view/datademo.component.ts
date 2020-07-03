@@ -4,7 +4,7 @@ import { NodeService } from '../service/nodeservice';
 import { EventService } from '../service/eventservice';
 import { Car } from '../domain/car';
 import { TreeNode, SelectItem, LazyLoadEvent } from 'primeng/api';
-import { BreadcrumbService } from '../../shared/breadcrumb.service';
+import { BreadcrumbService } from '../../shared/breadcrumb/breadcrumb.service';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';

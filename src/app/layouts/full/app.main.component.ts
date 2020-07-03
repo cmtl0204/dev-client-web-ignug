@@ -1,6 +1,6 @@
-import {Component, Renderer2} from '@angular/core';
-import { MenuService } from './shared/app.menu.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {Component, Renderer2, ViewChild} from '@angular/core';
+import {MenuService} from '../../shared/menu/app.menu.service';
+import {trigger, state, style, transition, animate} from '@angular/animations';
 
 @Component({
     selector: 'app-main',
@@ -18,7 +18,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]
 })
 export class AppMainComponent {
-
     horizontalMenu: boolean;
 
     darkMode = false;
@@ -65,7 +64,9 @@ export class AppMainComponent {
 
     menuHoverActive: boolean;
 
-    constructor(public renderer: Renderer2, private menuService: MenuService) {}
+    constructor(public renderer: Renderer2, private menuService: MenuService) {
+
+    }
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
@@ -119,8 +120,10 @@ export class AppMainComponent {
         this.topbarItemClick = true;
 
         if (this.activeTopbarItem === item) {
-            this.activeTopbarItem = null; } else {
-            this.activeTopbarItem = item; }
+            this.activeTopbarItem = null;
+        } else {
+            this.activeTopbarItem = item;
+        }
 
         event.preventDefault();
     }

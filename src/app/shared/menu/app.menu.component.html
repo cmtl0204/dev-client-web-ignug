@@ -1,4 +1,5 @@
-<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active': app.sidebarActive}" (click)="app.onSidebarClick($event)"
+<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active': app.sidebarActive}"
+     (click)="app.onSidebarClick($event)"
      (mouseover)="app.sidebarActive=true" (mouseleave)="app.sidebarActive=false">
     <div class="sidebar-logo">
         <a href="#" class="sidebar-pin" title="Toggle Menu" (click)="app.onToggleMenuClick($event)">
@@ -6,7 +7,7 @@
             <i class="pi pi-lock-open" *ngIf="!app.staticMenuActive"></i>
         </a>
         <a routerLink="/">
-            <img alt="logo" id="logo-menu" src="../../assets/layout/images/logo-menu.png" />
+            <img alt="logo" id="logo-menu" [src]="ajustesService.ajustes.urlLogoMenu"/>
             <span class="app-name">Yavirac</span>
         </a>
     </div>

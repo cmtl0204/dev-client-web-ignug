@@ -12,4 +12,10 @@ export class EventService {
                     .then(res => res.data as any[])
                     .then(data => data);
     }
+    getEventsJornadas() {
+        return this.http.get<any>('assets/demo/data/scheduleevents_jornadas.json')
+                    .toPromise()
+                    .then(res => res.data as any[])
+                    .then(data => data);
+    }
 }

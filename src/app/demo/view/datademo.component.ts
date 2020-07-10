@@ -321,6 +321,7 @@ export class DataDemoComponent implements OnInit {
             { label: 'Orange', value: 'Orange' },
             { label: 'Blue', value: 'Blue' }
         ];
+
         this.carouselCars = [
             { vin: 'r3278r2', year: 2010, brand: 'Audi', color: 'Black' },
             { vin: 'jhto2g2', year: 2015, brand: 'BMW', color: 'White' },

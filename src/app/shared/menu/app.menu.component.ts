@@ -1,23 +1,10 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {AppMainComponent} from '../../layouts/full/app.main.component';
-import {trigger, state, style, transition, animate} from '@angular/animations';
-import {MenuService} from './app.menu.service';
 import {SettingsService} from '../../services/matriculacion/settings.service';
 
 @Component({
     selector: 'app-menu',
-    templateUrl: './app.menu.component.html',
-    animations: [
-        trigger('mask-anim', [
-            state('void', style({
-                opacity: 0
-            })),
-            state('visible', style({
-                opacity: 0.8
-            })),
-            transition('* => *', animate('250ms cubic-bezier(0, 0, 0.2, 1)'))
-        ])
-    ]
+    templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
     model: any[];
@@ -27,7 +14,10 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
+            {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']},
             {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard/coordinador']},
+            {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+            // /*
             {
                 label: 'Components', icon: 'pi pi-fw pi-star', routerLink: ['/components'],
                 items: [
@@ -105,6 +95,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
             }
+             // */
         ];
     }
 

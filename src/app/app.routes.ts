@@ -45,6 +45,10 @@ export const routes: Routes = [
                 path: 'dashboard',
                 loadChildren: () => import('./pages/matriculacion/dashboards/dashboard.module').then(m => m.DashboardModule)
             },
+            {
+                path: 'administrativo',
+                loadChildren: () => import('./pages/administrativo/administrativo.module').then(m => m.AdministrativoModule)
+            },
         ]
     },
     {

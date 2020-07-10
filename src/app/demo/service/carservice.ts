@@ -27,4 +27,11 @@ export class CarService {
                     .then(res => res.data as Car[])
                     .then(data => data);
     }
+
+    getJornadas() {
+        return this.http.get<any>('assets/demo/data/jornada.json')
+            .toPromise()
+            .then(res => res.data)
+            .then(data => data);
+    }
 }

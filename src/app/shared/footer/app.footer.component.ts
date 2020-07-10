@@ -13,13 +13,10 @@ import {Component, Inject, forwardRef} from '@angular/core';
 			</div>
 			<div class="icons">
 				<div class="icon icon-hastag">
-					<i class="pi pi-home" routerLink="/dashboard"></i>
+					<i class="pi pi-home"></i>
 				</div>
 				<div class="icon icon-twitter">
-					<i class="pi pi-globe"></i>
-				</div>
-				<div class="icon icon-prime">
-					<i class="pi pi-bookmark"></i>
+					<a href="http://yavirac.edu.ec/" target="_blank"><i class="pi pi-globe"></i></a>
 				</div>
 			</div>
         </div>

@@ -112,6 +112,7 @@ import {MenuService} from './shared/menu/app.menu.service';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {CookieService} from 'ngx-cookie-service';
 import {SettingsService} from './services/matriculacion/settings.service';
+import {ServiceService} from './services/administrativo/service.service';
 
 @NgModule({
     imports: [
@@ -215,7 +216,7 @@ import {SettingsService} from './services/matriculacion/settings.service';
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService, CookieService, SettingsService
+        CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService, CookieService, SettingsService, ServiceService
     ],
     bootstrap: [AppComponent]
 })

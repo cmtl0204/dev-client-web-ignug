@@ -13,6 +13,9 @@ import {DocenteAsistencia} from '../../../models/administrativo/docente-asistenc
 import {JornadaActividad} from '../../../models/administrativo/jornada-actividad';
 import {timer, Observable, Subject} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
+import {DocenteActividad} from '../../../models/administrativo/docente-actividad';
+import {Catalogo} from '../../../models/administrativo/catalogo';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-asistencia-laboral',
@@ -21,12 +24,13 @@ import {map, shareReplay} from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class AppAsistenciaLaboralComponent implements OnInit {
-    date1: Date;
+    docenteActividadesItems: SelectItem[];
+    selectedMultiSelectDocenteActividades: string[];
+    actividadesSeleccionadas: any[];
     cols: any[];
-    brands: SelectItem[];
-    colors: SelectItem[];
-    selectedCar: JornadaActividad;
 
+    docenteActividades: Array<Catalogo>;
+    selectedCar: Car;
     totalHorasTrabajadas: Date;
     horaInicioJornada: string;
     horaFinJornada: string;
@@ -37,23 +41,8 @@ export class AppAsistenciaLaboralComponent implements OnInit {
     events: any[];
     fullCalendarOptions: any;
 
-    hora: number;
-    minutos: string;
-    ampm: string;
-    diadesemana: string;
-    diaymes: string;
-    segundo: string;
-
-    clock: Observable<Date>;
-    infofecha$ = new Subject<AppAsistenciaLaboralComponent>();
-    vr: any;
-    hours: number;
-    minute: string;
-    weekday: string;
-    months: string;
-
     constructor(private carService: CarService, private eventService: EventService, private nodeService: NodeService,
-                private breadcrumbService: BreadcrumbService, private service: ServiceService) {
+                private breadcrumbService: BreadcrumbService, private service: ServiceService, private spinner: NgxSpinnerService) {
         this.breadcrumbService.setItems([
             {label: 'Asistencia'}
         ]);
@@ -61,38 +50,16 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         this.jornadaActividadActual = new JornadaActividad();
         this.horaInicioJornada = '';
         this.horaFinJornada = null;
-        // this.clock = timer(0, 1000).pipe(map(t => new Date()), shareReplay(1));
-
+        this.selectedMultiSelectDocenteActividades = [];
+        this.actividadesSeleccionadas = [];
     }
 
     ngOnInit() {
-        this.brands = [
-            {label: 'Audi', value: 'Audi'},
-            {label: 'BMW', value: 'BMW'},
-            {label: 'Fiat', value: 'Fiat'},
-            {label: 'Honda', value: 'Honda'},
-            {label: 'Jaguar', value: 'Jaguar'},
-            {label: 'Mercedes', value: 'Mercedes'},
-            {label: 'Renault', value: 'Renault'},
-            {label: 'VW', value: 'VW'},
-            {label: 'Volvo', value: 'Volvo'}
-        ];
         this.cols = [
             {field: 'descripcion', header: 'Descripción'},
             {field: 'hora_inicio', header: 'Hora Inicio'},
             {field: 'hora_fin', header: 'Hora Fin'},
             {field: 'duracion', header: 'Duración'},
-        ];
-        this.colors = [
-            {label: 'White', value: 'White'},
-            {label: 'Green', value: 'Green'},
-            {label: 'Silver', value: 'Silver'},
-            {label: 'Black', value: 'Black'},
-            {label: 'Red', value: 'Red'},
-            {label: 'Maroon', value: 'Maroon'},
-            {label: 'Brown', value: 'Brown'},
-            {label: 'Orange', value: 'Orange'},
-            {label: 'Blue', value: 'Blue'}
         ];
         this.obtenerJornadaActividadesDiaria();
         this.obtenerJornadaActividadesTodos();
@@ -105,10 +72,12 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             }
         };
-        // this.getInfoReloj();
+        this.obtenerCatalogoDocenteActividades();
+        this.obtenerDocenteActividades();
     }
 
     obtenerJornadaActividadesTodos() {
+        this.spinner.show();
         this.service.get('docentes/asistencia_laboral/todos?user_id=1').subscribe(
             response => {
                 if (response) {
@@ -133,17 +102,19 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                         });
                     });
                     this.events = actividades;
-
+                    this.spinner.hide();
                 }
+            }, error => {
+                this.spinner.hide();
             }
         );
     }
 
     obtenerJornadaActividadesDiaria() {
+        this.spinner.show();
         this.service.get('docentes/asistencia_laboral?user_id=1').subscribe(
             response => {
                 this.jornadaActividades = response['jornada_actividades'];
-                console.log(this.jornadaActividades);
                 this.fechaActual = new Date(response['fecha_actual']);
                 let totalHorasTrabajadas = '00:00:00';
                 this.totalHorasTrabajadas = new Date();
@@ -162,16 +133,16 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                     });
 
                     const duracionJornada = totalHorasTrabajadas.split(':');
-                    const horas = parseInt(duracionJornada[0]);
-                    const minutos = parseInt(duracionJornada[1]);
-                    const segundos = parseInt(duracionJornada[2]);
-
-                    console.log(this.totalHorasTrabajadas);
+                    const horas = Number(duracionJornada[0]);
+                    const minutos = Number(duracionJornada[1]);
+                    const segundos = Number(duracionJornada[2]);
                     this.totalHorasTrabajadas.setHours(horas);
                     this.totalHorasTrabajadas.setMinutes(minutos);
                     this.totalHorasTrabajadas.setSeconds(segundos);
-                    console.log(this.totalHorasTrabajadas);
                 }
+                this.spinner.hide();
+            }, error => {
+                this.spinner.hide();
             }
         );
     }
@@ -186,9 +157,13 @@ export class AppAsistenciaLaboralComponent implements OnInit {
             }
         };
         const parametros = '?user_id=1' + '&tipo_id=' + tipoId + '&descripcion=' + descripcion;
+        this.spinner.show();
         this.service.post('docentes/asistencia_laboral' + parametros, horaInicioActividad).subscribe(
             response => {
                 this.obtenerJornadaActividadesDiaria();
+                this.spinner.hide();
+            }, error => {
+                this.spinner.hide();
             }
         );
     }
@@ -203,36 +178,44 @@ export class AppAsistenciaLaboralComponent implements OnInit {
             }
         };
         const parametros = '?jornada_actividad_id=' + this.jornadaActividadActual.id;
+        this.spinner.show();
         this.service.post('docentes/asistencia_laboral/finalizar' + parametros, horaFinActividad).subscribe(
             response => {
                 this.obtenerJornadaActividadesDiaria();
                 this.obtenerJornadaActividadesTodos();
+                this.spinner.hide();
+            }, error => {
+                this.spinner.hide();
             }
         );
     }
 
     eliminarJornadaActividad(id: number) {
+        this.spinner.show();
         this.service.delete('docentes/asistencia_laboral?jornada_actividad_id=' + id).subscribe(
             response => {
                 if (response) {
                     this.obtenerJornadaActividadesTodos();
                     this.obtenerJornadaActividadesDiaria();
+                    this.spinner.hide();
                 }
+            }, error => {
+                this.spinner.hide();
             }
         );
     }
 
     sumarHoras(duracion: string, totalHorasTrabajadas: string): string {
         const duracionTotal = totalHorasTrabajadas.split(':');
-        console.log(duracionTotal);
-        const horaTotal = parseInt(duracionTotal[0]);
-        const minutoTotal = parseInt(duracionTotal[1]);
-        const segundoTotal = parseInt(duracionTotal[2]);
+
+        const horaTotal = Number(duracionTotal[0]);
+        const minutoTotal = Number(duracionTotal[1]);
+        const segundoTotal = Number(duracionTotal[2]);
 
         const duracionParcial = duracion.split(':');
-        const horaParcial = parseInt(duracionParcial[0]);
-        const minutoParcial = parseInt(duracionParcial[1]);
-        const segundoParcial = parseInt(duracionParcial[2]);
+        const horaParcial = Number(duracionParcial[0]);
+        const minutoParcial = Number(duracionParcial[1]);
+        const segundoParcial = Number(duracionParcial[2]);
 
         let horaAdicional = 0;
         let minutoAdicional = 0;
@@ -250,16 +233,88 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         return horaSuma + ':' + minutoSuma + ':' + segundoSuma;
     }
 
-    getInfoReloj(): Observable<AppAsistenciaLaboralComponent> {
-        this.clock.subscribe(t => {
-            this.hours = t.getHours() % 12;
-            this.hours = this.hours ? this.hours : 12;
-            this.hora = this.hours;
-            this.minutos = (t.getMinutes() < 10) ? '0' + t.getMinutes() : t.getMinutes().toString();
-            this.ampm = t.getHours() > 11 ? 'PM' : 'AM';
-            this.segundo = t.getSeconds() < 10 ? '0' + t.getSeconds() : t.getSeconds().toString();
+    agregarActividad() {
+        let i = 0;
+        const indices = [];
+        this.actividadesSeleccionadas.forEach(actividadSeleccionada => {
+            const actividad = this.selectedMultiSelectDocenteActividades.find(element => Number(element) === actividadSeleccionada.tipo_id);
+            if (actividad === undefined) {
+                indices.push(i);
+            }
+            i++;
         });
-        return this.infofecha$.asObservable();
+        indices.forEach(value => {
+            this.actividadesSeleccionadas.splice(value, 1);
+        });
+        this.selectedMultiSelectDocenteActividades.forEach(actividadSeleccionada => {
+            if (this.actividadesSeleccionadas.find(x => x.tipo_id === actividadSeleccionada) === undefined) {
+                const actividadEncontrada = this.docenteActividades.find(element => element.id === Number(actividadSeleccionada));
+                this.actividadesSeleccionadas.push(
+                    {
+                        'tipo_id': actividadEncontrada.id,
+                        'tipo': {'nombre': actividadEncontrada.nombre},
+                        'porcentaje_avance': 0
+                    }
+                );
+            }
+        });
+        this.guardarActividades();
+    }
+
+    guardarActividades() {
+
+        // if (this.actividadesSeleccionadas.length > 0) {
+            const parametros = '?user_id=1' + '&descripcion=JORNADA';
+            this.spinner.show();
+            this.service.post('docentes/actividades' + parametros, {'docenteActividades': this.actividadesSeleccionadas}).subscribe(
+                response => {
+                    this.actividadesSeleccionadas = response['docente_actividades'];
+                    this.spinner.hide();
+                },
+                error => {
+                    this.spinner.hide();
+                }
+            );
+        // }
+    }
+
+    obtenerCatalogoDocenteActividades() {
+        this.service.get('catalogos?tipo=docente_actividades.actividades').subscribe(
+            response => {
+                this.docenteActividades = response['catalogos'];
+                if (this.docenteActividades) {
+                    this.docenteActividadesItems = [];
+                    this.docenteActividades.forEach(docenteActividad => {
+                            this.docenteActividadesItems.push({label: docenteActividad.nombre, value: docenteActividad.id});
+                        }
+                    )
+                    ;
+                }
+            }
+        );
+    }
+
+    obtenerDocenteActividades() {
+        const parametros = '?user_id=1';
+        this.spinner.show();
+        this.service.get('docentes/actividades' + parametros).subscribe(
+            response => {
+                if (response) {
+                    response['docente_actividades'].forEach(value => {
+                        this.selectedMultiSelectDocenteActividades.push(value.tipo_id);
+                        this.actividadesSeleccionadas.push(
+                            {
+                                'tipo_id': value.tipo_id,
+                                'tipo': {'nombre': value.tipo.nombre},
+                                'porcentaje_avance': value.porcentaje_avance
+                            });
+                    });
+                }
+                this.spinner.hide();
+            }, error => {
+                this.spinner.hide();
+            }
+        );
     }
 }
 

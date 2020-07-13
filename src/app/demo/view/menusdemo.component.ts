@@ -143,7 +143,7 @@ export class MenusDemoComponent implements OnInit {
                 { label: 'Redo', icon: 'pi pi-fw pi-refresh' }
             ]
         }];
-
+/*
         this.megaMenuItems = [
             {
                 label: 'TV', icon: 'pi pi-fw pi-check',
@@ -257,7 +257,7 @@ export class MenusDemoComponent implements OnInit {
                 ]
             }
         ];
-
+*/
         this.panelMenuItems = [
             {
                 label: 'File',

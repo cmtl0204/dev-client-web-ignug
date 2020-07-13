@@ -41,7 +41,7 @@ import {OrderListModule} from 'primeng/orderlist';
 import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {TabViewModule} from 'primeng';
-
+import {InputNumberModule} from 'primeng/inputnumber';
 @NgModule({
     imports: [
         CommonModule,
@@ -81,6 +81,7 @@ import {TabViewModule} from 'primeng';
         CarouselModule,
         FullCalendarModule,
         TabViewModule,
+        InputNumberModule,
 
     ],
     declarations: [

@@ -5,16 +5,20 @@
             <h1>Haz clic en el botón para comenzar el registro de tiempo</h1>
             <button pButton type="button" class="ui-button-primary" icon="pi pi-calendar"
                     label="Iniciar Jornada"
-                    style="margin-right: .5em" (click)="iniciarDocenteAsistencia(1,'Jornada')"
-                    *ngIf="jornadaActividadActual.estado_id == 0">
+                    style="margin-right: .5em" (click)="iniciarDocenteAsistencia('work','Jornada')"
+                    *ngIf="jornadaActual.state_id == 0 || (jornadaActual.start_time==null && jornadaActual.end_time!=null)">
             </button>
             <button pButton type="button" class="ui-button-warning" label="Iniciar Almuerzo"
-                    style="margin-right: .5em" (click)="iniciarDocenteAsistencia(2,'Almuerzo')"
+                    style="margin-right: .5em" (click)="iniciarDocenteAsistencia('lunch','Almuerzo')"
                     icon="pi pi-briefcase"
-                    *ngIf="jornadaActividadActual.estado_id == 0">
+                    *ngIf="almuerzoActual.state_id == 0">
             </button>
-            <button pButton type="button" class="ui-button-danger" icon="pi pi-power-off" label="Finalizar"
-                    (click)="finalizarDocenteAsistencia()" *ngIf="jornadaActividadActual.estado_id == 11">
+            <button pButton type="button" class="ui-button-danger" icon="pi pi-calendar" label="Finalizar Jornada"
+                    style="margin-right: .5em" (click)="finalizarDocenteAsistencia(jornadaActual)"
+                    *ngIf="jornadaActual.state_id == 1">
+            </button>
+            <button pButton type="button" class="ui-button-danger" icon="pi pi-briefcase" label="Finalizar Almuerzo"
+                    (click)="finalizarDocenteAsistencia(almuerzoActual)" *ngIf="almuerzoActual.state_id == 1">
             </button>
         </div>
     </div>
@@ -22,23 +26,16 @@
         <div class="card card-w-title">
             <p-tabView>
                 <p-tabPanel header="Resumen" leftIcon="pi pi-align-justify">
-                    <p-table #dt [columns]="cols" [value]="jornadaActividades" [paginator]="true" [responsive]="true"
+                    <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="jornadaActividades"
+                             [paginator]="true" [responsive]="true"
                              [rows]="3" dataKey="id" selectionMode="single" [(selection)]="selectedCar">
                         <ng-template pTemplate="caption">
-                            <div class="p-grid">
-                                <div class="p-lg-6 p-md-12 p-sm-12">
-                                    Total Horas Trabajadas:
-                                    <p-calendar id="time" showTime="true" [timeOnly]="true" placeholder="Time"
-                                                disabled=""
-                                                [(ngModel)]="totalHorasTrabajadas"></p-calendar>
-                                </div>
-                                <div class="p-lg-6 p-md-12 p-sm-12">
-                                    <div class="ui-table-globalfilter-container">
-                                        <input type="text" pInputText size="50" placeholder="Buscador Global"
-                                               (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                               style="width:250px;">
-                                    </div>
-                                </div>
+                            Total Horas Trabajadas:
+                            <span>{{totalHorasTrabajadas|date:'HH:mm:ss'}}</span>
+                            <div class="ui-table-globalfilter-container">
+                                <input type="text" pInputText size="50" placeholder="Buscador Global"
+                                       (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                       style="width:250px;">
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
@@ -48,18 +45,18 @@
                                     <p-sortIcon [field]="col.field"></p-sortIcon>
                                 </th>
                                 <th style="width: 12em; text-align: center;">
-                                    <button pButton type="button" class="ui-button-primary" icon="pi pi-cog"></button>
+                                    <button pButton type="button" icon="pi pi-cog"></button>
                                 </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr [pSelectableRow]="rowData">
-                                <td *ngFor="let col of columns" style="text-align: center">
+                                <td *ngFor="let col of columns">
                                     <span class="ui-column-title">{{col.header}}</span>
-                                    <i class="{{rowData.tipo.icono}}"
-                                       *ngIf="col.field =='descripcion'"> {{rowData[col.field]}}
+                                    <i class="{{rowData.type.icon}}"
+                                       *ngIf="col.field =='description'"> {{rowData[col.field]}}
                                     </i>
-                                    <span *ngIf="col.field !='descripcion'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field !='description'">{{rowData[col.field]}}</span>
                                 </td>
                                 <td style="width: 12em; text-align: center;">
                                     <button pButton type="button" class="ui-button-danger"
@@ -99,9 +96,9 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-actividad>
                             <tr>
-                                <td>{{actividad.tipo.nombre}}</td>
+                                <td>{{actividad.type.name}}</td>
                                 <td style="text-align: center;">
-                                    <p-inputNumber [(ngModel)]="actividad.porcentaje_avance"
+                                    <p-inputNumber [(ngModel)]="actividad.percentage_advance"
                                                    (focusout)="guardarActividades()"
                                                    max="100" :min="1"
                                                    maxlength="4"

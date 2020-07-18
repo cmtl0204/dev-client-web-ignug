@@ -16,11 +16,11 @@ import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-asistencia-laboral',
-    templateUrl: './app.asistencia-laboral.component.html',
-    styleUrls: ['app.asistencia-laboral.component.scss'],
+    templateUrl: './app.administracion-asistencia-laboral.component.html',
+    styleUrls: ['app.administracion-asistencia-laboral.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AppAsistenciaLaboralComponent implements OnInit {
+export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     docenteActividadesItems: SelectItem[];
     selectedMultiSelectDocenteActividades: string[];
     actividadesSeleccionadas: any[];
@@ -246,7 +246,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
 
         const horaSuma = horaTotal + horaParcial + horaAdicional;
         const minutoSuma = (minutoTotal + minutoParcial + minutoAdicional) > 60 ? 0 : minutoTotal + minutoParcial + minutoAdicional;
-        const segundoSuma = (segundoTotal + segundoParcial) > 60 ? segundoTotal + segundoParcial - 60 : segundoTotal + segundoParcial;
+        const segundoSuma = (segundoTotal + segundoParcial) > 60 ? 0 : segundoTotal + segundoParcial;
 
         return horaSuma + ':' + minutoSuma + ':' + segundoSuma;
     }

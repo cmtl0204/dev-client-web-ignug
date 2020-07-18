@@ -1,11 +1,13 @@
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card card-w-title">
-            <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="cars1" [paginator]="true" [rows]="10" dataKey="vin" selectionMode="single" [(selection)]="selectedCar">
+            <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="cars1" [paginator]="true" [rows]="10"
+                     dataKey="vin" selectionMode="single" [(selection)]="selectedCar">
                 <ng-template pTemplate="caption">
                     DataTable
                     <div class="ui-table-globalfilter-container">
-                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
+                        <input type="text" pInputText size="50" placeholder="Global Filter"
+                               (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:250px;">
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
@@ -20,21 +22,34 @@
                     </tr>
                     <tr>
                         <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
-                            <input *ngSwitchCase="'vin'" pInputText type="text" placeholder="Starts with" class="ui-column-filter" style="width: 100%; margin-top: 0;" (input)="dt.filter($event.target.value, col.field, 'startsWith')">
-                            <input *ngSwitchCase="'year'" pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%; margin-top: 0;" (input)="dt.filter($event.target.value, col.field, 'contains')">
-                            <p-dropdown *ngSwitchCase="'brand'" appendTo="body" [options]="brands" styleClass="ui-column-filter" [showClear]="true" [style]="{'min-width':'1em', 'width':'100%', 'margin-top':'0'}" placeholder="Select a Brand" (onChange)="dt.filter($event.value, col.field, 'equals')">
+                            <input *ngSwitchCase="'vin'" pInputText type="text" placeholder="Starts with"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                            <input *ngSwitchCase="'year'" pInputText type="text" placeholder="Contains"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                            <p-dropdown *ngSwitchCase="'brand'" appendTo="body" [options]="brands"
+                                        styleClass="ui-column-filter" [showClear]="true"
+                                        [style]="{'min-width':'1em', 'width':'100%', 'margin-top':'0'}"
+                                        placeholder="Select a Brand"
+                                        (onChange)="dt.filter($event.value, col.field, 'equals')">
                                 <ng-template let-item pTemplate="selectedItem">
-                                    <img src="assets/demo/images/car/{{item.label}}.png" style="width:16px;vertical-align:middle" />
+                                    <img src="assets/demo/images/car/{{item.label}}.png"
+                                         style="width:16px;vertical-align:middle"/>
                                     <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
                                 </ng-template>
                                 <ng-template let-car pTemplate="item">
                                     <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <img src="assets/demo/images/car/{{car.label}}.png" style="width:24px;position:absolute;top:1px;left:5px"/>
+                                        <img src="assets/demo/images/car/{{car.label}}.png"
+                                             style="width:24px;position:absolute;top:1px;left:5px"/>
                                         <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p-multiSelect *ngSwitchCase="'color'" [options]="colors" [filter]="false"  styleClass="ui-column-filter" [style]="{'width':'100%', 'margin-top':'0'}"  defaultLabel="Select a color" (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+                            <p-multiSelect *ngSwitchCase="'color'" [options]="colors" [filter]="false"
+                                           styleClass="ui-column-filter" [style]="{'width':'100%', 'margin-top':'0'}"
+                                           defaultLabel="Select a color"
+                                           (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
                         </th>
                         <th style="width: 8em;">
                         </th>
@@ -45,12 +60,14 @@
                         <td>{{rowData.vin}}</td>
                         <td>{{rowData.year}}</td>
                         <td>
-                            <img src="assets/demo/images/car/{{rowData.brand}}.png" style="width: 50px; margin-right: 1em; vertical-align: middle;">
+                            <img src="assets/demo/images/car/{{rowData.brand}}.png"
+                                 style="width: 50px; margin-right: 1em; vertical-align: middle;">
                             {{rowData.brand}}
                         </td>
                         <td>{{rowData.color}}</td>
                         <td>
-                            <button pButton type="button" class="ui-button-success" icon="pi pi-search" style="margin-right: .5em"></button>
+                            <button pButton type="button" class="ui-button-success" icon="pi pi-search"
+                                    style="margin-right: .5em"></button>
                             <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"></button>
                         </td>
                     </tr>
@@ -62,16 +79,19 @@
         <div class="card card-w-title">
             <h1>DataView</h1>
             <p-dataView #dv [value]="cars2" [paginator]="true" [rows]="10" paginatorPosition="both" filterBy="brand"
-                [sortField]="sortField" [sortOrder]="sortOrder">
+                        [sortField]="sortField" [sortOrder]="sortOrder">
                 <p-header>
                     <div class="ui-helper-clearfix">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-4">
-                                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+                                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                                            (onChange)="onSortChange($event)"
+                                            [style]="{'min-width':'140px'}"></p-dropdown>
                             </div>
                             <div class="ui-g-6 ui-md-4 filter-container">
                                 <div style="position:relative">
-                                    <input type="search" pInputText placeholder="Search by brand" (keyup)="dv.filter($event.target.value)">
+                                    <input type="search" pInputText placeholder="Search by brand"
+                                           (keyup)="dv.filter($event.target.value)">
                                 </div>
                             </div>
                             <div class="ui-g-6 ui-md-4" style="text-align:right">
@@ -127,16 +147,16 @@
                         </div>
                         <div class="ui-g-12 ui-md-8">
                             <div class="ui-g">
-                                <div class="ui-g-2 ui-sm-6">Vin: </div>
+                                <div class="ui-g-2 ui-sm-6">Vin:</div>
                                 <div class="ui-g-10 ui-sm-6">{{car?.vin}}</div>
 
-                                <div class="ui-g-2 ui-sm-6">Year: </div>
+                                <div class="ui-g-2 ui-sm-6">Year:</div>
                                 <div class="ui-g-10 ui-sm-6">{{car?.year}}</div>
 
-                                <div class="ui-g-2 ui-sm-6">Brand: </div>
+                                <div class="ui-g-2 ui-sm-6">Brand:</div>
                                 <div class="ui-g-10 ui-sm-6">{{car?.brand}}</div>
 
-                                <div class="ui-g-2 ui-sm-6">Color: </div>
+                                <div class="ui-g-2 ui-sm-6">Color:</div>
                                 <div class="ui-g-10 ui-sm-6">{{car?.color}}</div>
                             </div>
                         </div>
@@ -152,10 +172,18 @@
                         </div>
                         <div class="ui-g-12 ui-md-8">
                             <div class="ui-g">
-                                <div class="ui-g-12"><div class="empty-car-item-text"></div></div>
-                                <div class="ui-g-12"><div class="empty-car-item-text"></div></div>
-                                <div class="ui-g-12"><div class="empty-car-item-text"></div></div>
-                                <div class="ui-g-12"><div class="empty-car-item-text"></div></div>
+                                <div class="ui-g-12">
+                                    <div class="empty-car-item-text"></div>
+                                </div>
+                                <div class="ui-g-12">
+                                    <div class="empty-car-item-text"></div>
+                                </div>
+                                <div class="ui-g-12">
+                                    <div class="empty-car-item-text"></div>
+                                </div>
+                                <div class="ui-g-12">
+                                    <div class="empty-car-item-text"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,11 +195,14 @@
     <div class="p-col-12 p-md-8">
         <div class="card card-w-title">
             <h1>PickList</h1>
-            <p-pickList [source]="sourceCars" [target]="targetCars" filterBy="brand" filterPlaceholder="Search by Brand" sourceHeader="Available"
-                targetHeader="Selected" [responsive]="true" [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}">
+            <p-pickList [source]="sourceCars" [target]="targetCars" filterBy="brand" filterPlaceholder="Search by Brand"
+                        sourceHeader="Available"
+                        targetHeader="Selected" [responsive]="true" [sourceStyle]="{'height':'250px'}"
+                        [targetStyle]="{'height':'250px'}">
                 <ng-template let-car pTemplate="item">
                     <div class="ui-helper-clearfix">
-                        <img src="assets/demo/images/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px; width: 50px" />
+                        <img src="assets/demo/images/car/{{car.brand}}.png"
+                             style="display:inline-block;margin:2px 0 2px 2px; width: 50px"/>
                         <div style="font-size:16px;float:right;margin:15px 5px 0 0">{{car.brand}}</div>
                     </div>
                 </ng-template>
@@ -182,11 +213,13 @@
     <div class="p-col-12 p-md-4">
         <div class="card card-w-title">
             <h1>OrderList</h1>
-            <p-orderList [value]="orderListCars" [listStyle]="{'height':'250px'}" [responsive]="true" header="OrderList" filterBy="brand"
-                filterPlaceholder="Search by Brand">
+            <p-orderList [value]="orderListCars" [listStyle]="{'height':'250px'}" [responsive]="true" header="OrderList"
+                         filterBy="brand"
+                         filterPlaceholder="Search by Brand">
                 <ng-template let-car pTemplate="item">
                     <div class="ui-helper-clearfix">
-                        <img src="assets/demo/images/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px; width: 50px" />
+                        <img src="assets/demo/images/car/{{car.brand}}.png"
+                             style="display:inline-block;margin:2px 0 2px 2px; width: 50px"/>
                         <div style="font-size:16px;float:right;margin:15px 5px 0 0">{{car.brand}}</div>
                     </div>
                 </ng-template>
@@ -199,11 +232,13 @@
             <div class="p-grid">
                 <div class="p-col-12 p-md-6">
                     <h1>Tree</h1>
-                    <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedNode1" [style]="{width: '100%'}"></p-tree>
+                    <p-tree [value]="files1" selectionMode="single" [(selection)]="selectedNode1"
+                            [style]="{width: '100%'}"></p-tree>
                 </div>
                 <div class="p-col-12 p-md-6">
                     <h1>Checkbox Tree</h1>
-                    <p-tree [value]="files2" selectionMode="checkbox" [(selection)]="selectedNodes" [style]="{width: '100%'}"></p-tree>
+                    <p-tree [value]="files2" selectionMode="checkbox" [(selection)]="selectedNodes"
+                            [style]="{width: '100%'}"></p-tree>
                 </div>
             </div>
         </div>
@@ -246,19 +281,21 @@
     <div class="p-col-12">
         <div class="card card-w-title">
             <h1>Carousel</h1>
-            <p-carousel [value]="carouselCars" [numVisible]="4" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+            <p-carousel [value]="carouselCars" [numVisible]="4" [numScroll]="3" [circular]="false"
+                        [responsiveOptions]="responsiveOptions">
                 <ng-template let-car pTemplate="item">
                     <div class="car-details">
                         <div class="p-grid p-nogutter">
                             <div class="p-col-12">
-                                <img src="assets/demo/images/car/{{car.brand}}.png" />
+                                <img src="assets/demo/images/car/{{car.brand}}.png"/>
                             </div>
                             <div class="p-col-12 car-data">
                                 <div class="car-title">{{car.brand}}</div>
                                 <div class="car-subtitle">{{car.year}} | {{car.color}}</div>
 
                                 <div class="car-buttons">
-                                    <button pButton type="button" class="ui-button-success" icon="pi pi-search"></button>
+                                    <button pButton type="button" class="ui-button-success"
+                                            icon="pi pi-search"></button>
                                     <button pButton type="button" class="ui-button-warning" icon="pi pi-star"></button>
                                     <button pButton type="button" class="ui-button-info" icon="pi pi-cog"></button>
                                 </div>

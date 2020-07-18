@@ -30,6 +30,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthenticationRoutes} from './administrativo.routing';
 import {TooltipModule} from 'primeng/tooltip';
 import {AppAsistenciaLaboralComponent} from './docente-asistencia-laboral/app.asistencia-laboral.component';
+import {AppAdministracionAsistenciaLaboralComponent} from './administracion-asistencia-laboral/app.administracion-asistencia-laboral.component';
 import {TableModule} from 'primeng/table';
 import {DataViewModule} from 'primeng/dataview';
 import {PanelModule} from 'primeng/panel';
@@ -42,6 +43,7 @@ import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {TabViewModule} from 'primeng';
 import {InputNumberModule} from 'primeng/inputnumber';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -85,7 +87,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 
     ],
     declarations: [
-        AppAsistenciaLaboralComponent,
+        AppAsistenciaLaboralComponent, AppAdministracionAsistenciaLaboralComponent
     ]
 })
 export class AdministrativoModule {

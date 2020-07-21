@@ -1,5 +1,10 @@
 import {Component} from '@angular/core';
 import {AppMainComponent} from '../../layouts/full/app.main.component';
+import {User} from '../../models/authentication/user';
+import {Role} from '../../models/authentication/role';
+import {ServiceService} from '../../services/administrativo/service.service';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-topbar',
@@ -27,11 +32,11 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
                     </a>
 
                     <div class="layout-megamenu-wrapper">
-<!--                        <a class="layout-megamenu-button" href="#" (click)="app.onMegaMenuButtonClick($event)">-->
-<!--                            <i class="pi pi-comment"></i>-->
-<!--                            Mega Menu-->
-<!--                        </a>-->
-<!--                        <ul class="layout-megamenu" [ngClass]="{'layout-megamenu-active fadeInDown': app.megaMenuActive}"-->
+                        <!--                        <a class="layout-megamenu-button" href="#" (click)="app.onMegaMenuButtonClick($event)">-->
+                        <!--                            <i class="pi pi-comment"></i>-->
+                        <!--                            Mega Menu-->
+                        <!--                        </a>-->
+                        <!--                        <ul class="layout-megamenu" [ngClass]="{'layout-megamenu-active fadeInDown': app.megaMenuActive}"-->
                         <!--                            (click)="app.onMegaMenuClick($event)">-->
                         <!--                            <li [ngClass]="{'active-topmenuitem': activeItem === 1}" (click)="mobileMegaMenuItemClick(1)">-->
                         <!--                                <a href="#">JavaServer Faces <i class="pi pi-angle-down"></i></a>-->
@@ -103,151 +108,153 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
                 </div>
                 <div class="layout-topbar-right fadeInDown">
                     <ul class="layout-topbar-actions">
-<!--                        <li #search class="search-item topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === search}">-->
-<!--                            <a href="#" class="topbar-search-mobile-button" (click)="app.onTopbarItemClick($event,search)">-->
-<!--                                <i class="topbar-icon pi pi-search"></i>-->
-<!--                            </a>-->
-<!--                            <ul class="search-item-submenu fadeInDown" (click)="app.topbarItemClick = true">-->
-<!--                                <li>-->
-<!--                                    <span class="md-inputfield search-input-wrapper">-->
-<!--                                        <input pInputText placeholder="Search..."/>-->
-<!--                                        <i class="pi pi-search"></i>-->
-<!--                                    </span>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                        <li #calendar class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === calendar}">-->
-<!--                            <a href="#" (click)="app.onTopbarItemClick($event,calendar)">-->
-<!--                                <i class="topbar-icon pi pi-calendar"></i>-->
-<!--                            </a>-->
-<!--                            <ul class="fadeInDown" (click)="app.topbarItemClick = true">-->
-<!--                                <li class="layout-submenu-header">-->
-<!--                                    <h1>Calendar</h1>-->
-<!--                                </li>-->
-<!--                                <li class="calendar">-->
-<!--                                    <p-calendar [inline]="true"></p-calendar>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                        <li #search class="search-item topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === search}">-->
+                        <!--                            <a href="#" class="topbar-search-mobile-button" (click)="app.onTopbarItemClick($event,search)">-->
+                        <!--                                <i class="topbar-icon pi pi-search"></i>-->
+                        <!--                            </a>-->
+                        <!--                            <ul class="search-item-submenu fadeInDown" (click)="app.topbarItemClick = true">-->
+                        <!--                                <li>-->
+                        <!--                                    <span class="md-inputfield search-input-wrapper">-->
+                        <!--                                        <input pInputText placeholder="Search..."/>-->
+                        <!--                                        <i class="pi pi-search"></i>-->
+                        <!--                                    </span>-->
+                        <!--                                </li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
+                        <!--                        <li #calendar class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === calendar}">-->
+                        <!--                            <a href="#" (click)="app.onTopbarItemClick($event,calendar)">-->
+                        <!--                                <i class="topbar-icon pi pi-calendar"></i>-->
+                        <!--                            </a>-->
+                        <!--                            <ul class="fadeInDown" (click)="app.topbarItemClick = true">-->
+                        <!--                                <li class="layout-submenu-header">-->
+                        <!--                                    <h1>Calendar</h1>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="calendar">-->
+                        <!--                                    <p-calendar [inline]="true"></p-calendar>-->
+                        <!--                                </li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
 
-<!--                        <li #message class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === message}">-->
-<!--                            <a href="#" (click)="app.onTopbarItemClick($event,message)">-->
-<!--                                <i class="topbar-icon pi pi-inbox"></i>-->
-<!--                            </a>-->
-<!--                            <ul class="fadeInDown">-->
-<!--                                <li class="layout-submenu-header">-->
-<!--                                    <h1>Messages</h1>-->
-<!--                                    <span>Today, you have new 4 messages</span>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <img src="assets/layout/images/topbar/avatar-cayla.png" alt="mirage-layout" width="35"/>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Override the digital divide</p>-->
-<!--                                        <span>Cayla Brister</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <img src="assets/layout/images/topbar/avatar-gabie.png" alt="mirage-layout" width="35"/>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Nanotechnology immersion</p>-->
-<!--                                        <span>Gabie Sheber</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <img src="assets/layout/images/topbar/avatar-gaspar.png" alt="mirage-layout" width="35"/>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>User generated content</p>-->
-<!--                                        <span>Gaspar Antunes</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <img src="assets/layout/images/topbar/avatar-tatiana.png" alt="mirage-layout" width="35"/>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>The holistic world view</p>-->
-<!--                                        <span>Tatiana Gagelman</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                        <li #message class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === message}">-->
+                        <!--                            <a href="#" (click)="app.onTopbarItemClick($event,message)">-->
+                        <!--                                <i class="topbar-icon pi pi-inbox"></i>-->
+                        <!--                            </a>-->
+                        <!--                            <ul class="fadeInDown">-->
+                        <!--                                <li class="layout-submenu-header">-->
+                        <!--                                    <h1>Messages</h1>-->
+                        <!--                                    <span>Today, you have new 4 messages</span>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="layout-submenu-item">-->
+                        <!--                                    <img src="assets/layout/images/topbar/avatar-cayla.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                    <div class="menu-text">-->
+                        <!--                                        <p>Override the digital divide</p>-->
+                        <!--                                        <span>Cayla Brister</span>-->
+                        <!--                                    </div>-->
+                        <!--                                    <i class="pi pi-angle-right"></i>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="layout-submenu-item">-->
+                        <!--                                    <img src="assets/layout/images/topbar/avatar-gabie.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                    <div class="menu-text">-->
+                        <!--                                        <p>Nanotechnology immersion</p>-->
+                        <!--                                        <span>Gabie Sheber</span>-->
+                        <!--                                    </div>-->
+                        <!--                                    <i class="pi pi-angle-right"></i>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="layout-submenu-item">-->
+                        <!--                                    <img src="assets/layout/images/topbar/avatar-gaspar.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                    <div class="menu-text">-->
+                        <!--                                        <p>User generated content</p>-->
+                        <!--                                        <span>Gaspar Antunes</span>-->
+                        <!--                                    </div>-->
+                        <!--                                    <i class="pi pi-angle-right"></i>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="layout-submenu-item">-->
+                        <!--                                    <img src="assets/layout/images/topbar/avatar-tatiana.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                    <div class="menu-text">-->
+                        <!--                                        <p>The holistic world view</p>-->
+                        <!--                                        <span>Tatiana Gagelman</span>-->
+                        <!--                                    </div>-->
+                        <!--                                    <i class="pi pi-angle-right"></i>-->
+                        <!--                                </li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
 
-<!--                        <li #gift class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === gift}">-->
-<!--                            <a href="#" (click)="app.onTopbarItemClick($event,gift)">-->
-<!--                                <i class="topbar-icon pi pi-envelope"></i>-->
-<!--                            </a>-->
-<!--                            <ul class="fadeInDown">-->
-<!--                                <li class="layout-submenu-header">-->
-<!--                                    <h1>Deals</h1>-->
-<!--                                </li>-->
+                        <!--                        <li #gift class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === gift}">-->
+                        <!--                            <a href="#" (click)="app.onTopbarItemClick($event,gift)">-->
+                        <!--                                <i class="topbar-icon pi pi-envelope"></i>-->
+                        <!--                            </a>-->
+                        <!--                            <ul class="fadeInDown">-->
+                        <!--                                <li class="layout-submenu-header">-->
+                        <!--                                    <h1>Deals</h1>-->
+                        <!--                                </li>-->
 
-<!--                                <li class="deals">-->
-<!--                                    <ul>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-sapphire.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Sapphire</p>-->
-<!--                                                <span>Angular</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-roma.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Roma</p>-->
-<!--                                                <span>Minimalism</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-babylon.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Babylon</p>-->
-<!--                                                <span>Powerful</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                    <ul>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-harmony.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Harmony</p>-->
-<!--                                                <span>USWDS</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-prestige.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Prestige</p>-->
-<!--                                                <span>Elegancy</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <img src="assets/layout/images/topbar/deal-icon-ultima.png" alt="mirage-layout" width="35"/>-->
-<!--                                            <div class="menu-text">-->
-<!--                                                <p>Ultima</p>-->
-<!--                                                <span>Material</span>-->
-<!--                                            </div>-->
-<!--                                            <i class="pi pi-angle-right"></i>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                                <li class="deals">-->
+                        <!--                                    <ul>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-sapphire.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Sapphire</p>-->
+                        <!--                                                <span>Angular</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-roma.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Roma</p>-->
+                        <!--                                                <span>Minimalism</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-babylon.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Babylon</p>-->
+                        <!--                                                <span>Powerful</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                    </ul>-->
+                        <!--                                    <ul>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-harmony.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Harmony</p>-->
+                        <!--                                                <span>USWDS</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-prestige.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Prestige</p>-->
+                        <!--                                                <span>Elegancy</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                        <li>-->
+                        <!--                                            <img src="assets/layout/images/topbar/deal-icon-ultima.png" alt="mirage-layout" width="35"/>-->
+                        <!--                                            <div class="menu-text">-->
+                        <!--                                                <p>Ultima</p>-->
+                        <!--                                                <span>Material</span>-->
+                        <!--                                            </div>-->
+                        <!--                                            <i class="pi pi-angle-right"></i>-->
+                        <!--                                        </li>-->
+                        <!--                                    </ul>-->
+                        <!--                                </li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
 
                         <li #profile class="topbar-item profile-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === profile}">
                             <a href="#" (click)="app.onTopbarItemClick($event,profile)">
                             <span class="profile-image-wrapper">
-                                <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout"/>
+                                <!--Imagen perfil principal-->
+                                <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}" class="ui-button-rounded"
+                                     alt="mirage-layout"/>
                             </span>
                                 <span class="profile-info-wrapper">
-                                <h3>Olivia Eklund</h3>
-                                <span>Design</span>
+                                <h3>{{user.first_name}} {{user.first_lastname}}</h3>
+                                <span>{{role.name}}</span>
                             </span>
                             </a>
                             <ul class="profile-item-submenu fadeInDown">
@@ -257,47 +264,49 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
                                         <img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout"/>
                                     </div>
                                     <div class="profile">
-                                        <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout"
+                                        <!--Imagen pequeña-->
+                                        <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}"
+                                             class="ui-button-rounded" alt="mirage-layout"
                                              width="40"/>
-                                        <h1>Olivia Eklund</h1>
-                                        <span>Design</span>
+                                        <h1>{{user.first_name}} {{user.first_lastname}}</h1>
+                                        <span>{{role.name}}</span>
                                     </div>
                                 </li>
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <i class="pi pi-list icon icon-1"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Tasks</p>-->
-<!--                                        <span>3 open issues</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <i class="pi pi-shopping-cart icon icon-2"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Payments</p>-->
-<!--                                        <span>24 new</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li class="layout-submenu-item">-->
-<!--                                    <i class="pi pi-users icon icon-3"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Clients</p>-->
-<!--                                        <span>+80%</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
+                                <!--                                <li class="layout-submenu-item">-->
+                                <!--                                    <i class="pi pi-list icon icon-1"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Tasks</p>-->
+                                <!--                                        <span>3 open issues</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
+                                <!--                                <li class="layout-submenu-item">-->
+                                <!--                                    <i class="pi pi-shopping-cart icon icon-2"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Payments</p>-->
+                                <!--                                        <span>24 new</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
+                                <!--                                <li class="layout-submenu-item">-->
+                                <!--                                    <i class="pi pi-users icon icon-3"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Clients</p>-->
+                                <!--                                        <span>+80%</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
                                 <li class="layout-submenu-footer">
-                                    <button class="signout-button">Sign Out</button>
-<!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
+                                    <button class="signout-button" (click)="logout()">Sign Out</button>
+                                    <!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
                                 </li>
                             </ul>
                         </li>
-<!--                        <li>-->
-<!--                            <a href="#" class="layout-rightpanel-button" (click)="app.onRightPanelButtonClick($event)">-->
-<!--                                <i class="pi pi-arrow-left"></i>-->
-<!--                            </a>-->
-<!--                        </li>-->
+                        <!--                        <li>-->
+                        <!--                            <a href="#" class="layout-rightpanel-button" (click)="app.onRightPanelButtonClick($event)">-->
+                        <!--                                <i class="pi pi-arrow-left"></i>-->
+                        <!--                            </a>-->
+                        <!--                        </li>-->
                     </ul>
 
                     <ul class="profile-mobile-wrapper">
@@ -305,11 +314,12 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
                             [ngClass]="{'active-topmenuitem': app.activeTopbarItem === mobileProfile}">
                             <a href="#" (click)="app.onTopbarItemClick($event,mobileProfile)">
                             <span class="profile-image-wrapper">
-                                <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout"/>
+                                <!--Imagen mobile-->
+                                <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}" class="ui-button-rounded" alt="mirage-layout"/>
                             </span>
                                 <span class="profile-info-wrapper">
-                                <h3>Olivia Eklund</h3>
-                                <span>Design</span>
+                                <h3>{{user.first_name}} {{user.first_lastname}}</h3>
+                                <span>{{role.name}}</span>
                             </span>
                             </a>
                             <ul class="fadeInDown">
@@ -319,38 +329,39 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
                                         <img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout"/>
                                     </div>
                                     <div class="profile">
-                                        <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout" width="45"/>
-                                        <h1>Olivia Eklund</h1>
-                                        <span>Design</span>
+                                        <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}" alt="mirage-layout"
+                                             width="45"/>
+                                        <h1>{{user.first_name}} {{user.first_lastname}}</h1>
+                                        <span>{{role.name}}</span>
                                     </div>
                                 </li>
-<!--                                <li>-->
-<!--                                    <i class="pi pi-list icon icon-1"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Tasks</p>-->
-<!--                                        <span>3 open issues</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <i class="pi pi-shopping-cart icon icon-2"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Payments</p>-->
-<!--                                        <span>24 new</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <i class="pi pi-users icon icon-3"></i>-->
-<!--                                    <div class="menu-text">-->
-<!--                                        <p>Clients</p>-->
-<!--                                        <span>+80%</span>-->
-<!--                                    </div>-->
-<!--                                    <i class="pi pi-angle-right"></i>-->
-<!--                                </li>-->
+                                <!--                                <li>-->
+                                <!--                                    <i class="pi pi-list icon icon-1"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Tasks</p>-->
+                                <!--                                        <span>3 open issues</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
+                                <!--                                <li>-->
+                                <!--                                    <i class="pi pi-shopping-cart icon icon-2"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Payments</p>-->
+                                <!--                                        <span>24 new</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
+                                <!--                                <li>-->
+                                <!--                                    <i class="pi pi-users icon icon-3"></i>-->
+                                <!--                                    <div class="menu-text">-->
+                                <!--                                        <p>Clients</p>-->
+                                <!--                                        <span>+80%</span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <i class="pi pi-angle-right"></i>-->
+                                <!--                                </li>-->
                                 <li class="layout-submenu-footer">
-                                    <button class="signout-button">Sign Out</button>
-<!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
+                                    <button class="signout-button" (click)="logout()">Sign Out</button>
+                                    <!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
                                 </li>
                             </ul>
                         </li>
@@ -363,8 +374,12 @@ import {AppMainComponent} from '../../layouts/full/app.main.component';
 export class AppTopBarComponent {
 
     activeItem: number;
+    user: User;
+    role: Role;
 
-    constructor(public app: AppMainComponent) {
+    constructor(public app: AppMainComponent, private service: ServiceService, private router: Router, private spinner: NgxSpinnerService) {
+        this.user = JSON.parse(localStorage.getItem('user')) as User;
+        this.role = JSON.parse(localStorage.getItem('role')) as Role;
     }
 
     mobileMegaMenuItemClick(index) {
@@ -372,4 +387,25 @@ export class AppTopBarComponent {
         this.activeItem = this.activeItem === index ? null : index;
     }
 
+    logout() {
+        this.spinner.show();
+        this.service.get('auth/logout?user_id=' + this.user.id).subscribe(
+            response => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('roles');
+                localStorage.removeItem('isLoggedin');
+                this.spinner.hide();
+                this.router.navigate(['authentication/login']);
+            }, error => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('roles');
+                localStorage.removeItem('isLoggedin');
+                this.spinner.hide();
+            }
+        );
+    }
 }

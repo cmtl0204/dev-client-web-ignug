@@ -19,12 +19,13 @@ import {AppErrorComponent} from './pages/authentication/500/app.error.component'
 import {AppAccessdeniedComponent} from './pages/authentication/401/app.accessdenied.component';
 import {AppLoginComponent} from './pages/authentication/login/app.login.component';
 import {BlankComponent} from './layouts/blank/blank.component';
+import {AuthGuard} from './shared/auth-guard/auth.guard';
 
 export const routes: Routes = [
     {
         path: '', component: AppMainComponent,
         children: [
-            {path: '', component: DashboardDemoComponent},
+            {path: '', component: DashboardDemoComponent, canActivate: [AuthGuard]},
             {path: 'components/sample', component: SampleDemoComponent},
             {path: 'components/forms', component: FormsDemoComponent},
             {path: 'components/data', component: DataDemoComponent},
@@ -47,7 +48,8 @@ export const routes: Routes = [
             },
             {
                 path: 'administrativo',
-                loadChildren: () => import('./pages/administrativo/administrativo.module').then(m => m.AdministrativoModule)
+                loadChildren: () => import('./pages/administrativo/administrativo.module').then(m => m.AdministrativoModule),
+                canActivate: [AuthGuard]
             },
         ]
     },

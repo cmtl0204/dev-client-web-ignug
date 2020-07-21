@@ -33,6 +33,8 @@ import {AppLoginComponent} from './login/app.login.component';
 import {FormsModule} from '@angular/forms';
 import {AuthenticationRoutes} from './authentication.routing';
 import {TooltipModule} from 'primeng/tooltip';
+import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng';
 
 @NgModule({
     imports: [
@@ -62,6 +64,8 @@ import {TooltipModule} from 'primeng/tooltip';
         SplitButtonModule,
         PasswordModule,
         TooltipModule,
+        ToastModule,
+        MessagesModule,
 
     ],
     declarations: [

@@ -1,4 +1,4 @@
-import {User} from './user';
+import {User} from '../authentication/user';
 import {State} from './state';
 import {Workday} from './workday';
 

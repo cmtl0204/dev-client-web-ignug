@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BreadcrumbService} from '../../../shared/breadcrumb/breadcrumb.service';
 import {Car} from '../../../demo/domain/car';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem, TreeNode} from 'primeng/api';
 import {CarService} from '../../../demo/service/carservice';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -13,22 +13,37 @@ import {Attendance} from '../../../models/administrativo/attendance';
 import {Workday} from '../../../models/administrativo/workday';
 import {Catalogue} from '../../../models/administrativo/catalogue';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {User} from '../../../models/authentication/user';
+import {Task} from '../../../models/administrativo/task';
 
 @Component({
     selector: 'app-asistencia-laboral',
     templateUrl: './app.asistencia-laboral.component.html',
     styleUrls: ['app.asistencia-laboral.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [MessageService]
 })
 export class AppAsistenciaLaboralComponent implements OnInit {
-    docenteActividadesItems: SelectItem[];
+    docenteActividadesAcademicoItems: any[];
+    docenteActividadesInvestigacionItems: any[];
+    docenteActividadesVinculacionItems: any[];
+    docenteActividadesAdministrativoItems: any[];
     selectedMultiSelectDocenteActividades: string[];
-    actividadesSeleccionadas: any[];
+    actividadesAcademicoSeleccionadas: any[];
+    actividadesInvestifacionSeleccionadas: any[];
+    actividadesVinculacionSeleccionadas: any[];
+    actividadesAdministrativoSeleccionadas: any[];
     cols: any[];
+    colsActividades: any[];
+    sourceCars: Car[];
+    targetCars: Car[];
+    actividadSeleccionada: any;
+    display: boolean;
 
     docenteActividades: Array<Catalogue>;
     selectedCar: Car;
     totalHorasTrabajadas: Date;
+    totalHorasAlmuerzo: Date;
     horaInicioJornada: string;
     horaFinJornada: string;
     docenteAsistencia: Attendance;
@@ -38,19 +53,27 @@ export class AppAsistenciaLaboralComponent implements OnInit {
     fechaActual: Date;
     events: any[];
     fullCalendarOptions: any;
+    user: User;
 
-    constructor(private carService: CarService, private eventService: EventService, private nodeService: NodeService,
+    constructor(private message: MessageService, private carService: CarService, private eventService: EventService, private nodeService: NodeService,
                 private breadcrumbService: BreadcrumbService, private service: ServiceService, private spinner: NgxSpinnerService) {
         this.breadcrumbService.setItems([
-            {label: 'Asistencia'}
+            {label: 'Registro Asistencia'}
         ]);
+        this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.docenteAsistencia = new Attendance();
         this.jornadaActual = new Workday();
         this.almuerzoActual = new Workday();
         this.horaInicioJornada = '';
         this.horaFinJornada = null;
         this.selectedMultiSelectDocenteActividades = [];
-        this.actividadesSeleccionadas = [];
+        this.actividadesAcademicoSeleccionadas = [];
+        this.actividadesInvestifacionSeleccionadas = [];
+        this.actividadesVinculacionSeleccionadas = [];
+        this.actividadesAdministrativoSeleccionadas = [];
+        this.carService.getCarsMedium().then(cars => this.sourceCars = cars);
+        this.targetCars = [];
+        this.actividadSeleccionada = new Task();
     }
 
     ngOnInit() {
@@ -59,6 +82,11 @@ export class AppAsistenciaLaboralComponent implements OnInit {
             {field: 'start_time', header: 'Hora Inicio'},
             {field: 'end_time', header: 'Hora Fin'},
             {field: 'duration', header: 'Duración'},
+        ];
+        this.colsActividades = [
+            {field: 'name', header: 'Actividad'},
+            {field: 'percentage_advance', header: 'Porcentaje de Avance'},
+
         ];
         this.obtenerJornadaActividadesDiaria();
         this.obtenerJornadaActividadesTodos();
@@ -77,7 +105,8 @@ export class AppAsistenciaLaboralComponent implements OnInit {
 
     obtenerJornadaActividadesTodos() {
         this.spinner.show();
-        this.service.get('workdays/all?user_id=5').subscribe(
+        const parametros = '?user_id=' + this.user.id;
+        this.service.get('workdays/all' + parametros).subscribe(
             response => {
                 if (response) {
                     const asistencias = response['data']['attributes'];
@@ -116,14 +145,17 @@ export class AppAsistenciaLaboralComponent implements OnInit {
     }
 
     obtenerJornadaActividadesDiaria() {
+        const parametros = '?user_id=' + this.user.id;
         this.spinner.show();
-        this.service.get('workdays/current_day?user_id=5').subscribe(
+        this.service.get('workdays/current_day' + parametros).subscribe(
             response => {
                 if (response['data']) {
                     this.jornadaActividades = response['data']['attributes'];
                     this.fechaActual = new Date(response['meta']['current_day']);
                     let totalHorasTrabajadas = '00:00:00';
+                    let totalHorasAlmuerzo = '00:00:00';
                     this.totalHorasTrabajadas = new Date();
+                    this.totalHorasAlmuerzo = new Date();
                     if (this.jornadaActividades) {
                         this.jornadaActividades.forEach(actividad => {
                             if (actividad.type.code === 'work') {
@@ -143,16 +175,27 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                                 } else {
                                     this.almuerzoActual = new Workday();
                                 }
+                                if (actividad.end_time !== null) {
+                                    totalHorasAlmuerzo = this.sumarHoras(actividad.duration, totalHorasAlmuerzo);
+                                }
                             }
                         });
 
                         const duracionJornada = totalHorasTrabajadas.split(':');
-                        const horas = Number(duracionJornada[0]);
-                        const minutos = Number(duracionJornada[1]);
-                        const segundos = Number(duracionJornada[2]);
+                        let horas = Number(duracionJornada[0]);
+                        let minutos = Number(duracionJornada[1]);
+                        let segundos = Number(duracionJornada[2]);
                         this.totalHorasTrabajadas.setHours(horas);
                         this.totalHorasTrabajadas.setMinutes(minutos);
                         this.totalHorasTrabajadas.setSeconds(segundos);
+
+                        const duracionAlmuerzo = totalHorasAlmuerzo.split(':');
+                        horas = Number(duracionAlmuerzo[0]);
+                        minutos = Number(duracionAlmuerzo[1]);
+                        segundos = Number(duracionAlmuerzo[2]);
+                        this.totalHorasAlmuerzo.setHours(horas);
+                        this.totalHorasAlmuerzo.setMinutes(minutos);
+                        this.totalHorasAlmuerzo.setSeconds(segundos);
                     }
                 }
                 this.spinner.hide();
@@ -177,11 +220,12 @@ export class AppAsistenciaLaboralComponent implements OnInit {
             'type': 'work',
         };
 
-        const parametros = '?user_id=5';
+        const parametros = '?user_id=' + this.user.id;
         this.spinner.show();
         this.service.post('workdays' + parametros, {'attendance': attendance, 'workday': workday}).subscribe(
             response => {
                 this.obtenerJornadaActividadesDiaria();
+                this.message.add({key: 'tst', severity: 'success', summary: 'Se inició correctamente', detail: type});
                 this.spinner.hide();
             }, error => {
                 this.spinner.hide();
@@ -199,6 +243,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         this.spinner.show();
         this.service.update('workdays', {'workday': workday}).subscribe(
             response => {
+                this.message.add({key: 'tst', severity: 'success', summary: 'Se finalizó correctamente', detail: workday.type.name});
                 this.obtenerJornadaActividadesDiaria();
                 this.obtenerJornadaActividadesTodos();
                 this.spinner.hide();
@@ -208,11 +253,12 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         );
     }
 
-    eliminarJornadaActividad(id: number) {
+    eliminarJornadaActividad(workday: Workday) {
         this.spinner.show();
-        this.service.delete('workdays/' + id).subscribe(
+        this.service.delete('workdays/' + workday.id).subscribe(
             response => {
                 if (response) {
+                    this.message.add({key: 'tst', severity: 'success', summary: 'Se eliminó correctamente', detail: workday.type.name});
                     this.obtenerJornadaActividadesTodos();
                     this.obtenerJornadaActividadesDiaria();
                     this.spinner.hide();
@@ -251,44 +297,56 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         return horaSuma + ':' + minutoSuma + ':' + segundoSuma;
     }
 
-    agregarActividad() {
-        let i = 0;
-        const indices = [];
-        this.actividadesSeleccionadas.forEach(actividadSeleccionada => {
-            const actividad = this.selectedMultiSelectDocenteActividades.find(element => Number(element) === actividadSeleccionada.tipo_id);
-            if (actividad === undefined) {
-                indices.push(i);
-            }
-            i++;
-        });
-        indices.forEach(value => {
-            this.actividadesSeleccionadas.splice(value, 1);
-        });
-        this.selectedMultiSelectDocenteActividades.forEach(actividadSeleccionada => {
-            if (this.actividadesSeleccionadas.find(x => x.tipo_id === actividadSeleccionada) === undefined) {
-                const actividadEncontrada = this.docenteActividades.find(element => element.id === Number(actividadSeleccionada));
-                this.actividadesSeleccionadas.push(
-                    {
-                        'type_id': actividadEncontrada.id,
-                        'description': '',
-                        'type': {'name': actividadEncontrada.name},
-                        'percentage_advance': 0
-                    }
-                );
-            }
-        });
-        this.guardarActividades();
-    }
-
-    guardarActividades() {
+    guardarActividades(type: string) {
 
         // if (this.actividadesSeleccionadas.length > 0) {
-        const parametros = '?user_id=5';
+        const parametros = '?user_id=' + this.user.id;
         this.spinner.show();
-        this.service.post('tasks' + parametros, {'tasks': this.actividadesSeleccionadas}).subscribe(
+        this.service.post('tasks' + parametros, {'tasks': this.actividadesAcademicoSeleccionadas}).subscribe(
             response => {
+                this.message.add({
+                    key: 'tst',
+                    severity: 'success',
+                    summary: 'Se guardó correctamente',
+                    detail: type,
+                    life: type.length * 100
+                });
                 if (response['data']) {
-                    this.actividadesSeleccionadas = response['data']['attributes'];
+                    response['data']['attributes'].forEach(actividad => {
+                        if (actividad.type.code === 'academic') {
+                            this.actividadesAcademicoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'administrative') {
+                            this.actividadesAcademicoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'entailment') {
+                            this.actividadesAcademicoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'investigation') {
+                            this.actividadesAcademicoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                    });
+
                 }
                 this.spinner.hide();
             },
@@ -300,39 +358,117 @@ export class AppAsistenciaLaboralComponent implements OnInit {
     }
 
     obtenerCatalogoDocenteActividades() {
-        this.service.get('catalogues?type=tasks.activity').subscribe(
+        this.service.get('tasks/catalogues').subscribe(
             response => {
-                this.docenteActividades = response['data']['attributes'];
-                if (this.docenteActividades) {
-                    this.docenteActividadesItems = [];
-                    this.docenteActividades.forEach(docenteActividad => {
-                            this.docenteActividadesItems.push({label: docenteActividad.name, value: docenteActividad.id});
+                if (response['data']['attributes']) {
+                    this.docenteActividadesAcademicoItems = [];
+                    this.docenteActividadesInvestigacionItems = [];
+                    this.docenteActividadesVinculacionItems = [];
+                    this.docenteActividadesAdministrativoItems = [];
+                    response['data']['attributes'].forEach(docenteActividad => {
+                            if (docenteActividad.code === 'academic') {
+                                docenteActividad.tasks.forEach(actividad => {
+                                    this.docenteActividadesAcademicoItems.push(
+                                        {
+                                            'type_id': actividad.id,
+                                            'name': actividad.name,
+                                            'description': '',
+                                            'percentage_advance': 0
+                                        }
+                                    );
+                                });
+
+                            }
+                            if (docenteActividad.code === 'administrative') {
+                                docenteActividad.tasks.forEach(actividad => {
+                                    this.docenteActividadesAdministrativoItems.push(
+                                        {
+                                            'type_id': actividad.id,
+                                            'name': actividad.name,
+                                            'description': '',
+                                            'percentage_advance': 0
+                                        }
+                                    );
+                                });
+
+                            }
+                            if (docenteActividad.code === 'entailment') {
+                                docenteActividad.tasks.forEach(actividad => {
+                                    this.docenteActividadesVinculacionItems.push(
+                                        {
+                                            'type_id': actividad.id,
+                                            'name': actividad.name,
+                                            'description': '',
+                                            'percentage_advance': 0
+                                        }
+                                    );
+                                });
+
+                            }
+                            if (docenteActividad.code === 'investigation') {
+                                docenteActividad.tasks.forEach(actividad => {
+                                    this.docenteActividadesInvestigacionItems.push(
+                                        {
+                                            'type_id': actividad.id,
+                                            'name': actividad.name,
+                                            'description': '',
+                                            'percentage_advance': 0
+                                        }
+                                    );
+                                });
+
+                            }
                         }
-                    )
-                    ;
+                    );
                 }
             }
         );
     }
 
     obtenerDocenteActividades() {
-        const parametros = '?user_id=5';
+        const parametros = '?user_id=' + this.user.id;
         this.spinner.show();
         this.service.get('tasks/current_day' + parametros).subscribe(
             response => {
-                if (response) {
-                    if (response['data']) {
-                        response['data']['attributes'].forEach(value => {
-                            this.selectedMultiSelectDocenteActividades.push(value.type_id);
-                            this.actividadesSeleccionadas.push(
-                                {
-                                    'type_id': value.type_id,
-                                    'description': value.description,
-                                    'type': {'name': value.type.name},
-                                    'percentage_advance': value.percentage_advance
-                                });
-                        });
-                    }
+                if (response['data']) {
+                    this.actividadesAcademicoSeleccionadas = [];
+                    this.actividadesAdministrativoSeleccionadas = [];
+                    this.actividadesVinculacionSeleccionadas = [];
+                    this.actividadesInvestifacionSeleccionadas = [];
+                    response['data']['attributes'].forEach(actividad => {
+                        if (actividad.type.code === 'academic') {
+                            this.actividadesAcademicoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'administrative') {
+                            this.actividadesAdministrativoSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'entailment') {
+                            this.actividadesVinculacionSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                        if (actividad.type.code === 'investigation') {
+                            this.actividadesInvestifacionSeleccionadas.push({
+                                'type_id': actividad.type_id,
+                                'name': actividad.type.name,
+                                'description': actividad.description,
+                                'percentage_advance': actividad.percentage_advance
+                            });
+                        }
+                    });
                 }
                 this.spinner.hide();
             }, error => {
@@ -340,5 +476,18 @@ export class AppAsistenciaLaboralComponent implements OnInit {
             }
         );
     }
+
+    registrar() {
+        this.message.add({
+            key: 'tst',
+            severity: 'success',
+            summary: 'Se registró correctamente',
+            detail: this.actividadSeleccionada.name
+        });
+        this.docenteActividadesAcademicoItems
+            [this.docenteActividadesAcademicoItems.findIndex(element => element.type_id === this.actividadSeleccionada.type_id)]
+            .percentage_advance = this.actividadSeleccionada.percentage_advance;
+    }
 }
+
 

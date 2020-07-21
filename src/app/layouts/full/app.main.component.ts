@@ -1,5 +1,5 @@
-import {Component, Renderer2, ViewChild} from '@angular/core';
-import {MenuService} from '../../shared/menu/app.menu.service';
+import {Component, Renderer2} from '@angular/core';
+import {MenuService} from './../../shared/menu/app.menu.service';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 
 @Component({
@@ -18,6 +18,7 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
     ]
 })
 export class AppMainComponent {
+
     horizontalMenu: boolean;
 
     darkMode = false;
@@ -65,7 +66,6 @@ export class AppMainComponent {
     menuHoverActive: boolean;
 
     constructor(public renderer: Renderer2, private menuService: MenuService) {
-
     }
 
     onLayoutClick() {

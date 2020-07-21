@@ -41,8 +41,10 @@ import {PickListModule} from 'primeng/picklist';
 import {OrderListModule} from 'primeng/orderlist';
 import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
-import {TabViewModule} from 'primeng';
+import {AccordionModule, DialogService, TabViewModule} from 'primeng';
+import {DialogModule} from 'primeng/dialog';
 import {InputNumberModule} from 'primeng/inputnumber';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
     imports: [
@@ -84,11 +86,14 @@ import {InputNumberModule} from 'primeng/inputnumber';
         FullCalendarModule,
         TabViewModule,
         InputNumberModule,
-
+        ToastModule,
+        AccordionModule,
+        DialogModule
     ],
     declarations: [
         AppAsistenciaLaboralComponent, AppAdministracionAsistenciaLaboralComponent
-    ]
+    ],
+    providers: [DialogService]
 })
 export class AdministrativoModule {
 }

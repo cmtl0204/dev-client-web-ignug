@@ -8,9 +8,6 @@ import {ChartsDemoComponent} from '../../demo/view/chartsdemo.component';
 @Component({
     selector: 'app-config',
     template: `
-        <a href="#" class="layout-config-button" (click)="onConfigButtonClick($event)">
-            <i class="pi pi-cog"></i>
-        </a>
         <div id="layout-config" class="layout-config" [ngClass]="{'layout-config-exit-done': !app.configDialogActive,
         'layout-config-enter-done': app.configDialogActive}" [@children]="app.configDialogActive ? 'visibleAnimated' : 'hiddenAnimated'">
             <div class="layout-config-content">
@@ -101,6 +98,9 @@ import {ChartsDemoComponent} from '../../demo/view/chartsdemo.component';
                 </p-tabView>
             </div>
         </div>
+        <a href="#" class="layout-config-button" (click)="onConfigButtonClick($event)">
+            <i class="pi pi-cog"></i>
+        </a>
     `,
     animations: [
         trigger('children', [

@@ -5,10 +5,13 @@ import {Role} from '../../models/authentication/role';
 import {ServiceService} from '../../services/administrativo/service.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Router} from '@angular/router';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
+    providers: [MessageService],
     selector: 'app-topbar',
     template: `
+        <p-toast key="tst"></p-toast>
         <div class="layout-topbar">
             <div class="layout-topbar-wrapper">
                 <div class="layout-topbar-left">
@@ -298,7 +301,7 @@ import {Router} from '@angular/router';
                                 <!--                                </li>-->
                                 <li class="layout-submenu-footer">
                                     <button class="signout-button" (click)="logout()">Sign Out</button>
-                                    <!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
+                                    <button class="buy-mirage-button" (click)="display=true">Change Password</button>
                                 </li>
                             </ul>
                         </li>
@@ -315,7 +318,8 @@ import {Router} from '@angular/router';
                             <a href="#" (click)="app.onTopbarItemClick($event,mobileProfile)">
                             <span class="profile-image-wrapper">
                                 <!--Imagen mobile-->
-                                <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}" class="ui-button-rounded" alt="mirage-layout"/>
+                                <img src="{{'assets/layout/images/topbar/avatars/'+user.identification+'.jpg'}}" class="ui-button-rounded"
+                                     alt="mirage-layout"/>
                             </span>
                                 <span class="profile-info-wrapper">
                                 <h3>{{user.first_name}} {{user.first_lastname}}</h3>
@@ -361,7 +365,7 @@ import {Router} from '@angular/router';
                                 <!--                                </li>-->
                                 <li class="layout-submenu-footer">
                                     <button class="signout-button" (click)="logout()">Sign Out</button>
-                                    <!--                                    <button class="buy-mirage-button">Buy Mirage</button>-->
+                                    <button class="buy-mirage-button" (click)="display=true">Change Password</button>
                                 </li>
                             </ul>
                         </li>
@@ -369,6 +373,33 @@ import {Router} from '@angular/router';
                 </div>
             </div>
         </div>
+
+        <p-dialog header="Cambio de Contraseña" [(visible)]="display" modal="true" showEffect="fade" [style]="{width: '450px'}">
+            <label for="password">Ingresa tu nueva contraseña</label>
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+                <input id="password" type="password" size="30" pInputText minlength="6"
+                       [(ngModel)]="user.password" (keyup)="validatePassword()">
+            </div>
+            <br>
+            <p-message *ngIf="user.password && user.password.length<6" severity="error"
+                       text="Tienes que ingresar mínimo 6 caracteres"></p-message>
+
+            <br>
+            <label for="repeatPassword">Repite la contraseña</label>
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+                <input id="repeatPassword" class="ng-dirty ng-invalid" type="password" size="30" pInputText minlength="6"
+                       [(ngModel)]="user.repeatPassword" (keyup)="validatePassword()">
+            </div>
+            <br>
+            <p-message *ngIf="user.password && flagPasswords" severity="error" text="Las contraseñas no coinciden"></p-message>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-refresh" class="ui-button-success"
+                        [disabled]="flagPasswords || (user.password && user.password.length<6)"
+                        (click)="display=false;changePassword()" label="Cambiar"></button>
+            </p-footer>
+        </p-dialog>
     `
 })
 export class AppTopBarComponent {
@@ -376,10 +407,13 @@ export class AppTopBarComponent {
     activeItem: number;
     user: User;
     role: Role;
+    display: boolean;
+    flagPasswords: boolean;
 
-    constructor(public app: AppMainComponent, private service: ServiceService, private router: Router, private spinner: NgxSpinnerService) {
+    constructor(private message: MessageService, public app: AppMainComponent, private service: ServiceService, private router: Router, private spinner: NgxSpinnerService) {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.role = JSON.parse(localStorage.getItem('role')) as Role;
+        this.flagPasswords = true;
     }
 
     mobileMegaMenuItemClick(index) {
@@ -389,23 +423,45 @@ export class AppTopBarComponent {
 
     logout() {
         this.spinner.show();
-        this.service.get('auth/logout?user_id=' + this.user.id).subscribe(
+        this.service.logout().subscribe(
             response => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('user');
-                localStorage.removeItem('roles');
-                localStorage.removeItem('isLoggedin');
                 this.spinner.hide();
                 this.router.navigate(['authentication/login']);
             }, error => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('user');
-                localStorage.removeItem('roles');
-                localStorage.removeItem('isLoggedin');
                 this.spinner.hide();
+                this.router.navigate(['/authentication/login']);
             }
         );
+    }
+
+    validatePassword() {
+        console.log(this.user.password);
+        console.log(this.user.repeatPassword);
+        if ((this.user.password === this.user.repeatPassword) && this.user.password) {
+            this.flagPasswords = false;
+        } else {
+            this.flagPasswords = true;
+        }
+    }
+
+    changePassword() {
+        if (!this.flagPasswords && this.user.password.length >= 6) {
+            this.spinner.show();
+            this.service.update('auth/password', {'user': this.user}).subscribe(
+                response => {
+                    this.message.add({
+                        key: 'tst',
+                        severity: 'success',
+                        summary: 'Cambio de Contraseña',
+                        detail: 'Se cambió la contraseña correctamente'
+                    });
+                    this.spinner.hide();
+                }, error => {
+                    this.spinner.hide();
+                    this.message.add({key: 'tst', severity: 'success', summary: 'Oops tuvimos problemas!', detail: 'Inténtalo de nuevo'});
+                    this.router.navigate(['/authentication/login']);
+                }
+            );
+        }
     }
 }

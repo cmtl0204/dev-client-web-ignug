@@ -45,6 +45,7 @@ import {AccordionModule, DialogService, TabViewModule} from 'primeng';
 import {DialogModule} from 'primeng/dialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
     imports: [
@@ -88,7 +89,8 @@ import {ToastModule} from 'primeng/toast';
         InputNumberModule,
         ToastModule,
         AccordionModule,
-        DialogModule
+        DialogModule,
+        ConfirmDialogModule
     ],
     declarations: [
         AppAsistenciaLaboralComponent, AppAdministracionAsistenciaLaboralComponent

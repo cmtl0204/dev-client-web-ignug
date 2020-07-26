@@ -38,8 +38,16 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     fechaActual: Date;
     events: any[];
     fullCalendarOptions: any;
-    asistencias: any[];
+    resumenAsistencias: any[];
+    detalleAsistencias: any[];
     fechas: Date;
+    sortField: string;
+    sortOrder: number;
+    sortOptions: SelectItem[];
+    filterOptions: SelectItem[];
+    sortKey: string;
+    tipoFiltro: string;
+    exportColumns: any[];
 
     constructor(private carService: CarService, private eventService: EventService, private nodeService: NodeService,
                 private breadcrumbService: BreadcrumbService, private service: ServiceService, private spinner: NgxSpinnerService) {
@@ -48,6 +56,20 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         ]);
         this.docenteAsistencia = new Attendance();
         // this.fechas = [];
+        this.sortOptions = [
+            {label: 'Apellido', value: 'first_lastname'},
+            {label: 'Hora Inicio', value: 'start_time'},
+            {label: 'Hora Fin', value: 'end_time'}
+        ];
+        this.filterOptions = [
+            {label: 'Apellido', value: 'first_lastname'},
+            {label: 'Hora Inicio', value: 'start_time'},
+            {label: 'Hora Fin', value: 'end_time'},
+            {label: 'Duración', value: 'duration'}
+        ];
+        this.tipoFiltro = 'first_lastname';
+        this.resumenAsistencias = [];
+        this.detalleAsistencias = [];
     }
 
     ngOnInit() {
@@ -57,8 +79,11 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             {field: 'first_lastname', header: 'Docente'},
             {field: 'start_time', header: 'Hora Inicio'},
             {field: 'end_time', header: 'Hora Fin'},
+            {field: 'duration', header: 'Duración'},
         ];
-        this.obtenerJornadaActividadesTodos();
+        this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+        this.obtenerJornadaActividadesResumen();
+        this.obtenerJornadaActividadesDetalle();
         this.fullCalendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             defaultDate: new Date(),
@@ -71,7 +96,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
 
     }
 
-    obtenerJornadaActividadesTodos() {
+    obtenerJornadaActividadesResumen() {
         const currentDate = new Date();
         this.spinner.show();
         let parametros = '';
@@ -89,10 +114,10 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             parametros = '?start_date=' + currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
                 + '&end_date=' + currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
         }
-        this.service.get('attendances/all' + parametros).subscribe(
+        this.service.get('attendances/summary' + parametros).subscribe(
             response => {
                 if (response) {
-                    this.asistencias = response['data']['attributes'];
+                    this.resumenAsistencias = response['data']['attributes'];
                     this.spinner.hide();
                 }
             }, error => {
@@ -100,6 +125,37 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             }
         );
     }
+
+    obtenerJornadaActividadesDetalle() {
+        const currentDate = new Date();
+        this.spinner.show();
+        let parametros = '';
+
+        if (this.fechas) {
+            parametros = '?start_date='
+                + this.fechas[0].getFullYear()
+                + '-' + (this.fechas[0].getMonth() + 1)
+                + '-' + this.fechas[0].getDate()
+                + '&end_date='
+                + this.fechas[1].getFullYear()
+                + '-' + (this.fechas[1].getMonth() + 1)
+                + '-' + this.fechas[1].getDate();
+        } else {
+            parametros = '?start_date=' + currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
+                + '&end_date=' + currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+        }
+        this.service.get('attendances/detail' + parametros).subscribe(
+            response => {
+                if (response) {
+                    this.detalleAsistencias = response['data']['attributes'];
+                    this.spinner.hide();
+                }
+            }, error => {
+                this.spinner.hide();
+            }
+        );
+    }
+
 
     sumarHoras(duracion: string, totalHorasTrabajadas: string): string {
         const duracionTotal = totalHorasTrabajadas.split(':');
@@ -132,9 +188,55 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     filtrarFechas() {
         if (this.fechas) {
             if (this.fechas[1] != null) {
-                this.obtenerJornadaActividadesTodos();
+                this.obtenerJornadaActividadesResumen();
+                this.obtenerJornadaActividadesDetalle();
             }
         }
+    }
+
+    onSortChange(event) {
+        const value = event.value;
+        if (value.indexOf('!') === 0) {
+            this.sortOrder = -1;
+            this.sortField = value.substring(1, value.length);
+        } else {
+            this.sortOrder = 1;
+            this.sortField = value;
+        }
+    }
+
+    cambiarFiltro(event) {
+
+    }
+
+    exportPdf() {
+        import('jspdf').then(jsPDF => {
+            import('jspdf-autotable').then(x => {
+                const doc = new jsPDF.default(0, 0);
+                doc.autoTable(this.exportColumns, this.detalleAsistencias);
+                doc.save('asistencias.pdf');
+            });
+        });
+    }
+
+    exportExcel() {
+        import('xlsx').then(xlsx => {
+            const worksheet = xlsx.utils.json_to_sheet(this.detalleAsistencias);
+            const workbook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+            const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
+            this.saveAsExcelFile(excelBuffer, 'asistencias');
+        });
+    }
+
+    saveAsExcelFile(buffer: any, fileName: string): void {
+        import('file-saver').then(FileSaver => {
+            let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+            let EXCEL_EXTENSION = '.xlsx';
+            const data: Blob = new Blob([buffer], {
+                type: EXCEL_TYPE
+            });
+            FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+        });
     }
 }
 

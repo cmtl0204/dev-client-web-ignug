@@ -6,4 +6,10 @@ export class User {
     second_lastname: string;
     identification: string;
     user_name: string;
+    password: string;
+    repeatPassword: string;
+
+    constructor() {
+        this.password = '';
+    }
 }

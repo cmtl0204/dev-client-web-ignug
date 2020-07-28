@@ -176,7 +176,7 @@
             </h1>
         </div>
     </div>
-    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='3'">
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='5' || role.code=='6'">
         <div class="card card-w-title">
             <p-accordion>
                 <p-accordionTab header="Actividades Académicas">
@@ -230,7 +230,7 @@
             </p-accordion>
         </div>
     </div>
-    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='3'">
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='5' || role.code=='6'">
         <div class="card card-w-title">
             <p-accordion>
                 <p-accordionTab header="Actividades Administrativas">
@@ -284,10 +284,10 @@
             </p-accordion>
         </div>
     </div>
-    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code!='1' && role.code!='2' && role.code!='3'">
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='3' || role.code=='4' || role.code=='7'">
         <div class="card card-w-title">
             <p-accordion>
-                <p-accordionTab header="Actividades Rector" *ngIf="role.code=='4'">
+                <p-accordionTab header="Actividades Rector" *ngIf="role.code=='3'">
                     <p-table [columns]="colsActividades" [value]="docenteActividadesRectorItems"
                              [(selection)]="actividadSeleccionada" selectionMode="single"
                              [responsive]="true" dataKey="type_id">
@@ -311,7 +311,7 @@
                         </ng-template>
                     </p-table>
                 </p-accordionTab>
-                <p-accordionTab header="Actividades Vicerrector" *ngIf="role.code=='5'">
+                <p-accordionTab header="Actividades Vicerrector" *ngIf="role.code=='4'">
                     <p-table [columns]="colsActividades" [value]="docenteActividadesVicerrectorItems"
                              [(selection)]="actividadSeleccionada" selectionMode="single"
                              [responsive]="true" dataKey="type_id">
@@ -335,7 +335,7 @@
                         </ng-template>
                     </p-table>
                 </p-accordionTab>
-                <p-accordionTab header="Actividades Conserje" *ngIf="role.code=='6'">
+                <p-accordionTab header="Actividades Conserje" *ngIf="role.code=='7'">
                     <p-table [columns]="colsActividades" [value]="docenteActividadesConserjeItems"
                              [(selection)]="actividadSeleccionada" selectionMode="single"
                              [responsive]="true" dataKey="type_id">

@@ -1,9 +1,9 @@
 export const environment = {
     production: true,
-    // API_URL: 'http://www.asistencia.yavirac.edu.ec/public/api/v0/',
-    // API_URL_PUBLIC: 'http://www.asistencia.yavirac.edu.ec/public/api/v0/',
-    API_URL: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/v0/',
-    API_URL_PUBLIC: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/v0/',
+    API_URL: 'http://www.asistencia.yavirac.edu.ec/public/api/v0/',
+    API_URL_PUBLIC: 'http://www.asistencia.yavirac.edu.ec/public/api/v0/',
+    // API_URL: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/v0/',
+    // API_URL_PUBLIC: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/v0/',
     CLIENT_SECRET: 'CX6ja4U9u0bau0esTUI4T7LIvBvvqWfounk7ojLC',
     // CLIENT_SECRET: 'oSogUExmufqd0qxAEHdONZjdwh8wEcZ5AwZM2ORM',
     CLIENT_ID: 8,

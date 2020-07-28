@@ -64,72 +64,8 @@ export class ServiceService {
 
     login(user: User) {
         const url = environment.API_URL_PUBLIC + 'auth/login';
-        return this._http.post(url, user).subscribe(response => {
-            if (response['user']['state_id'] === 1) {
-                localStorage.setItem('isLoggedin', 'true');
-                localStorage.setItem('user', JSON.stringify(response['user']));
-                localStorage.setItem('accessToken', JSON.stringify(response['token']['accessToken']));
-                localStorage.setItem('token', JSON.stringify(response['token']['token']));
-                localStorage.setItem('roles', JSON.stringify(response['roles']));
-                response['roles'].forEach(role => {
-                    let route = '';
-                    let selectedRole = '';
-                    switch (role) {
-                        case '1':
-                            route = '/administrativo/asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '2':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '3':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '4':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '5':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '6':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        case '7':
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                        default:
-                            route = '/administrativo/administracion-asistencia-laboral';
-                            selectedRole = role;
-                            break;
-                    }
-                    localStorage.setItem('role', JSON.stringify(selectedRole));
-                    this.router.navigate([route]);
-                });
-
-            } else {
-                localStorage.removeItem('token');
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('user');
-                localStorage.removeItem('roles');
-                localStorage.removeItem('role');
-                localStorage.removeItem('isLoggedin');
-                return response['user'];
-            }
-        }, error => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('user');
-            localStorage.removeItem('roles');
-            localStorage.removeItem('role');
-            localStorage.removeItem('isLoggedin');
-            return error;
-        });
+        this.headers = new HttpHeaders().set('Content-Type', 'application/json').append('X-Requested-With', 'XMLHttpRequest');
+        return this._http.post(url, user);
     }
 
     logout() {

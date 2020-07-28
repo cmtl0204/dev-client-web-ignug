@@ -28,21 +28,19 @@ export class AuthGuard implements CanActivate {
         if (localStorage.getItem('isLoggedin') === 'true') {
             switch (next['_routerState']['url']) {
                 case '/':
-                    if (this.role.code === '1' || this.role.code === '2') {
-                        this.routes.navigate(['/administrativo/asistencia-laboral']);
-                    } else {
-                        this.routes.navigate(['/authentication/login']);
-                    }
+                    this.routes.navigate(['/administrativo/asistencia-laboral']);
                     break;
                 case '/administrativo/asistencia-laboral':
-                    if (this.role.code === '1' || this.role.code === '2') {
+                    if (this.role.code === '1' || this.role.code === '2' || this.role.code === '3' || this.role.code === '4'
+                        || this.role.code === '5' || this.role.code === '6' || this.role.code === '7') {
                         return true;
                     } else {
                         this.routes.navigate(['/authentication/login']);
                     }
                     break;
                 case '/administrativo/administracion-asistencia-laboral':
-                    if (this.role.code === '2') {
+                    if (this.role.code === '2' || this.role.code === '3' || this.role.code === '4' || this.role.code === '5'
+                        || this.role.code === '6') {
                         return true;
                     } else {
                         this.routes.navigate(['/authentication/401']);

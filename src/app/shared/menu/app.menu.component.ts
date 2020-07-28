@@ -150,6 +150,11 @@ export class AppMenuComponent implements OnInit {
                 {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
             ];
         }
+        if (this.role.code === '7') {
+            this.model = [
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+            ];
+        }
     }
 
     onMenuClick() {

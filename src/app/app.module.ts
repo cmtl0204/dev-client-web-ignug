@@ -106,13 +106,12 @@ import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
 import {NodeService} from './demo/service/nodeservice';
 
-// Application matriculacion
+// Application ignug
 import {BreadcrumbService} from './shared/breadcrumb/breadcrumb.service';
 import {MenuService} from './shared/menu/app.menu.service';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {CookieService} from 'ngx-cookie-service';
-import {SettingsService} from './services/matriculacion/settings.service';
-import {ServiceService} from './services/administrativo/service.service';
+import {SettingsService} from './services/ignug/settings.service';
+import {AttendanceServiceService} from './services/attendance/attendance-service.service';
 
 @NgModule({
     imports: [
@@ -216,7 +215,8 @@ import {ServiceService} from './services/administrativo/service.service';
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService, CookieService, SettingsService, ServiceService
+        CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService, SettingsService,
+        AttendanceServiceService
     ],
     bootstrap: [AppComponent]
 })

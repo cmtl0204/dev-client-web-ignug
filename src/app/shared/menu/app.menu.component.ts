@@ -1,6 +1,6 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {AppMainComponent} from '../../layouts/full/app.main.component';
-import {SettingsService} from '../../services/matriculacion/settings.service';
+import {SettingsService} from '../../services/ignug/settings.service';
 import {User} from '../../models/authentication/user';
 import {Role} from '../../models/authentication/role';
 
@@ -23,7 +23,7 @@ export class AppMenuComponent implements OnInit {
             this.model = [
                 // {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']},
                 // {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard/coordinador']},
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 /*
                {
                    label: 'Components', icon: 'pi pi-fw pi-star', routerLink: ['/components'],
@@ -107,52 +107,52 @@ export class AppMenuComponent implements OnInit {
         }
         if (this.role.code === '2') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 {
                     label: 'Administración Asistencia',
                     icon: 'pi pi-fw pi-clock',
-                    routerLink: ['/administrativo/administracion-asistencia-laboral']
+                    routerLink: ['/attendance/administracion-asistencia-laboral']
                 },
             ];
         }
         if (this.role.code === '3') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 {
                     label: 'Administración Asistencia',
                     icon: 'pi pi-fw pi-clock',
-                    routerLink: ['/administrativo/administracion-asistencia-laboral']
+                    routerLink: ['/attendance/administracion-asistencia-laboral']
                 },
             ];
         }
         if (this.role.code === '4') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 {
                     label: 'Administración Asistencia',
                     icon: 'pi pi-fw pi-clock',
-                    routerLink: ['/administrativo/administracion-asistencia-laboral']
+                    routerLink: ['/attendance/administracion-asistencia-laboral']
                 },
             ];
         }
         if (this.role.code === '5') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 {
                     label: 'Administración Asistencia',
                     icon: 'pi pi-fw pi-clock',
-                    routerLink: ['/administrativo/administracion-asistencia-laboral']
+                    routerLink: ['/attendance/administracion-asistencia-laboral']
                 },
             ];
         }
         if (this.role.code === '6') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
             ];
         }
         if (this.role.code === '7') {
             this.model = [
-                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/administrativo/asistencia-laboral']},
+                {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
             ];
         }
     }

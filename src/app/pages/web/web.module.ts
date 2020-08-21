@@ -1,7 +1,11 @@
+// Modulos Internos
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {WebRoutes} from './web.routing';
 
+// Modulos Externos
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {CalendarModule} from 'primeng/calendar';
@@ -24,22 +28,28 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {PasswordModule} from 'primeng/password';
-
-import {AppNotfoundComponent} from './404/app.notfound.component';
-import {AppAccessdeniedComponent} from './401/app.accessdenied.component';
-import {AppErrorComponent} from './500/app.error.component';
-import {AppLoginComponent} from './login/app.login.component';
-
-import {FormsModule} from '@angular/forms';
-import {AuthenticationRoutes} from './authentication.routing';
 import {TooltipModule} from 'primeng/tooltip';
+import {TableModule} from 'primeng/table';
+import {DataViewModule} from 'primeng/dataview';
+import {PanelModule} from 'primeng/panel';
+import {TreeModule} from 'primeng/tree';
+import {TreeTableModule} from 'primeng/treetable';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {PickListModule} from 'primeng/picklist';
+import {OrderListModule} from 'primeng/orderlist';
+import {CarouselModule} from 'primeng/carousel';
+import {FullCalendarModule} from 'primeng/fullcalendar';
+import {AccordionModule, DialogService, TabViewModule} from 'primeng';
+import {DialogModule} from 'primeng/dialog';
+import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
-import {InputNumberModule, MessagesModule} from 'primeng';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
+// Mis componentes
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(AuthenticationRoutes),
+        RouterModule.forChild(WebRoutes),
         FormsModule,
         AutoCompleteModule,
         MultiSelectModule,
@@ -64,17 +74,27 @@ import {InputNumberModule, MessagesModule} from 'primeng';
         SplitButtonModule,
         PasswordModule,
         TooltipModule,
-        ToastModule,
-        MessagesModule,
+        TableModule,
+        DataViewModule,
+        PanelModule,
+        TreeModule,
+        TreeTableModule,
+        VirtualScrollerModule,
+        PickListModule,
+        OrderListModule,
+        CarouselModule,
+        FullCalendarModule,
+        TabViewModule,
         InputNumberModule,
-
+        ToastModule,
+        AccordionModule,
+        DialogModule,
+        ConfirmDialogModule
     ],
     declarations: [
-        AppNotfoundComponent,
-        AppAccessdeniedComponent,
-        AppErrorComponent,
-        AppLoginComponent,
-    ]
+
+    ],
+    providers: [DialogService]
 })
-export class AuthenticationModule {
+export class WebModule {
 }

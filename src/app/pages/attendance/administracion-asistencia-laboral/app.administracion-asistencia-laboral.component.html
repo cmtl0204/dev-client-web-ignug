@@ -1,0 +1,172 @@
+<div class="p-grid">
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <div class="card card-w-title">
+            <p-tabView>
+                <p-tabPanel header="Resumen" leftIcon="pi pi-align-justify">
+                    <p-dataView #dv [value]="resumenAsistencias" [paginator]="true" [rows]="10" paginatorPosition="both"
+                                [filterBy]="tipoFiltro" [sortField]="sortField" [sortOrder]="sortOrder" filter>
+                        <p-header>
+                            <div class="ui-helper-clearfix">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <i class="pi pi-sort"></i>
+                                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey"
+                                                    placeholder="Ordenar por"
+                                                    (onChange)="onSortChange($event)" style="padding:.5em"
+                                                    [style]="{'min-width':'140px'}"></p-dropdown>
+                                        <p-calendar selectionMode="range" [(ngModel)]="fechas"
+                                                    (click)="filtrarFechas()"
+                                                    icon="pi pi-calendar"
+                                                    showIcon="true" styleClass="ui-calendar-w-btn"
+                                                    placeholder="Rango de fechas">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="ui-g-6 ui-md-4 filter-container">
+                                        <div style="position:relative">
+                                            <i class="pi pi-filter"></i>
+                                            <p-dropdown [options]="filterOptions" [(ngModel)]="tipoFiltro"
+                                                        placeholder="Filtrar por" style="padding:.5em"
+                                                        [style]="{'min-width':'140px'}"></p-dropdown>
+                                            <input type="search" pInputText placeholder="Buscar..."
+                                                   (keyup)="dv.filter($event.target.value)">
+
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-6 ui-md-4" style="text-align:right">
+                                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-header>
+                        <ng-template let-car pTemplate="listItem">
+                            <div class="ui-g-12">
+                                <div class="car-details-list">
+                                    <div>
+                                        <img src="assets/layout/images/topbar/avatars/{{car.identification}}.jpg"
+                                             width="100"
+                                             height="100"
+                                             class="ui-button-rounded">
+                                        <div class="ui-g">
+                                            <div class="ui-g-12">Identificación: <b>{{car.identification}}</b></div>
+                                            <div class="ui-g-12">Docente:
+                                                <b>{{car.first_lastname}} {{car.second_lastname}} {{car.first_name}} {{car.second_name}}</b>
+                                            </div>
+                                            <div class="ui-g-12">Hora Inicio: <b>{{car.start_time}}</b></div>
+                                            <div class="ui-g-12">Hora Fin: <b>{{car.end_time}}</b></div>
+                                            <div class="ui-g-12">Jornada: <b>{{car.duration}}</b></div>
+                                            <div class="ui-g-12">Almuerzo: <b>{{car.lunch}}</b></div>
+                                            <div class="ui-g-12">Fecha: <b>{{car.date}}</b></div>
+                                        </div>
+                                    </div>
+                                    <button pButton type="button" icon="pi pi-search"></button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-car pTemplate="gridItem">
+                            <div style="padding:.5em" class="ui-g-12 ui-md-3">
+                                <p-panel [header]="car.vin" [style]="{'text-align':'center'}">
+                                    <img src="assets/layout/images/topbar/avatars/{{car.identification}}.jpg"
+                                         width="60">
+                                    <div class="car-detail">
+                                        <p>Hora Inicio: <b>{{car.start_time}}</b></p>
+                                        <p>Hora Fin: <b>{{car.end_time}}</b></p>
+                                        <p>Jornada: <b>{{car.duration}}</b></p>
+                                        <p>Almuerzo: <b>{{car.lunch}}</b></p>
+                                    </div>
+                                    <button pButton type="button" icon="pi pi-search" style="margin-top:0"></button>
+                                </p-panel>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+                </p-tabPanel>
+                <p-tabPanel header="Detalle" leftIcon="pi pi-list">
+                    <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="detalleAsistencias"
+                             [paginator]="true"
+                             [responsive]="true"
+                             [rows]="10"
+                             dataKey="id" selectionMode="single" [(selection)]="selectedCar">
+                        <ng-template pTemplate="caption">
+                            <div class="p-grid">
+                                <div class="p-lg-10 p-md-10 p-sm-12">
+                                    <p-calendar selectionMode="range" [(ngModel)]="fechas"
+                                                (click)="filtrarFechas()"
+                                                icon="pi pi-calendar"
+                                                showIcon="true" styleClass="ui-calendar-w-btn"
+                                                placeholder="Rango de fechas">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-lg-2 p-md-2 p-sm-12">
+                                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                                            (click)="exportExcel()" style="margin-right: 0.5em;"
+                                            class="ui-button-success"></button>
+                                    <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                                            (click)="exportPdf()" class="ui-button-warning"></button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                </th>
+                                <th style="width: 8em; text-align: center;">
+                                    <button pButton type="button" icon="pi pi-cog"></button>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                    <!--                            <input *ngSwitchCase="'date'" pInputText type="date" placeholder="Starts with"-->
+                                    <!--                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"-->
+                                    <!--                                   (input)="dt.filter($event.target.value, col.field, 'startsWith')">-->
+
+                                    <input *ngSwitchCase="'identification'" pInputText type="text"
+                                           placeholder="Buscar por número de identificación"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'first_lastname'" pInputText type="text"
+                                           placeholder="Buscar por el primer apellido"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'type_workdays'" pInputText type="text"
+                                           placeholder="Buscar por Jornada/Almuerzo"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'start_time'" pInputText type="text" placeholder="Contains"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'end_time'" pInputText type="text" placeholder="Contains"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'duration'" pInputText type="text" placeholder="Contains"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+
+                                </th>
+                                <th style="width: 8em;">
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                                <td>{{rowData.date}}</td>
+                                <td>{{rowData.identification}}</td>
+                                <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>
+                                <td>{{rowData.type_workdays}}</td>
+                                <td>{{rowData.start_time}}</td>
+                                <td>{{rowData.end_time}}</td>
+                                <td>{{rowData.duration}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-success" icon="pi pi-search"
+                                            style="margin-right: .5em"></button>
+                                    <button pButton type="button" class="ui-button-warning"
+                                            icon="pi pi-pencil"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</div>

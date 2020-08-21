@@ -1,0 +1,372 @@
+<p-dialog header="Actividad" [(visible)]="display" modal="true" showEffect="fade"
+          [style]="{width: '400px'}" *ngIf="actividadSeleccionada">
+    <p style="margin-top: 1em; margin-bottom: 1em; text-align: justify; ">{{actividadSeleccionada.name}}</p>
+    <span>Porcentaje de Avance: </span>
+    <p-inputNumber [(ngModel)]="actividadSeleccionada.percentage_advance" max="100" :min="1" maxlength="4"
+                   spinnerMode="horizontal" step="5" suffix="%"></p-inputNumber>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" class="ui-button-success"
+                (click)="display=false;guardarActividades()"
+                label="Registrar"></button>
+        <button *ngIf="actividadSeleccionada.id" type="button" pButton icon="pi pi-trash" class="ui-button-danger"
+                (click)="display=false;eliminarTask()"
+                label="Eliminar"></button>
+    </p-footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+                 rejectButtonStyleClass="ui-button-secondary">
+</p-confirmDialog>
+
+<p-toast key="tst"></p-toast>
+
+<div class="p-grid">
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <div class="card card-w-title">
+            <h1>{{fechaActual|date:'fullDate'}}</h1>
+            <div class="p-grid">
+                <div class="p-lg-6 p-md-6 p-sm-12">
+                    <span *ngIf="totalJornadas>=3 && jornadaActual.end_time!=null">
+                        Has alcanzado el número máximo de jornadas permitidas
+                    </span>
+                    <button pButton type="button" class="ui-button-primary" icon="pi pi-calendar"
+                            label="Iniciar Jornada"
+                            style="margin: .5em"
+                            (click)="iniciarDocenteAsistencia('work','Jornada','pi pi-calendar')"
+                            *ngIf="totalJornadas<3 && jornadaActual.state_id == 0 || (jornadaActual.start_time==null && jornadaActual.end_time!=null)">
+                    </button>
+                    <button pButton type="button" class="ui-button-danger" icon="pi pi-calendar"
+                            label="Finalizar Jornada"
+                            style="margin: .5em" (click)="finalizarDocenteAsistencia(jornadaActual)"
+                            *ngIf="jornadaActual.state_id == 1">
+                    </button>
+                    <button pButton type="button" class="ui-button-warning" label="Iniciar Almuerzo"
+                            style="margin: .5em"
+                            (click)="iniciarDocenteAsistencia('lunch','Almuerzo','pi pi-briefcase')"
+                            icon="pi pi-briefcase"
+                            *ngIf="totalAlmuerzos==0">
+                    </button>
+                    <button pButton type="button" class="ui-button-danger" icon="pi pi-briefcase"
+                            style="margin: .5em" label="Finalizar Almuerzo"
+                            (click)="finalizarDocenteAsistencia(almuerzoActual)"
+                            *ngIf="totalAlmuerzos==1 && almuerzoActual.end_time==null">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <div class="card card-w-title">
+            <p-tabView>
+                <p-tabPanel header="Resumen" leftIcon="pi pi-align-justify">
+                    <p-table #dt [columns]="cols" styleClass="ui-table-cars" [value]="jornadaActividades"
+                             [paginator]="true" [responsive]="true"
+                             [rows]="9" dataKey="id" selectionMode="single" [(selection)]="selectedCar">
+                        <ng-template pTemplate="caption">
+                            <div class="p-grid">
+                                <div class="p-lg-12 p-md-12 p-sm-12">
+                                    <i *ngIf="jornadaActual.end_time != null && jornadaActual.start_time!=null"
+                                       class="pi pi-calendar">
+                                        | Total Horas Trabajadas: {{totalHorasTrabajadas|date:'HH:mm:ss'}}
+                                    </i>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                </th>
+                                <th style="width: 12em; text-align: center;">
+                                    <button pButton type="button" icon="pi pi-cog"></button>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr [pSelectableRow]="rowData">
+                                <td *ngFor="let col of columns">
+                                    <span class="ui-column-title">{{col.header}}</span>
+                                    <i class="{{rowData.type.icon}}"
+                                       *ngIf="col.field =='description'"> {{rowData[col.field]}}
+                                    </i>
+                                    <span *ngIf="col.field !='description'">{{rowData[col.field]}}</span>
+                                </td>
+                                <td style="width: 12em; text-align: center;">
+                                    <button type="text" (click)="eliminarJornadaActividad(rowData)" pButton
+                                            icon="pi pi-trash" class="ui-button-danger"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Calendario" leftIcon="pi pi-calendar">
+                    <p-fullCalendar [events]="events" [options]="fullCalendarOptions"></p-fullCalendar>
+                </p-tabPanel>
+                <p-tabPanel header="Actividades" leftIcon="pi pi-list">
+                    <h1 *ngIf="historicoActividades.length===0">No tienes actividades registradas en la fecha
+                        seleccionada!</h1>
+                    <p-table #dt [columns]="colsHistoricoActividades" styleClass="ui-table-cars"
+                             [value]="historicoActividades"
+                             [paginator]="true"
+                             [responsive]="true"
+                             [rows]="5"
+                             dataKey="id" selectionMode="single" [(selection)]="selectedCar">
+                        <ng-template pTemplate="caption">
+                            <div class="p-grid">
+                                <div class="p-lg-10 p-md-10 p-sm-12">
+                                    <p-calendar selectionMode="range" [(ngModel)]="fechas"
+                                                (click)="filtrarFechas()"
+                                                icon="pi pi-calendar"
+                                                showIcon="true" styleClass="ui-calendar-w-btn"
+                                                placeholder="Rango de fechas">
+                                    </p-calendar>
+                                </div>
+                                <!--                                <div class="p-lg-2 p-md-2 p-sm-12">-->
+                                <!--                                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"-->
+                                <!--                                            (click)="exportExcel()" style="margin-right: 0.5em;"-->
+                                <!--                                            class="ui-button-success"></button>-->
+                                <!--                                    <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF"-->
+                                <!--                                            (click)="exportPdf()" class="ui-button-warning"></button>-->
+                                <!--                                </div>-->
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th [pSortableColumn]="'date'" [ngSwitch]="'date'" style="width:12em">
+                                    {{colsHistoricoActividades[0].header}}
+                                    <p-sortIcon [field]="'date'"></p-sortIcon>
+                                </th>
+                                <th [pSortableColumn]="'name'" [ngSwitch]="'name'">
+                                    {{colsHistoricoActividades[1].header}}
+                                    <p-sortIcon [field]="'name'"></p-sortIcon>
+                                </th>
+                                <th style="width: 8em; text-align: center;">
+                                    <!--                                    <button pButton type="button" icon="pi pi-cog"></button>-->
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                                <td>{{rowData.date}}</td>
+                                <td>
+                                    <b *ngIf="rowData.tasks.length===0">
+                                        <i class="pi pi-exclamation-circle" style="font-size: 2em"></i>
+                                        No tienes actividades registradas
+                                    </b>
+
+                                    <ul>
+                                        <li *ngFor="let actividad of rowData.tasks">
+                                            <b>{{actividad.percentage_advance}}%</b>
+                                            {{actividad.type.name}}
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <!--                                    <button pButton type="button" class="ui-button-success" icon="pi pi-search"-->
+                                    <!--                                            style="margin-right: .5em"></button>-->
+                                    <!--                                    <button pButton type="button" class="ui-button-warning"-->
+                                    <!--                                            icon="pi pi-pencil"></button>-->
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <div class="card card-w-title">
+            <h1>
+                <i class="pi pi-list"></i>
+                | Registro de Actividades Diarias
+            </h1>
+        </div>
+    </div>
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='5' || role.code=='6'">
+        <div class="card card-w-title">
+            <p-accordion>
+                <p-accordionTab header="Actividades Académicas">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesAcademicoItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+                <p-accordionTab header="Actividades Investigación">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesInvestigacionItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='1' || role.code=='2'|| role.code=='5' || role.code=='6'">
+        <div class="card card-w-title">
+            <p-accordion>
+                <p-accordionTab header="Actividades Administrativas">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesAdministrativoItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+                <p-accordionTab header="Actividades Vinculación">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesVinculacionItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+    <div class="p-lg-6 p-md-6 p-sm-12" *ngIf="role.code=='3' || role.code=='4' || role.code=='7'">
+        <div class="card card-w-title">
+            <p-accordion>
+                <p-accordionTab header="Actividades Rector" *ngIf="role.code=='3'">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesRectorItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+                <p-accordionTab header="Actividades Vicerrector" *ngIf="role.code=='4'">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesVicerrectorItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+                <p-accordionTab header="Actividades Conserje" *ngIf="role.code=='7'">
+                    <p-table [columns]="colsActividades" [value]="docenteActividadesConserjeItems"
+                             [(selection)]="actividadSeleccionada" selectionMode="single"
+                             [responsive]="true" dataKey="type_id">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>
+                                    {{columns[0].header}}
+                                </th>
+                                <th style="width: 10em;">
+                                    {{columns[1].header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" (click)="display=true">
+                                <td *ngFor="let col of columns">
+                                    <span *ngIf="col.field=='name'">{{rowData[col.field]}}</span>
+                                    <span *ngIf="col.field=='percentage_advance'">{{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+</div>

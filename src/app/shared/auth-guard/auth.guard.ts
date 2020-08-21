@@ -28,9 +28,9 @@ export class AuthGuard implements CanActivate {
         if (localStorage.getItem('isLoggedin') === 'true') {
             switch (next['_routerState']['url']) {
                 case '/':
-                    this.routes.navigate(['/administrativo/asistencia-laboral']);
+                    this.routes.navigate(['/attendance/asistencia-laboral']);
                     break;
-                case '/administrativo/asistencia-laboral':
+                case '/attendance/asistencia-laboral':
                     if (this.role.code === '1' || this.role.code === '2' || this.role.code === '3' || this.role.code === '4'
                         || this.role.code === '5' || this.role.code === '6' || this.role.code === '7') {
                         return true;
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
                         this.routes.navigate(['/authentication/login']);
                     }
                     break;
-                case '/administrativo/administracion-asistencia-laboral':
+                case '/attendance/administracion-asistencia-laboral':
                     if (this.role.code === '2' || this.role.code === '3' || this.role.code === '4' || this.role.code === '5'
                         || this.role.code === '6') {
                         return true;

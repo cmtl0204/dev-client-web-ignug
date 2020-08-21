@@ -18,7 +18,9 @@
                     <div class="login-input-wrapper">
                         <label for="username">Identificación</label>
                         <input id="username" pInputText [(ngModel)]="user.user_name"
-                               placeholder="Ingrese su número de cédula" (keypress)="onLoggedin($event)"
+                               placeholder="Ingrese su número de cédula"
+                               maxlength="10" (paste)="false"
+                               (keypress)="validarSoloNumeros($event.key)"
                                tooltipEvent="focus"/>
                         <i class="pi pi-id-card" style="font-size: 2em"></i>
                     </div>

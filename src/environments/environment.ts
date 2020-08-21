@@ -4,10 +4,15 @@
 
 export const environment = {
     production: false,
-    API_URL: 'http://127.0.0.1:8000/api/v0/',
-    API_URL_PUBLIC: 'http://127.0.0.1:8000/api/v0/',
-    // API_URL: 'http://192.168.100.9:8000/api/v0/',
-    // API_URL_PUBLIC: 'http://192.168.100.9:8000/api/v0/',
+    API_URL_AUTHENTICATION: 'http://127.0.0.1:8000/api/authentication/',
+    API_URL_IGNUG: 'http://127.0.0.1:8000/api/ignug/',
+    API_URL_ATTENDANCE: 'http://127.0.0.1:8000/api/attendance/',
+    API_URL_JOB_BOARD: 'http://127.0.0.1:8000/api/job_board/',
+    API_URL_WEB: 'http://127.0.0.1:8000/api/web/',
+    //
+    // API_URL_AUTHENTICATION: 'http://192.168.100.9:8000/api/authentication/',
+    // API_URL_IGNUG: 'http://192.168.100.9:8000/api/ignug/',
+    // API_URL_ATTENDANCE: 'http://192.168.100.9:8000/api/attendance/',
     CLIENT_SECRET: 'oSogUExmufqd0qxAEHdONZjdwh8wEcZ5AwZM2ORM',
     CLIENT_ID: 8,
     GRANT_TYPE: 'password',

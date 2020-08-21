@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AppMainComponent} from '../../layouts/full/app.main.component';
 import {AppMenuComponent} from '../menu/app.menu.component';
-import {SettingsService} from '../../services/matriculacion/settings.service';
+import {SettingsService} from '../../services/ignug/settings.service';
 import {ChartsDemoComponent} from '../../demo/view/chartsdemo.component';
 
 @Component({

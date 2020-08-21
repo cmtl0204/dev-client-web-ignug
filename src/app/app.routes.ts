@@ -1,5 +1,6 @@
 import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
+
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
 import {SampleDemoComponent} from './demo/view/sampledemo.component';
 import {FormsDemoComponent} from './demo/view/formsdemo.component';
@@ -14,10 +15,6 @@ import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 import {AppMainComponent} from './layouts/full/app.main.component';
-import {AppNotfoundComponent} from './pages/authentication/404/app.notfound.component';
-import {AppErrorComponent} from './pages/authentication/500/app.error.component';
-import {AppAccessdeniedComponent} from './pages/authentication/401/app.accessdenied.component';
-import {AppLoginComponent} from './pages/authentication/login/app.login.component';
 import {BlankComponent} from './layouts/blank/blank.component';
 import {AuthGuard} from './shared/auth-guard/auth.guard';
 
@@ -39,18 +36,21 @@ export const routes: Routes = [
             {path: 'components/file', component: FileDemoComponent},
             {path: 'documentation', component: DocumentationComponent},
             {
-                path: 'cupo',
-                loadChildren: () => import('./pages/matriculacion/cupo/cupo.module').then(m => m.CupoModule)
-            },
-            {
-                path: 'dashboard',
-                loadChildren: () => import('./pages/matriculacion/dashboards/dashboard.module').then(m => m.DashboardModule)
-            },
-            {
-                path: 'administrativo',
-                loadChildren: () => import('./pages/administrativo/administrativo.module').then(m => m.AdministrativoModule),
+                path: 'attendance',
+                loadChildren: () => import('./pages/attendance/administrativo.module').then(m => m.AdministrativoModule),
                 canActivate: [AuthGuard]
             },
+            {
+                path: 'job-board',
+                loadChildren: () => import('./pages/job-board/job-board.module').then(m => m.JobBoardModule),
+                // canActivate: [AuthGuard]
+            },
+            {
+                path: 'web',
+                loadChildren: () => import('./pages/web/web.module').then(m => m.WebModule),
+                // canActivate: [AuthGuard]
+            },
+
         ]
     },
     {

@@ -22,7 +22,8 @@ export class AppDatosPersonalesComponent implements OnInit {
     users: Array<User>; // para almacenar el listado de todos los usuarios
     colsUser: any[]; // para almacenar las columnas para la tabla usuarios
     headerDialogUser: string; // para cambiar de forma dinamica la cabecear del  modal de creacion o actualizacion de usuario
-    userform: FormGroup;
+    userForm: FormGroup;
+    validationBirthdate: string;
 
     constructor(private messageService: MessageService,
                 private ignugService: IgnugServiceService,
@@ -39,20 +40,22 @@ export class AppDatosPersonalesComponent implements OnInit {
             {field: 'first_lastname', header: 'Apellido'},
             {field: 'email', header: 'Correo Institucional'},
         ];
-        this.userform = this.fb.group({
+        this.userForm = this.fb.group({
             'first_name': new FormControl('', Validators.required),
             'first_lastname': new FormControl('', Validators.required),
-            'identification': new FormControl('', Validators.compose([Validators.required, Validators.minLength(5)])),
+            'identification': new FormControl('', Validators.compose(
+                [Validators.required, Validators.minLength(9), Validators.maxLength(10)])),
             'ethnic_origin_id': new FormControl('', Validators.required),
-            'email': new FormControl('', Validators.required),
+            'email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
             'location_id': new FormControl('', Validators.required),
             'identification_type_id': new FormControl('', Validators.required),
             'sex_id': new FormControl('', Validators.required),
             'gender_id': new FormControl('', Validators.required),
             'birthdate': new FormControl('', Validators.required),
-            // 'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
 
         });
+        const currentDate = new Date();
+        this.validationBirthdate = (currentDate.getFullYear() - 70).toString() + ':' + currentDate.getFullYear().toString();
     }
 
     // Esta funcion se ejectuta apenas inicie el componente
@@ -71,7 +74,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.ignugService.get('catalogues' + parameters).subscribe(
             response => {
                 const ethnicOrigins = response['data']['catalogues'];
-                this.ethnicOrigins = [{label: 'Seleccione Etnia', value: 0}];
+                this.ethnicOrigins = [{label: 'Seleccione', value: ''}];
                 ethnicOrigins.forEach(item => {
                     this.ethnicOrigins.push({label: item.name, value: item.id});
                 });
@@ -92,7 +95,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.ignugService.get('catalogues' + parameters).subscribe(
             response => {
                 const identificationTypes = response['data']['catalogues'];
-                this.identificationTypes = [{label: 'Seleccione Tipo de Documento', value: 0}];
+                this.identificationTypes = [{label: 'Seleccione', value: ''}];
                 identificationTypes.forEach(item => {
                     this.identificationTypes.push({label: item.name, value: item.id});
                 });
@@ -113,7 +116,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.ignugService.get('catalogues' + parameters).subscribe(
             response => {
                 const sexs = response['data']['catalogues'];
-                this.sexs = [{label: 'Seleccione Sexo', value: 0}];
+                this.sexs = [{label: 'Seleccione', value: ''}];
                 sexs.forEach(item => {
                     this.sexs.push({label: item.name, value: item.id});
                 });
@@ -134,7 +137,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.ignugService.get('catalogues' + parameters).subscribe(
             response => {
                 const genders = response['data']['catalogues'];
-                this.genders = [{label: 'Seleccione Género', value: 0}];
+                this.genders = [{label: 'Seleccione', value: ''}];
                 genders.forEach(item => {
                     this.genders.push({label: item.name, value: item.id});
                 });
@@ -155,7 +158,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.ignugService.get('catalogues' + parameters).subscribe(
             response => {
                 const cantones = response['data']['catalogues'];
-                this.cantones = [{label: 'Seleccione cantón', value: 0}];
+                this.cantones = [{label: 'Seleccione', value: ''}];
                 cantones.forEach(item => {
                     this.cantones.push({label: item.name, value: item.id});
                 });
@@ -190,21 +193,14 @@ export class AppDatosPersonalesComponent implements OnInit {
     }
 
     createUser() {
-        this.selectedUser.identification = this.userform.controls['identification'].value;
-        this.selectedUser.first_name = this.userform.controls['first_name'].value;
-        this.selectedUser.first_lastname = this.userform.controls['first_lastname'].value;
-        this.selectedUser.ethnic_origin.id = this.userform.controls['ethnic_origin_id'].value;
-        this.selectedUser.location.id = this.userform.controls['location_id'].value;
-        this.selectedUser.identification_type.id = this.userform.controls['identification_type_id'].value;
-        this.selectedUser.sex.id = this.userform.controls['sex_id'].value;
-        this.selectedUser.gender.id = this.userform.controls['gender_id'].value;
-        this.selectedUser.birthdate = this.userform.controls['birthdate'].value;
-        this.selectedUser.email = this.userform.controls['email'].value;
+        this.selectedUser = this.getUser();
         this.selectedUser.user_name = this.selectedUser.identification;
         this.selectedUser.password = '123';
         this.spinnerService.show();
         this.authenticationService.post('auth/users', {'user': this.selectedUser}).subscribe(
             response => {
+                this.users.unshift(this.selectedUser);
+
                 this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
@@ -227,16 +223,7 @@ export class AppDatosPersonalesComponent implements OnInit {
     }
 
     updateUser() {
-        this.selectedUser.identification = this.userform.controls['identification'].value;
-        this.selectedUser.first_name = this.userform.controls['first_name'].value;
-        this.selectedUser.first_lastname = this.userform.controls['first_lastname'].value;
-        this.selectedUser.ethnic_origin.id = this.userform.controls['ethnic_origin_id'].value;
-        this.selectedUser.location.id = this.userform.controls['location_id'].value;
-        this.selectedUser.identification_type.id = this.userform.controls['identification_type_id'].value;
-        this.selectedUser.sex.id = this.userform.controls['sex_id'].value;
-        this.selectedUser.gender.id = this.userform.controls['gender_id'].value;
-        this.selectedUser.birthdate = this.userform.controls['birthdate'].value;
-        this.selectedUser.email = this.userform.controls['email'].value;
+        this.selectedUser = this.getUser();
         this.selectedUser.user_name = this.selectedUser.identification;
         this.spinnerService.show();
         this.authenticationService.update('auth/users', {'user': this.selectedUser}).subscribe(
@@ -302,22 +289,37 @@ export class AppDatosPersonalesComponent implements OnInit {
     selectUser(user: User): void {
         if (user) {
             this.selectedUser = user;
-            this.userform.controls['first_name'].setValue(user.first_name);
-            this.userform.controls['first_lastname'].setValue(user.first_lastname);
-            this.userform.controls['identification'].setValue(user.identification);
-            this.userform.controls['ethnic_origin_id'].setValue(user.ethnic_origin.id);
-            this.userform.controls['email'].setValue(user.email);
-            this.userform.controls['location_id'].setValue(user.location.id);
-            this.userform.controls['identification_type_id'].setValue(user.identification_type.id);
-            this.userform.controls['sex_id'].setValue(user.sex.id);
-            this.userform.controls['gender_id'].setValue(user.gender.id);
-            this.userform.controls['birthdate'].setValue(user.birthdate);
+            this.userForm.controls['first_name'].setValue(user.first_name);
+            this.userForm.controls['first_lastname'].setValue(user.first_lastname);
+            this.userForm.controls['identification'].setValue(user.identification);
+            this.userForm.controls['ethnic_origin_id'].setValue(user.ethnic_origin.id);
+            this.userForm.controls['email'].setValue(user.email);
+            this.userForm.controls['location_id'].setValue(user.location.id);
+            this.userForm.controls['identification_type_id'].setValue(user.identification_type.id);
+            this.userForm.controls['sex_id'].setValue(user.sex.id);
+            this.userForm.controls['gender_id'].setValue(user.gender.id);
+            this.userForm.controls['birthdate'].setValue(user.birthdate);
             this.headerDialogUser = 'Modificar Usuario';
         } else {
             this.selectedUser = new User();
-            this.userform.reset();
+            this.userForm.reset();
             this.headerDialogUser = 'Nuevo Usuario';
         }
         this.displayUser = true;
+    }
+
+    getUser(): User {
+        return {
+            identification: this.userForm.controls['identification'].value,
+            first_name: this.userForm.controls['first_name'].value,
+            first_lastname: this.userForm.controls['first_lastname'].value,
+            ethnic_origin: {id: this.userForm.controls['ethnic_origin_id'].value},
+            location: {id: this.userForm.controls['location_id'].value},
+            identification_type: {id: this.userForm.controls['identification_type_id'].value},
+            sex: {id: this.userForm.controls['sex_id'].value},
+            gender: {id: this.userForm.controls['gender_id'].value},
+            birthdate: this.userForm.controls['birthdate'].value,
+            email: this.userForm.controls['email'].value,
+        } as User;
     }
 }

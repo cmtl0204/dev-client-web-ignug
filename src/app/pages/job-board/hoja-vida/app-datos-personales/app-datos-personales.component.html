@@ -1,21 +1,24 @@
 <p-dialog [header]="headerDialogUser" [(visible)]="displayUser" modal="true" showEffect="fade">
-    <!--    <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">-->
-    <form [formGroup]="userform">
+    <!--    <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">-->
+    <form [formGroup]="userForm">
         <!--IdentificationType y Identification-->
         <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col">
                 <label for="identificationType">Tipo de Documento</label>
                 <p-dropdown id="identificationType" [options]="identificationTypes"
                             formControlName="identification_type_id"></p-dropdown>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['identification_type_id'].valid&&userform.controls['identification_type_id'].dirty"></p-message>
+                <p-message severity="error" text="Tipo de documento es requerido"
+                           *ngIf="!userForm.controls['identification_type_id'].valid&&userForm.controls['identification_type_id'].dirty"></p-message>
             </div>
             <div class="p-field p-col">
                 <label for="identification">Número de Documento</label>
                 <input id="identification" type="text" pInputText pKeyFilter="pnum" maxlength="10"
                        formControlName="identification">
-                <p-message severity="error" text="El número es obligatorio"
-                           *ngIf="!userform.controls['identification'].valid&&userform.controls['identification'].dirty"></p-message>
+                <p-message severity="error"
+                           [text]="userForm.controls['identification'].errors['required'] ? 'Identificación es requerido'
+                           : userForm.controls['identification'].errors['minlength'] ? 'Debe ingresar mínimo 10 dígitos'
+                           : ''"
+                           *ngIf="!userForm.controls['identification'].valid&&userForm.controls['identification'].dirty"></p-message>
             </div>
         </div>
         <!--Firstname y FirstLastName-->
@@ -24,15 +27,15 @@
                 <label for="firstName">Nombre</label>
                 <input id="firstName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
                        formControlName="first_name">
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['first_name'].valid&&userform.controls['first_name'].dirty"></p-message>
+                <p-message severity="error" text="El nombre es requerido"
+                           *ngIf="!userForm.controls['first_name'].valid&&userForm.controls['first_name'].dirty"></p-message>
             </div>
             <div class="p-field p-col">
                 <label for="firstLastName">Apellido</label>
                 <input id="firstLastName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
                        formControlName="first_lastname">
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['first_lastname'].valid&&userform.controls['first_lastname'].dirty"></p-message>
+                <p-message severity="error" text="El apellido es requerido"
+                           *ngIf="!userForm.controls['first_lastname'].valid&&userForm.controls['first_lastname'].dirty"></p-message>
             </div>
 
         </div>
@@ -43,16 +46,18 @@
                 <label for="email">Correo Institucional</label>
                 <input id="email" type="text" size="30" pInputText pKeyFilter="email"
                        formControlName="email">
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['email'].valid&&userform.controls['email'].dirty"></p-message>
+                <p-message severity="error" [text]="userForm.controls['email'].errors['required'] ? 'Correo es requerido'
+                           : userForm.controls['email'].errors['email'] ? 'Debe ingresar un correo válido'
+                           : ''"
+                           *ngIf="!userForm.controls['email'].valid&&userForm.controls['email'].dirty"></p-message>
             </div>
             <div class="p-field p-col">
                 <label for="birthdate">Fecha de Nacimiento</label>
                 <p-calendar id="birthdate" formControlName="birthdate" [monthNavigator]="true"
-                            [showIcon]="true" [yearNavigator]="true" yearRange="2000:2030"
-                            dateFormat="yy-mm-dd"></p-calendar>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['birthdate'].valid&&userform.controls['birthdate'].dirty"></p-message>
+                            [showIcon]="true" [yearNavigator]="true" [yearRange]="validationBirthdate"
+                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+                <p-message severity="error" text="La fecha de nacimiento es requerido"
+                           *ngIf="!userForm.controls['birthdate'].valid&&userForm.controls['birthdate'].dirty"></p-message>
             </div>
         </div>
 
@@ -62,15 +67,15 @@
                 <label for="sex">Sexo</label>
                 <p-dropdown id="sex" [options]="sexs"
                             formControlName="sex_id"></p-dropdown>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['sex_id'].valid&&userform.controls['sex_id'].dirty"></p-message>
+                <p-message severity="error" text="El tipo de sexo es requerido"
+                           *ngIf="!userForm.controls['sex_id'].valid&&userForm.controls['sex_id'].dirty"></p-message>
             </div>
             <div class="p-field p-col">
                 <label for="gender">Género</label>
                 <p-dropdown id="gender" [options]="genders"
                             formControlName="gender_id"></p-dropdown>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['gender_id'].valid&&userform.controls['gender_id'].dirty"></p-message>
+                <p-message severity="error" text="El género es requerido"
+                           *ngIf="!userForm.controls['gender_id'].valid&&userForm.controls['gender_id'].dirty"></p-message>
             </div>
         </div>
 
@@ -80,8 +85,8 @@
                 <label for="ethnic_origin">Etnia</label>
                 <p-dropdown id="ethnic_origin" [options]="ethnicOrigins"
                             formControlName="ethnic_origin_id"></p-dropdown>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['ethnic_origin_id'].valid&&userform.controls['ethnic_origin_id'].dirty"></p-message>
+                <p-message severity="error" text="La etnia es requerido"
+                           *ngIf="!userForm.controls['ethnic_origin_id'].valid&&userForm.controls['ethnic_origin_id'].dirty"></p-message>
             </div>
             <div class="p-field p-col">
                 <label for="location">Ubicación</label>
@@ -95,18 +100,21 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                <p-message severity="error" text="Firstname is required"
-                           *ngIf="!userform.controls['location_id'].valid&&userform.controls['location_id'].dirty"></p-message>
+                <p-message severity="error" text="La ubicación es requerido"
+                           *ngIf="!userForm.controls['location_id'].valid&&userForm.controls['location_id'].dirty"></p-message>
             </div>
         </div>
 
+        <!--Botones-->
         <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-col">
                 <button type="submit" pButton icon="pi pi-refresh" class="ui-button-primary"
-                        (click)="updateUser()" *ngIf="selectedUser.id!=null" [disabled]="!userform.valid"
+                        [title]="!userForm.valid?'Debe llenar todos los campos':''"
+                        (click)="updateUser()" *ngIf="selectedUser.id!=null" [disabled]="!userForm.valid"
                         label="Actualizar"></button>
                 <button type="button" pButton icon="pi pi-save" class="ui-button-success"
-                        (click)="createUser()" *ngIf="selectedUser.id==null" [disabled]="!userform.valid"
+                        [title]="!userForm.valid?'Debe llenar todos los campos':''"
+                        (click)="createUser()" *ngIf="selectedUser.id==null" [disabled]="!userForm.valid"
                         label="Crear"></button>
             </div>
         </div>

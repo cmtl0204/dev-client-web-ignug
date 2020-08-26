@@ -19,7 +19,8 @@
                         <label for="username">Identificación</label>
                         <input id="username" pInputText [(ngModel)]="user.user_name"
                                placeholder="Ingrese su número de cédula"
-                               maxlength="10" (paste)="false"
+                               maxlength="10"
+                               autocomplete="false"
                                (keypress)="validarSoloNumeros($event.key)"
                                tooltipEvent="focus"/>
                         <i class="pi pi-id-card" style="font-size: 2em"></i>

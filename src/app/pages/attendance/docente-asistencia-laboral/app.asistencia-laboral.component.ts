@@ -26,6 +26,7 @@ import {Role} from '../../../models/authentication/role';
     encapsulation: ViewEncapsulation.None,
     providers: [MessageService, ConfirmationService]
 })
+
 export class AppAsistenciaLaboralComponent implements OnInit {
     docenteActividadesAcademicoItems: any[];
     docenteActividadesInvestigacionItems: any[];

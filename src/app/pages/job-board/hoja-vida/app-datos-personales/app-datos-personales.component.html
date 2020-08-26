@@ -1,0 +1,184 @@
+<p-dialog [header]="headerDialogUser" [(visible)]="displayUser" modal="true" showEffect="fade">
+    <div class="ui-fluid">
+        <div class="p-field">
+            <label for="identificationType">Tipo de Documento</label>
+            <p-dropdown id="identificationType" [options]="identificationTypes"
+                        [(ngModel)]="selectedUser.identification_type.id"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="identification">Número de Documento</label>
+            <input id="identification" type="text" pInputText
+                   [(ngModel)]="selectedUser.identification">
+        </div>
+        <div class="p-field">
+            <label for="firstName">Nombre</label>
+            <input id="firstName" type="text" size="30" pInputText
+                   [(ngModel)]="selectedUser.first_name">
+        </div>
+        <div class="p-field">
+            <label for="firstLastName">Apellido</label>
+            <input id="firstLastName" type="text" size="30" pInputText
+                   [(ngModel)]="selectedUser.first_lastname">
+        </div>
+        <div class="p-field">
+            <label for="sex">Sexo</label>
+            <p-dropdown id="sex" [options]="sexs"
+                        [(ngModel)]="selectedUser.sex.id"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="gender">Género</label>
+            <p-dropdown id="gender" [options]="genders"
+                        [(ngModel)]="selectedUser.gender.id"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="ethnic_origin">Etnia</label>
+            <p-dropdown id="ethnic_origin" [options]="ethnicsOrigin"
+                        [(ngModel)]="selectedUser.ethnic_origin.id"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="location">Ubicación</label>
+            <p-dropdown id="location" [options]="cantones" [(ngModel)]="selectedUser.location.id" filter="true">
+                <ng-template let-canton pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{canton.label}}</span>
+                </ng-template>
+                <ng-template let-canton pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{canton.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            <p>Selected Car: {{selectedUser.location.id || 'none'}}</p>
+        </div>
+        <div class="p-field">
+            <label for="birthdate">Fecha de Nacimiento</label>
+            <p-calendar id="birthdate" [(ngModel)]="selectedUser.birthdate" [monthNavigator]="true" [showIcon]="true"
+                        [yearNavigator]="true" yearRange="2000:2030" dateFormat="yy-mm-dd"></p-calendar>
+        </div>
+        <div class="p-field">
+            <label for="email">Correo Institucional</label>
+            <input id="email" type="email" size="30" pInputText [(ngModel)]="selectedUser.email">
+        </div>
+        <div class="p-field" *ngIf="selectedUser.id==null">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" size="30" pInputText
+                   [(ngModel)]="selectedUser.password">
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-refresh" class="ui-button-primary"
+                (click)="updateUser()" *ngIf="selectedUser.id!=null"
+                label="Actualizar"></button>
+        <button type="button" pButton icon="pi pi-save" class="ui-button-success"
+                (click)="createUser()" *ngIf="selectedUser.id==null"
+                label="Crear"></button>
+    </p-footer>
+</p-dialog>
+<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
+                 rejectButtonStyleClass="ui-button-secondary">
+</p-confirmDialog>
+<p-toast key="tst"></p-toast>
+<div class="p-grid ui-fluid">
+    <div class="p-col-8 p-lg-8 p-offset-2">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <div class="card card-w-title">
+                    <h1>Hoja de Vida</h1>
+                    <p-tabView>
+                        <p-message severity="info" text="No hay registros" *ngIf="users.length==0"></p-message>
+                        <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
+
+                            <p-table #dt [columns]="colsUser" styleClass="ui-table-cars" [value]="users"
+                                     [paginator]="true"
+                                     [responsive]="true"
+                                     [rows]="20"
+                                     dataKey="id" selectionMode="single" [(selection)]="selectedUser"
+                                     *ngIf="users.length>0">
+                                <ng-template pTemplate="caption">
+                                    <div class="p-grid">
+                                        <div class="p-lg-12 p-md-12 p-sm-12">
+                                            <h1>Usuarios</h1>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let col of columns" [pSortableColumn]="col.field"
+                                            [ngSwitch]="col.field">
+                                            {{col.header}}
+                                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 8em; text-align: center;">
+                                            <button pButton type="button" icon="pi pi-user-plus"
+                                                    class="ui-button-success"
+                                                    (click)="selectUser(null)"></button>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                            <input *ngSwitchCase="'identification'" pInputText type="text"
+                                                   placeholder="Buscar por número de identificación"
+                                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                            <input *ngSwitchCase="'first_lastname'" pInputText type="text"
+                                                   placeholder="Buscar por el primer apellido"
+                                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                            <input *ngSwitchCase="'first_name'" pInputText type="text"
+                                                   placeholder="Buscar por el primer nombre"
+                                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                            <input *ngSwitchCase="'email'" pInputText type="text"
+                                                   placeholder="Buscar por correo"
+                                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                        </th>
+                                        <th style="width: 8em;">
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                    <tr [pEditableRow]="rowData">
+                                        <td>{{rowData.identification}}</td>
+                                        <td>{{rowData.first_name}}</td>
+                                        <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>
+                                        <td><p>{{rowData.email}}</p></td>
+                                        <td>
+                                            <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
+                                                    style="margin-right: .5em" (click)="selectUser(rowData);"></button>
+                                            <button pButton type="button" class="ui-button-danger"
+                                                    (click)="deleteUser(rowData)"
+                                                    icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                        </p-tabPanel>
+                        <p-tabPanel header="Formación Académica" leftIcon="pi pi-users">
+                            Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film,
+                            The_Godfather parallels the young Vito
+                            Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction
+                            of the dark
+                            side of the American dream. In the early 1900s, the child Vito flees his Sicilian village
+                            for America
+                            after the local Mafia kills his family. Vito struggles to make a living, legally or
+                            illegally, for his
+                            wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he
+                            demands his customary
+                            cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+                        </p-tabPanel>
+                        <p-tabPanel header="Idiomas" leftIcon="pi pi-globe">
+                            After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo
+                            returned to the well for this third
+                            and final story of the fictional Corleone crime family. Two decades have passed, and crime
+                            kingpin Michael
+                            Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that
+                            his family
+                            would one day be completely legitimate.
+                        </p-tabPanel>
+                    </p-tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

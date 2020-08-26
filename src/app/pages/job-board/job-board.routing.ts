@@ -1,7 +1,6 @@
 import {Routes} from '@angular/router';
 
 import {AuthGuard} from '../../shared/auth-guard/auth.guard';
-import {AppHojaVidaComponent} from './hoja-vida/app.hoja-vida.component';
 import {AppEmpresaComponentComponent} from './app-empresa-component/app-empresa-component.component';
 import {AppEmpresaDosComponent} from './app-empresa-dos/app-empresa-dos.component';
 
@@ -11,7 +10,7 @@ export const JobBoardRoutes: Routes = [
         children: [
             {
                 path: 'hoja-vida',
-                component: AppHojaVidaComponent,
+                loadChildren: () => import('./hoja-vida/hoja-vida.module').then(m => m.HojaVidaModule),
                 // canActivate: [AuthGuard]
             },
             {

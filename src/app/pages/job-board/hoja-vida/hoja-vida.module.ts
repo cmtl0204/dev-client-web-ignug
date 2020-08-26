@@ -2,9 +2,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {JobBoardRoutes} from './hoja-vida.routing';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HojaVidaRoutes} from './hoja-vida.routing';
+import {KeyFilterModule} from 'primeng/keyfilter';
 // Modulos Externos
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -45,15 +45,16 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
-
 // Mis componentes
 import {AppDatosPersonalesComponent} from './app-datos-personales/app-datos-personales.component';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import { HojaVidaComponent } from './hoja-vida.component';
+
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(JobBoardRoutes),
+        RouterModule.forChild(HojaVidaRoutes),
         FormsModule,
         AutoCompleteModule,
         MultiSelectModule,
@@ -95,9 +96,12 @@ import {ConfirmationService, MessageService} from 'primeng/api';
         DialogModule,
         ConfirmDialogModule,
         MessageModule,
+        KeyFilterModule,
+        ReactiveFormsModule
     ],
     declarations: [
-        AppDatosPersonalesComponent
+        AppDatosPersonalesComponent,
+        HojaVidaComponent
     ],
     providers: [DialogService, MessageService, ConfirmationService]
 })

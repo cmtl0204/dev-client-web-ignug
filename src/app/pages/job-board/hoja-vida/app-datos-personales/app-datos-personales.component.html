@@ -14,7 +14,7 @@
                 <label for="identification">Número de Documento</label>
                 <input id="identification" type="text" pInputText pKeyFilter="pnum" maxlength="10"
                        formControlName="identification">
-                <p-message severity="error" text="Firstname is required"
+                <p-message severity="error" text="El número es obligatorio"
                            *ngIf="!userform.controls['identification'].valid&&userform.controls['identification'].dirty"></p-message>
             </div>
         </div>
@@ -112,8 +112,7 @@
         </div>
     </form>
 </p-dialog>
-<p-confirmDialog header="Confirmation" icon="pi pi-info" [style]="{width: '425px'}"
-                 rejectButtonStyleClass="ui-button-secondary">
+<p-confirmDialog [style]="{width: '425px'}">
 </p-confirmDialog>
 <p-toast key="tst"></p-toast>
 <div class="p-grid ui-fluid">
@@ -121,9 +120,9 @@
         <p-message severity="info" text="No hay registros" *ngIf="users.length==0"></p-message>
         <p-table #dt [columns]="colsUser" styleClass="ui-table-cars" [value]="users"
                  [paginator]="true"
+                 [rows]="5"
                  [responsive]="true"
-                 [rows]="20"
-                 dataKey="id" selectionMode="single" [(selection)]="selectedUser"
+                 dataKey="id"
                  *ngIf="users.length>0">
             <ng-template pTemplate="caption">
                 <div class="p-grid">
@@ -134,7 +133,8 @@
             </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field"
+                    <th *ngFor="let col of columns"
+                        [pSortableColumn]="col.field"
                         [ngSwitch]="col.field">
                         {{col.header}}
                         <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -168,8 +168,8 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pEditableRow]="rowData">
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
                     <td>{{rowData.identification}}</td>
                     <td>{{rowData.first_name}}</td>
                     <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>
@@ -177,8 +177,7 @@
                     <td>
                         <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
                                 style="margin-right: .5em" (click)="selectUser(rowData);"></button>
-                        <button pButton type="button" class="ui-button-danger"
-                                (click)="deleteUser(rowData)"
+                        <button pButton type="button" class="ui-button-danger" (click)="deleteUser(rowData)"
                                 icon="pi pi-trash"></button>
                     </td>
                 </tr>

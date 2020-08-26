@@ -8,7 +8,7 @@ import {JobBoardServiceService} from '../../../../services/job-board/job-board-s
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
-    selector: 'app-app-datos-personales',
+    selector: 'app-datos-personales',
     templateUrl: './app-datos-personales.component.html',
 })
 export class AppDatosPersonalesComponent implements OnInit {
@@ -18,17 +18,16 @@ export class AppDatosPersonalesComponent implements OnInit {
     identificationTypes: SelectItem[]; // para almacenar el catalogo de los tipos de documento
     sexs: SelectItem[]; // para almacenar el catalogo de las sexos
     genders: SelectItem[]; // para almacenar el catalogo de las generos
-    selectedUser: User; // para guardar el usuario seleccionado para poder editar la informacion
+    selectedUser: User; // para guardar el usuario seleccionado o para poder editar la informacion
     users: Array<User>; // para almacenar el listado de todos los usuarios
     colsUser: any[]; // para almacenar las columnas para la tabla usuarios
     headerDialogUser: string; // para cambiar de forma dinamica la cabecear del  modal de creacion o actualizacion de usuario
     userform: FormGroup;
-    submitted: boolean;
 
     constructor(private messageService: MessageService,
                 private ignugService: IgnugServiceService,
                 private jobBoardService: JobBoardServiceService,
-                private spinner: NgxSpinnerService,
+                private spinnerService: NgxSpinnerService,
                 private authenticationService: AuthenticationServiceService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
@@ -40,14 +39,10 @@ export class AppDatosPersonalesComponent implements OnInit {
             {field: 'first_lastname', header: 'Apellido'},
             {field: 'email', header: 'Correo Institucional'},
         ];
-    }
-
-    // Esta funcion se ejectuta apenas inicie el componente
-    ngOnInit(): void {
         this.userform = this.fb.group({
             'first_name': new FormControl('', Validators.required),
             'first_lastname': new FormControl('', Validators.required),
-            'identification': new FormControl('', Validators.required),
+            'identification': new FormControl('', Validators.compose([Validators.required, Validators.minLength(5)])),
             'ethnic_origin_id': new FormControl('', Validators.required),
             'email': new FormControl('', Validators.required),
             'location_id': new FormControl('', Validators.required),
@@ -58,6 +53,10 @@ export class AppDatosPersonalesComponent implements OnInit {
             // 'password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
 
         });
+    }
+
+    // Esta funcion se ejectuta apenas inicie el componente
+    ngOnInit(): void {
         this.getUsers(); // obtiene la lista de todos los usuarios
         this.getEthnicOrigins(); // obtiene la lista del catalogo de etnias
         this.getLocations(); // obtiene la lista del catalogo de ubicaciones para los cantones
@@ -66,6 +65,7 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.getGenders(); // obtiene la lista del catalogo de generos
     }
 
+    // obtiene la lista del catalogo de etnias
     getEthnicOrigins(): void {
         const parameters = '?type=ethnic_origin';
         this.ignugService.get('catalogues' + parameters).subscribe(
@@ -172,13 +172,13 @@ export class AppDatosPersonalesComponent implements OnInit {
     }
 
     getUsers() {
-        this.spinner.show();
+        this.spinnerService.show();
         this.authenticationService.get('auth/users').subscribe(
             response => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.users = response['data']['users'];
             }, error => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
                     severity: 'error',
@@ -202,10 +202,10 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.selectedUser.email = this.userform.controls['email'].value;
         this.selectedUser.user_name = this.selectedUser.identification;
         this.selectedUser.password = '123';
-        this.spinner.show();
+        this.spinnerService.show();
         this.authenticationService.post('auth/users', {'user': this.selectedUser}).subscribe(
             response => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
                     severity: 'success',
@@ -215,7 +215,7 @@ export class AppDatosPersonalesComponent implements OnInit {
                 });
                 this.displayUser = false;
             }, error => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
                     severity: 'error',
@@ -238,10 +238,10 @@ export class AppDatosPersonalesComponent implements OnInit {
         this.selectedUser.birthdate = this.userform.controls['birthdate'].value;
         this.selectedUser.email = this.userform.controls['email'].value;
         this.selectedUser.user_name = this.selectedUser.identification;
-        this.spinner.show();
+        this.spinnerService.show();
         this.authenticationService.update('auth/users', {'user': this.selectedUser}).subscribe(
             response => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
                     severity: 'success',
@@ -251,7 +251,7 @@ export class AppDatosPersonalesComponent implements OnInit {
                 });
                 this.displayUser = false;
             }, error => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.messageService.add({
                     key: 'tst',
                     severity: 'error',
@@ -267,15 +267,16 @@ export class AppDatosPersonalesComponent implements OnInit {
             header: 'Eliminar ' + user.first_lastname + ' ' + user.first_name,
             message: '¿Estás seguro de eliminar?',
             acceptButtonStyleClass: 'ui-button-danger',
+            rejectButtonStyleClass: 'ui-button-primary',
             icon: 'pi pi-trash',
             accept: () => {
-                this.spinner.show();
+                this.spinnerService.show();
                 this.authenticationService.delete('auth/users/' + user.id).subscribe(
                     response => {
                         const indiceUser = this.users
                             .findIndex(element => element.id === user.id);
                         this.users.splice(indiceUser, 1);
-                        this.spinner.hide();
+                        this.spinnerService.hide();
                         this.messageService.add({
                             key: 'tst',
                             severity: 'success',
@@ -283,9 +284,8 @@ export class AppDatosPersonalesComponent implements OnInit {
                             detail: user.first_lastname + ' ' + user.first_name,
                             life: 3000
                         });
-                        this.displayUser = false;
                     }, error => {
-                        this.spinner.hide();
+                        this.spinnerService.hide();
                         this.messageService.add({
                             key: 'tst',
                             severity: 'error',
@@ -319,6 +319,5 @@ export class AppDatosPersonalesComponent implements OnInit {
             this.headerDialogUser = 'Nuevo Usuario';
         }
         this.displayUser = true;
-
     }
 }

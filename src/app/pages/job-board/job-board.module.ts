@@ -51,6 +51,7 @@ import { AppEmpresaComponentComponent } from './app-empresa-component/app-empres
 import { AppEmpresaDosComponent } from './app-empresa-dos/app-empresa-dos.component';
 import {HojaVidaModule} from './hoja-vida/hoja-vida.module';
 
+
 @NgModule({
     imports: [
         CommonModule,

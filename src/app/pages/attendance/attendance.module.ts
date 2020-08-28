@@ -27,7 +27,7 @@ import {PasswordModule} from 'primeng/password';
 
 
 import {FormsModule} from '@angular/forms';
-import {AuthenticationRoutes} from './administrativo.routing';
+import {AttendanceRoutes} from './attendance.routing';
 import {TooltipModule} from 'primeng/tooltip';
 import {AppAsistenciaLaboralComponent} from './docente-asistencia-laboral/app.asistencia-laboral.component';
 import {AppAdministracionAsistenciaLaboralComponent} from './administracion-asistencia-laboral/app.administracion-asistencia-laboral.component';
@@ -50,7 +50,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(AuthenticationRoutes),
+        RouterModule.forChild(AttendanceRoutes),
         FormsModule,
         AutoCompleteModule,
         MultiSelectModule,
@@ -97,5 +97,5 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ],
     providers: [DialogService]
 })
-export class AdministrativoModule {
+export class AttendanceModule {
 }

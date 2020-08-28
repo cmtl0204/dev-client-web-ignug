@@ -180,8 +180,11 @@
                 <tr>
                     <td>{{rowData.identification}}</td>
                     <td>{{rowData.first_name}}</td>
-                    <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>
-                    <td><p>{{rowData.email}}</p></td>
+                    <td>{{rowData.first_lastname}} {{rowData.second_lastname}}</td>
+                    <td>
+                        <textarea pInputTextarea autoResize="autoResize" readonly
+                                  style="border: 0px">{{rowData.email}}</textarea>
+                    </td>
                     <td>
                         <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
                                 style="margin-right: .5em" (click)="selectUser(rowData);"></button>

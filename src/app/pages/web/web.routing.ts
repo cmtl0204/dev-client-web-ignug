@@ -8,12 +8,12 @@ export const WebRoutes: Routes = [
             {
                 path: 'mision',
             //    component: AppAsistenciaLaboralComponent,
-                // canActivate: [AuthGuard]
+                canActivate: [AuthGuard]
             },
             {
                 path: 'historia',
                 //    component: AppAsistenciaLaboralComponent,
-                // canActivate: [AuthGuard]
+                canActivate: [AuthGuard]
             },
 
         ]

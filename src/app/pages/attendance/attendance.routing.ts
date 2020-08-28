@@ -3,7 +3,7 @@ import {AppAsistenciaLaboralComponent} from './docente-asistencia-laboral/app.as
 import {AppAdministracionAsistenciaLaboralComponent} from './administracion-asistencia-laboral/app.administracion-asistencia-laboral.component';
 import {AuthGuard} from '../../shared/auth-guard/auth.guard';
 
-export const AuthenticationRoutes: Routes = [
+export const AttendanceRoutes: Routes = [
     {
         path: '',
         children: [

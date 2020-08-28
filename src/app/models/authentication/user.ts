@@ -1,21 +1,21 @@
 import {Catalogue} from '../ignug/models.index';
 
 export class User {
-    id: number;
+    id?: number;
     first_name: string;
-    second_name: string;
+    second_name?: string;
     first_lastname: string;
-    second_lastname: string;
+    second_lastname?: string;
     identification: string;
-    user_name: string;
-    password: string;
-    repeatPassword: string;
+    user_name?: string;
+    password?: string;
+    repeatPassword?: string;
     ethnic_origin: Catalogue;
     location: Catalogue;
     identification_type: Catalogue;
     sex: Catalogue;
     gender: Catalogue;
-    state: Catalogue;
+    state?: Catalogue;
     birthdate: Date;
     email: string;
 

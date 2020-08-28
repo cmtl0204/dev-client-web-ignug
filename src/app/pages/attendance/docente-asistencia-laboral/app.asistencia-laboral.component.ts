@@ -69,9 +69,15 @@ export class AppAsistenciaLaboralComponent implements OnInit {
     fechas: Date;
     exportColumns: any[];
 
-    constructor(private message: MessageService, private carService: CarService, private eventService: EventService,
-                private nodeService: NodeService, private breadcrumbService: BreadcrumbService, private attendanceService: AttendanceServiceService,
-                private spinner: NgxSpinnerService, private router: Router, private confirmationService: ConfirmationService) {
+    constructor(private message: MessageService,
+                private carService: CarService,
+                private eventService: EventService,
+                private nodeService: NodeService,
+                private breadcrumbService: BreadcrumbService,
+                private attendanceService: AttendanceServiceService,
+                private spinner: NgxSpinnerService,
+                private router: Router,
+                private confirmationService: ConfirmationService) {
         this.role = JSON.parse(localStorage.getItem('role')) as Role;
         this.breadcrumbService.setItems([
             {label: 'Registro Asistencia'}

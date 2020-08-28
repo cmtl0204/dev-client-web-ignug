@@ -19,7 +19,7 @@ export class JobBoardServiceService {
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
-            // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
+        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_JOB_BOARD + url;
         return this._http.get(url, {headers: this.headers});
     }
@@ -29,7 +29,7 @@ export class JobBoardServiceService {
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
-            // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
+        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_IGNUG + url;
         return this._http.post(url, data, {headers: this.headers});
     }
@@ -39,7 +39,7 @@ export class JobBoardServiceService {
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
-           // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
+        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_IGNUG + url;
         return this._http.put(url, data, {headers: this.headers});
     }
@@ -49,7 +49,7 @@ export class JobBoardServiceService {
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
-            // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
+        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_IGNUG + url;
         return this._http.delete(url, {headers: this.headers});
     }
@@ -68,6 +68,7 @@ export class JobBoardServiceService {
             return false;
         }
     }
+
 
     validarSoloNumeros(cadena: string): boolean {
         const expreg = /^[0-9]*$/;

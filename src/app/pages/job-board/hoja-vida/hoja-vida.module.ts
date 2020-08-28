@@ -39,7 +39,7 @@ import {PickListModule} from 'primeng/picklist';
 import {OrderListModule} from 'primeng/orderlist';
 import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
-import {AccordionModule, DialogService, MessageModule, TabViewModule} from 'primeng';
+import {AccordionModule, DialogService, MessageModule, StepsModule, TabViewModule} from 'primeng';
 import {DialogModule} from 'primeng/dialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
@@ -97,7 +97,8 @@ import { HojaVidaComponent } from './hoja-vida.component';
         ConfirmDialogModule,
         MessageModule,
         KeyFilterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StepsModule
     ],
     declarations: [
         AppDatosPersonalesComponent,

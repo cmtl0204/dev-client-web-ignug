@@ -37,18 +37,18 @@ export const routes: Routes = [
             {path: 'documentation', component: DocumentationComponent},
             {
                 path: 'attendance',
-                loadChildren: () => import('./pages/attendance/administrativo.module').then(m => m.AdministrativoModule),
+                loadChildren: () => import('./pages/attendance/attendance.module').then(m => m.AttendanceModule),
                 canActivate: [AuthGuard]
             },
             {
                 path: 'job-board',
                 loadChildren: () => import('./pages/job-board/job-board.module').then(m => m.JobBoardModule),
-                // canActivate: [AuthGuard]
+                canActivate: [AuthGuard]
             },
             {
                 path: 'web',
                 loadChildren: () => import('./pages/web/web.module').then(m => m.WebModule),
-                // canActivate: [AuthGuard]
+                canActivate: [AuthGuard]
             },
 
         ]

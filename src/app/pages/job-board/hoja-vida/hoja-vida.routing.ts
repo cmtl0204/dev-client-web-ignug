@@ -12,7 +12,7 @@ export const HojaVidaRoutes: Routes = [
             {
                 path: '',
                 component: HojaVidaComponent,
-                // canActivate: [AuthGuard]
+                canActivate: [AuthGuard]
             },
         ]
     }

@@ -23,3 +23,13 @@
         </div>
     </div>
 </div>
+
+<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+<div class="p-grid ui-fluid">
+    <div class="p-col-8 p-lg-8 p-offset-2" *ngIf="activeIndex==0">
+        0
+    </div>
+    <div class="p-col-8 p-lg-8 p-offset-2" *ngIf="activeIndex==1">
+        1
+    </div>
+</div>

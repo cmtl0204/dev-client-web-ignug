@@ -82,7 +82,7 @@ export class AuthenticationServiceService {
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json')
             .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
-        url = environment.API_URL_ATTENDANCE + url;
+        url = environment.API_URL_AUTHENTICATION + url;
         return this._http.put(url, data, {headers: this.headers});
     }
 }

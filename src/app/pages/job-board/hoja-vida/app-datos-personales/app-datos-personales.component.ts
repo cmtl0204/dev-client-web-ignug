@@ -32,6 +32,7 @@ export class AppDatosPersonalesComponent implements OnInit {
                 private authenticationService: AuthenticationServiceService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
+        this.buildFormUser();
         this.selectedUser = new User();
         this.users = new Array<User>();
         this.colsUser = [
@@ -40,22 +41,24 @@ export class AppDatosPersonalesComponent implements OnInit {
             {field: 'first_lastname', header: 'Apellido'},
             {field: 'email', header: 'Correo Institucional'},
         ];
-        this.userForm = this.fb.group({
-            'first_name': new FormControl('', Validators.required),
-            'first_lastname': new FormControl('', Validators.required),
-            'identification': new FormControl('', Validators.compose(
-                [Validators.required, Validators.minLength(9), Validators.maxLength(10)])),
-            'ethnic_origin_id': new FormControl('', Validators.required),
-            'email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
-            'location_id': new FormControl('', Validators.required),
-            'identification_type_id': new FormControl('', Validators.required),
-            'sex_id': new FormControl('', Validators.required),
-            'gender_id': new FormControl('', Validators.required),
-            'birthdate': new FormControl('', Validators.required),
-
-        });
         const currentDate = new Date();
         this.validationBirthdate = (currentDate.getFullYear() - 70).toString() + ':' + currentDate.getFullYear().toString();
+    }
+
+    buildFormUser() {
+        this.userForm = this.fb.group({
+            first_name: ['', Validators.required],
+            first_lastname: ['', Validators.required],
+            identification: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
+            ethnic_origin_id: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            location_id: ['', Validators.required],
+            identification_type_id: ['', Validators.required],
+            sex_id: ['', Validators.required],
+            gender_id: ['', Validators.required],
+            birthdate: ['', Validators.required],
+
+        });
     }
 
     // Esta funcion se ejectuta apenas inicie el componente
@@ -321,5 +324,16 @@ export class AppDatosPersonalesComponent implements OnInit {
             birthdate: this.userForm.controls['birthdate'].value,
             email: this.userForm.controls['email'].value,
         } as User;
+    }
+
+    onSubmitUser(event: Event) {
+        event.preventDefault();
+        if (this.userForm.valid) {
+            console.log(event);
+        } else {
+            this.userForm.markAllAsTouched();
+        }
+
+
     }
 }

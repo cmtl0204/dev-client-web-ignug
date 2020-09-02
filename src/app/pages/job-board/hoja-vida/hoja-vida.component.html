@@ -33,3 +33,13 @@
         1
     </div>
 </div>
+
+<h3>Multiple Selection with Checkbox</h3>
+<p-tree [value]="cataloguesTree" selectionMode="checkbox" [(selection)]="selectedcataloguesTree"></p-tree>
+<div>Selected Nodes:
+    <ul>
+        <li *ngFor="let file of selectedcataloguesTree">
+            {{file.data}}
+        </li>
+    </ul>
+</div>

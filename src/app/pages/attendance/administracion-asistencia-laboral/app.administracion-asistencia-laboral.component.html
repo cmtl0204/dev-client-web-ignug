@@ -1,3 +1,50 @@
+<p-dialog [header]="selectedAttendance.first_lastname + ' ' + selectedAttendance.first_name"
+          [(visible)]="displayWorkday" modal="true" showEffect="fade"
+          [style]="{width: '400px'}" *ngIf="selectedAttendance">
+    <h1>{{selectedAttendance.type_workdays}}</h1>
+    <!--Firstname y FirstLastName-->
+    <div class="p-grid">
+        <div class="p-lg-6">
+            <label for="start_time">Hora Inicio</label>
+            <br>
+            <input id="start_time" name="start_time" type="time" pInputText
+                   [(ngModel)]="selectedAttendance.start_time">
+            {{selectedAttendance.start_time}}
+        </div>
+
+        <div class="p-lg-6">
+            <label for="end_time">Hora Fin</label>
+            <br>
+            <input id="end_time" name="end_time" type="time" pInputText [(ngModel)]="selectedAttendance.end_time">
+            {{selectedAttendance.end_time}}
+        </div>
+        <div class="p-lg-12">
+            <label for="newObservations">Nueva Observación</label>
+            <br>
+            <textarea id="newObservations" name="observations" autoResize="autoResize" pInputTextarea
+                      [(ngModel)]="workday.observations">
+                </textarea>
+        </div>
+        <div class="p-lg-12" *ngIf="selectedAttendance.observations">
+            <label><b>Observaciones:</b></label>
+            <br>
+            <div *ngFor="let observation of selectedAttendance.observations">
+                <span *ngIf="observation[0].length>0">{{observation[0]}}</span>
+                <ul *ngIf="observation[0].length>0">
+                    <li>{{observation[1]}}</li>
+                    <li>{{observation[2]}}</li>
+                    <li>{{observation[3]}}</li>
+                    <li>{{observation[4]}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-refresh" class="ui-button-success"
+                (click)="displayWorkday=false;updateWorkday()"
+                label="Actualizar"></button>
+    </p-footer>
+</p-dialog>
 <div class="p-grid">
     <div class="p-lg-12 p-md-12 p-sm-12">
         <div class="card card-w-title">
@@ -73,7 +120,8 @@
                                         <p>Jornada: <b>{{car.duration}}</b></p>
                                         <p>Almuerzo: <b>{{car.lunch}}</b></p>
                                     </div>
-                                    <button pButton type="button" icon="pi pi-search" style="margin-top:0"></button>
+                                    <button pButton type="button" icon="pi pi-search" style="margin-top:0"
+                                    ></button>
                                 </p-panel>
                             </div>
                         </ng-template>
@@ -158,9 +206,8 @@
                                 <td>{{rowData.duration}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-success" icon="pi pi-search"
-                                            style="margin-right: .5em"></button>
-                                    <button pButton type="button" class="ui-button-warning"
-                                            icon="pi pi-pencil"></button>
+                                            style="margin-right: .5em"
+                                            (click)="displayWorkday=true;selectAttendance(rowData)"></button>
                                 </td>
                             </tr>
                         </ng-template>

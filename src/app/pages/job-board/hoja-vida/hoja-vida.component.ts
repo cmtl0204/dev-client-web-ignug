@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem, MessageService} from 'primeng/api';
+import {MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {NodeService} from '../../../demo/service/nodeservice';
 
 @Component({
     selector: 'app-hoja-vida',
@@ -36,8 +37,10 @@ import {MenuItem, MessageService} from 'primeng/api';
 export class HojaVidaComponent implements OnInit {
     items: MenuItem[];
     activeIndex: number;
+    cataloguesTree: TreeNode[];
+    selectedcataloguesTree: TreeNode;
 
-    constructor(private messageService: MessageService) {
+    constructor(private messageService: MessageService, private nodeService: NodeService) {
         this.activeIndex = 1;
     }
 
@@ -71,6 +74,10 @@ export class HojaVidaComponent implements OnInit {
                 }
             }
         ];
+        this.cargarTree();
     }
 
+    cargarTree() {
+        this.nodeService.getFilesCatalogue().then(files => this.cataloguesTree = files);
+    }
 }

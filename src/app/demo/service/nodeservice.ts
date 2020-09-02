@@ -13,6 +13,13 @@ export class NodeService {
                     .then(data => data);
     }
 
+    getFilesCatalogue() {
+        return this.http.get<any>('assets/demo/data/filesCatalogue.json')
+            .toPromise()
+            .then(res => res.data as any[])
+            .then(data => data);
+    }
+
     getFilesystem() {
         return this.http.get<any>('assets/demo/data/filesystem.json')
                     .toPromise()

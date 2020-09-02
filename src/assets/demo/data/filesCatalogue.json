@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "label": "Documents",
+      "data": "Documents Folder",
+      "expandedIcon": "pi pi-folder-open",
+      "collapsedIcon": "pi pi-folder",
+      "children": [
+        {
+          "label": "Expenses.doc",
+          "icon": "pi pi-file",
+          "data": "Expenses Document",
+          "value": "Expenses Document VAlue"
+        },
+        {
+          "label": "Expenses.doc",
+          "icon": "pi pi-file",
+          "data": "Expenses Document",
+          "value": "Expenses Document VAlue"
+        }
+      ]
+    },
+    {
+      "label": "Documents",
+      "data": "Documents Folder",
+      "expandedIcon": "pi pi-folder-open",
+      "collapsedIcon": "pi pi-folder",
+      "children": [
+        {
+          "label": "Expenses.doc",
+          "icon": "pi pi-file",
+          "data": "Expenses Document",
+          "value": "Expenses Document VAlue"
+        },
+        {
+          "label": "Expenses.doc",
+          "icon": "pi pi-file",
+          "data": "Expenses Document",
+          "value": "Expenses Document VAlue"
+        }
+      ]
+    }
+  ]
+}

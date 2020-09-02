@@ -58,6 +58,11 @@ export const routes: Routes = [
         component: BlankComponent,
         loadChildren: () => import('./pages/authentication/authentication.module').then(m => m.AuthenticationModule)
     },
+    {
+        path: 'bolsa-empleo',
+        component: BlankComponent,
+        loadChildren: () => import('./pages/job-board/job-board.module').then(m => m.JobBoardModule)
+    },
     {path: '**', redirectTo: '/authentication/404'},
 
 ];

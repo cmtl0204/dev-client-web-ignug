@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BreadcrumbService} from '../../../shared/breadcrumb/breadcrumb.service';
 import {Car} from '../../../demo/domain/car';
-import {SelectItem} from 'primeng/api';
+import {SelectItem, TreeNode} from 'primeng/api';
 import {CarService} from '../../../demo/service/carservice';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -13,6 +13,7 @@ import {Attendance} from '../../../models/attendance/attendance';
 import {Workday} from '../../../models/attendance/workday';
 import {Catalogue} from '../../../models/attendance/catalogue';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {User} from '../../../models/authentication/user';
 
 @Component({
     selector: 'app-asistencia-laboral',
@@ -48,9 +49,16 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     sortKey: string;
     tipoFiltro: string;
     exportColumns: any[];
+    workday: Workday;
+    user: User;
+    displayWorkday: boolean;
+    selectedAttendance: any;
+    categories: TreeNode[];
+    selectedCategories: TreeNode[];
 
     constructor(private eventService: EventService, private nodeService: NodeService, private breadcrumbService: BreadcrumbService,
                 private attendanceService: AttendanceServiceService, private spinner: NgxSpinnerService) {
+        this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.breadcrumbService.setItems([
             {label: 'Control Asistencia'}
         ]);
@@ -70,6 +78,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         this.tipoFiltro = 'first_lastname';
         this.resumenAsistencias = [];
         this.detalleAsistencias = [];
+        this.workday = new Workday();
     }
 
     ngOnInit() {
@@ -118,7 +127,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         this.attendanceService.get('attendances/summary' + parametros).subscribe(
             response => {
                 if (response) {
-                    this.resumenAsistencias = response['data']['attributes'];
+                    this.resumenAsistencias = response['data']['attendances'];
                     this.spinner.hide();
                 }
             }, error => {
@@ -148,10 +157,28 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         this.attendanceService.get('attendances/detail' + parametros).subscribe(
             response => {
                 if (response) {
-                    this.detalleAsistencias = response['data']['attributes'];
+                    this.detalleAsistencias = response['data']['attendances'];
                     this.spinner.hide();
                 }
             }, error => {
+                this.spinner.hide();
+            }
+        );
+    }
+
+    updateWorkday(): void {
+        const parameters = '?user_id=' + this.user.id;
+        this.workday.id = this.selectedAttendance.workday_id;
+        this.workday.start_time = this.selectedAttendance.start_time;
+        this.workday.end_time = this.selectedAttendance.end_time;
+
+        this.spinner.show();
+        this.attendanceService.update('workdays' + parameters, {'workday': this.workday}).subscribe(
+            response => {
+                this.obtenerJornadaActividadesDetalle();
+                this.spinner.hide();
+            }, error => {
+                this.obtenerJornadaActividadesDetalle();
                 this.spinner.hide();
             }
         );
@@ -237,6 +264,19 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             });
             FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
         });
+    }
+
+    selectAttendance(attedance) {
+        this.selectedAttendance = attedance;
+        this.workday.observations = '';
+        if (this.selectedAttendance.observations) {
+            this.selectedAttendance.observations = attedance.observations.split('##');
+            let i = 0;
+            this.selectedAttendance.observations.forEach(observation => {
+                this.selectedAttendance.observations[i] = observation.split('#');
+                i++;
+            });
+        }
     }
 }
 

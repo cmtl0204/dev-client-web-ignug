@@ -19,6 +19,7 @@ export class AppMenuComponent implements OnInit {
     }
 
     ngOnInit() {
+        /*
         this.model = [
             {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']},
             {
@@ -99,7 +100,8 @@ export class AppMenuComponent implements OnInit {
                 label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
             }
         ];
-        /*
+        */
+
         if (this.role.code === '1') {
             this.model = [
                 {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
@@ -155,7 +157,6 @@ export class AppMenuComponent implements OnInit {
                 {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
             ];
         }
-        */
     }
 
     onMenuClick() {

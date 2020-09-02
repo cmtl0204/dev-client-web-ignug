@@ -39,15 +39,10 @@ export class AppLoginComponent {
                 this.msgs.push({severity: 'error', summary: 'Debes ingresar el usuario y la contraseña', detail: 'Inténtalo de nuevo!'});
                 return;
             }
-
             this.spinner.show();
-            const clientId = environment.CLIENT_ID;
-            const clientSecret = environment.CLIENT_SECRET;
-            const grantType = environment.GRANT_TYPE;
-
             this.authenticationService.login(this.user).subscribe(
                 response => {
-                    if (response['user']['state_id'] === 1) {
+                    if (response['user']['state']['code'] === '1') {
                         localStorage.setItem('isLoggedin', 'true');
                         localStorage.setItem('user', JSON.stringify(response['user']));
                         localStorage.setItem('accessToken', JSON.stringify(response['token']['accessToken']));
@@ -108,6 +103,13 @@ export class AppLoginComponent {
                         localStorage.removeItem('roles');
                         localStorage.removeItem('role');
                         localStorage.removeItem('isLoggedin');
+                        if (response['user']['state']['code'] === '3') {
+                            this.msgs.push({
+                                severity: 'error',
+                                summary: 'Tú usuario se encuentra eliminado',
+                                detail: 'Comunícante con el Administrador!'
+                            });
+                        }
                     }
                     this.spinner.hide();
                 },

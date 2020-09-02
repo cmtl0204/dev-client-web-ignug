@@ -297,7 +297,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
 
                 const parametros = '?user_id=' + this.user.id;
                 this.spinner.show();
-                this.attendanceService.post('workdays' + parametros, {'attendance': attendance, 'workday': workday}).subscribe(
+                this.attendanceService.post('workdays/start_day' + parametros, {'attendance': attendance, 'workday': workday}).subscribe(
                     response => {
                         this.obtenerJornadaActividadesDiaria();
                         this.message.add({key: 'tst', severity: 'success', summary: 'Se inició correctamente', detail: type});
@@ -330,7 +330,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                 workday.observations = '';
                 workday.end_time = horas + ':' + minutos + ':' + segundos;
                 this.spinner.show();
-                this.attendanceService.update('workdays', {'workday': workday}).subscribe(
+                this.attendanceService.update('workdays/end_day', {'workday': workday}).subscribe(
                     response => {
                         this.message.add({
                             key: 'tst',

@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {AppLandingComponent} from './app-landing/app-landing.component';
+import {AppAdministratorComponent} from './app-administrator/app.administrator.component';
 import {AuthGuard} from '../../../shared/auth-guard/auth.guard';
 
 
@@ -10,7 +10,7 @@ export const LandingRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: AppLandingComponent,
+                component: AppAdministratorComponent,
                 // canActivate: [AuthGuard],
             },
         ],

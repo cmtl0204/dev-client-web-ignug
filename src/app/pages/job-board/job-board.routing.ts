@@ -18,7 +18,7 @@ export const JobBoardRoutes: Routes = [
             },
             {
                 path: 'landing',
-                loadChildren: () => import('./professional/professional.module').then(m => m.ProfessionalModule),
+                loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
                 // canActivate: [AuthGuard]
             }
         ]

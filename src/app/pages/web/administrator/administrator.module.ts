@@ -45,6 +45,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MegaMenuModule } from 'primeng/megamenu';
+import { App } from './app-administrator/app.administrator.component';
 
 
 // Mis componentes
@@ -95,7 +96,7 @@ import { MegaMenuModule } from 'primeng/megamenu';
     ConfirmDialogModule,
     MegaMenuModule,
   ],
-  declarations: [],
+  declarations: [AppAdministratorComponent],
   providers: [DialogService],
 })
 export class AdministratorModule {}

@@ -29,14 +29,14 @@
         {
           "label": "Expenses.doc",
           "icon": "pi pi-file",
-          "data": "Expenses Document",
-          "value": "Expenses Document VAlue"
+          "data": "Expenses Document 1",
+          "value": "Expenses Document 1"
         },
         {
           "label": "Expenses.doc",
           "icon": "pi pi-file",
-          "data": "Expenses Document",
-          "value": "Expenses Document VAlue"
+          "data": "Expenses Document 2",
+          "value": "Expenses Document 2"
         }
       ]
     }

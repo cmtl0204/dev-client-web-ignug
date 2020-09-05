@@ -3,8 +3,8 @@ import {MenuItem, MessageService, TreeNode} from 'primeng/api';
 import {NodeService} from '../../../demo/service/nodeservice';
 
 @Component({
-    selector: 'app-hoja-vida',
-    templateUrl: './hoja-vida.component.html',
+    selector: 'app-professional',
+    templateUrl: './professional.component.html',
     styles: [`
         .ui-steps .ui-steps-item {
             width: 25%;
@@ -34,7 +34,7 @@ import {NodeService} from '../../../demo/service/nodeservice';
         }
     `],
 })
-export class HojaVidaComponent implements OnInit {
+export class ProfessionalComponent implements OnInit {
     items: MenuItem[];
     activeIndex: number;
     cataloguesTree: TreeNode[];
@@ -79,5 +79,9 @@ export class HojaVidaComponent implements OnInit {
 
     cargarTree() {
         this.nodeService.getFilesCatalogue().then(files => this.cataloguesTree = files);
+    }
+
+    select() {
+        console.log(this.selectedcataloguesTree);
     }
 }

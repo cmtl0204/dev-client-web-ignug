@@ -1,29 +1,26 @@
 import {Routes} from '@angular/router';
-
 import {AuthGuard} from '../../shared/auth-guard/auth.guard';
-import {AppEmpresaComponentComponent} from './app-empresa-component/app-empresa-component.component';
-import {AppEmpresaDosComponent} from './app-empresa-dos/app-empresa-dos.component';
-import {HojaVidaComponent} from './hoja-vida/hoja-vida.component';
+import {AppProfessionalsComponent} from './landing/professionals/app.professionals.component';
 
 export const JobBoardRoutes: Routes = [
     {
         path: '',
         children: [
             {
-                path: 'hoja-vida',
-                loadChildren: () => import('./hoja-vida/hoja-vida.module').then(m => m.HojaVidaModule),
+                path: 'professional',
+                loadChildren: () => import('./professional/professional.module').then(m => m.ProfessionalModule),
                 canActivate: [AuthGuard]
             },
             {
-                path: 'empresa',
-                component: AppEmpresaComponentComponent,
-                canActivate: [AuthGuard]
+                path: 'company',
+                loadChildren: () => import('./company/company.module').then(m => m.CompanyModule),
+                // canActivate: [AuthGuard]
             },
             {
-                path: 'empresa-dos',
-                component: AppEmpresaDosComponent,
-                canActivate: [AuthGuard]
-            },
+                path: 'landing',
+                loadChildren: () => import('./professional/professional.module').then(m => m.ProfessionalModule),
+                // canActivate: [AuthGuard]
+            }
         ]
     }
 ];

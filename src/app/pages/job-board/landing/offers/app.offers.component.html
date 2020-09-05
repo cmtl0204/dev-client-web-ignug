@@ -1,0 +1,173 @@
+<h1 align="center" style="color: #784fcf; font-size: 48px;">Bolsa de Empleo - Ofertas</h1>
+
+<div class="p-col-12">
+
+    <p-card>
+
+        <div class="p-grid" align="center">
+            <div class="p-col">
+                <h3>Empresas Registradas</h3>
+
+                <i class="pi pi-briefcase" style="font-size: 3em">
+                    {{totalCompanies}}</i>
+            </div>
+            <div class="p-col">
+                <h3>Profesionales Vinculados</h3>
+
+                <i class="pi pi-users" style="font-size: 3em">
+                    {{totalProffesionals}}</i>
+            </div>
+            <div class="p-col">
+                <h3>Ofertas laborales</h3>
+
+                <i class="pi pi-user" style="font-size: 3em">
+                    {{totalOffers}}
+                </i>
+            </div>
+        </div>
+    </p-card>
+    <br>
+    <p-card>
+        <div class="p-grid" align="center">
+            <div class="p-col-3">
+                <img src="../../../../assets/pages/CONTRATANDO.png" alt="" style="height: 300px;
+                width: 300px;">
+            </div>
+            <div class="p-col-2">
+
+            </div>
+            <div class="p-col-7">
+                <h1 style="color: #a689e6; font-size: 48px;">Ofertas Laborales</h1>
+                <p align="center" style="text-align: justify">
+                    Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores
+                    humanísticos, morales y éticos, basados en una formación de calidad y calidez acordes al Plan
+                    Nacional del
+                    Buen Vivir.
+                </p>
+            </div>
+        </div>
+
+
+    </p-card>
+</div>
+<div class="p-col-12">
+
+
+    <br>
+    <div class="p-grid">
+        <div class="p-col-3">
+            <h3>Filtros</h3>
+            <p-tree [value]="categories" selectionMode="checkbox" [(selection)]="selectedCategories"></p-tree>
+        </div>
+        <div class="p-col-9">
+
+
+            <br>
+            <br>
+            <p-dataView #dv [value]="offers" [paginator]="true" [rows]="3" paginatorPosition="both" filterBy="brand"
+                        [sortField]="sortField" [sortOrder]="sortOrder">
+                <p-header>
+                    <div class="ui-helper-clearfix">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey"
+                                            placeholder="Filtrar por Categoria" (onChange)="onSortChange($event)"
+                                            [style]="{'min-width':'140px'}"></p-dropdown>
+                            </div>
+                            <div class="p-col-6 p-md-4 filter-container">
+                                <div style="position:relative">
+                                    <input type="search" pInputText placeholder="Buscar"
+                                           (input)="dv.filter($event.target.value)">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </p-header>
+                <ng-template let-offer pTemplate="listItem">
+                    <div>
+                        <div class="offer-details">
+                            <div>
+                                <div class="p-grid">
+                                    <div class="p-col-10"><b>{{offer.position}}</b></div>
+                                    <div class="p-col-10">{{offer.activities}}</div>
+                                    <div class="p-col-10">{{offer.start_date}} - {{offer.finish_date}}</div>
+                                </div>
+                                <br>
+
+                                <button pButton type="button" icon="pi pi-info"
+                                        (click)="selectOffer($event, offer)"></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+
+            <p-dialog header="Información" [(visible)]="displayDialog" [minY]="70" showEffect="fade" [modal]="true"
+                      [style]="{width: '500px'}" [contentStyle]="{padding: '2em', textAlign: 'left'}">
+                <div *ngIf="selectedOffer">
+                    <p>id: {{selectedOffer.id}}</p>
+
+                    <p>company_id: {{selectedOffer.company}}</p>
+
+                    <p>code: {{selectedOffer.code}}</p>
+
+                    <p>contact: {{selectedOffer.contact}}</p>
+
+                    <p>email: {{selectedOffer.email}}</p>
+
+                    <p>phone: {{selectedOffer.phone}}</p>
+
+                    <p>cell_phone: {{selectedOffer.cell_phone}}</p>
+
+                    <p>contract_type: {{selectedOffer.contract_type}}</p>
+
+                    <p>position: {{selectedOffer.position}}</p>
+
+                    <p>training_hours: {{selectedOffer.training_hours}}</p>
+
+                    <p>experience_time: {{selectedOffer.experience_time}}</p>
+
+                    <p>remuneration: {{selectedOffer.remuneration}}</p>
+
+                    <p>working_day: {{selectedOffer.working_day}}</p>
+
+                    <p>number_jobs: {{selectedOffer.number_jobs}}</p>
+
+                    <p>start_date: {{selectedOffer.start_date}}</p>
+
+                    <p>finish_date: {{selectedOffer.end_date}}</p>
+
+                    <p>activities: {{selectedOffer.activities}}</p>
+
+                    <p>aditional_information: {{selectedOffer.aditional_information}}</p>
+
+                    <p>location_id: {{selectedOffer.location}}</p>
+
+                    <p>state_id: {{selectedOffer.state}}</p>
+
+                    <button type="button">Postular</button>
+                </div>
+            </p-dialog>
+
+
+        </div>
+    </div>
+    <br>
+
+</div>
+
+<div class="p-grid">
+    <div class="p-col-2"></div>
+    <p-card class="p-col-8">
+        <video class="p-col-12" controls>
+            <source src="../../../../assets/pages/empresas.mp4">
+        </video>
+    </p-card>
+
+    <div class="p-col-2"></div>
+</div>
+
+<br>
+

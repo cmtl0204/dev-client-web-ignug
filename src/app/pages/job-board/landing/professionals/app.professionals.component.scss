@@ -1,0 +1,11 @@
+@import '../../../pages';
+
+:host ::ng-deep .ui-tree.my-tree {
+    width: 100%;
+}
+/*
+:host ::ng-deep .ui-tree.my-tree span.ng-star-inserted {
+    
+}
+*/
+

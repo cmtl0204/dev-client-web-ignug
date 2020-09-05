@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.div {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    background-color: #fff;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    padding: 20px;
+}
+
+th {
+    background-color: #246355;
+    border-bottom: 5px solid #0f362d;
+    color: #fff;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+input[type=text] {
+    border: none;
+    border-bottom: 1px solid black;
+    background: transparent;
+    outline: none;
+    height: 35px;
+    color: black;
+    font-size: 15px;
+}

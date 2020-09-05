@@ -59,7 +59,7 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/authentication/authentication.module').then(m => m.AuthenticationModule)
     },
     {
-        path: 'bolsa-empleo',
+        path: 'app-job-board',
         component: BlankComponent,
         loadChildren: () => import('./pages/job-board/job-board.module').then(m => m.JobBoardModule)
     },

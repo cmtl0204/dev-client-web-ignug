@@ -3,8 +3,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HojaVidaRoutes} from './hoja-vida.routing';
+import {HojaVidaRoutes} from './professional.routing';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import {ConfirmationService, MessageService} from 'primeng/api';
 // Modulos Externos
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -46,9 +47,14 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 // Mis componentes
-import {AppDatosPersonalesComponent} from './app-datos-personales/app-datos-personales.component';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import { HojaVidaComponent } from './hoja-vida.component';
+import {AppPersonalInformationComponent} from './personal-information/app-personal-information.component';
+import {ProfessionalComponent} from './professional.component';
+import {AppCourseComponent} from './course/app.course.component';
+import {AppProfessionalReferenceComponent} from './professional-reference/app-professional-reference.component';
+import {AppAbilityComponent} from './ability/app.ability.component';
+import {AppProfessionalExperienceComponent} from './profesional-experience/app.professional-experience.component';
+import {AppAcademicFormationComponent} from './academic-formation/app.academic-formation.component';
+import {AppOportunitiesComponent} from './oportunities/app.oportunities.component';
 
 
 @NgModule({
@@ -101,10 +107,17 @@ import { HojaVidaComponent } from './hoja-vida.component';
         StepsModule
     ],
     declarations: [
-        AppDatosPersonalesComponent,
-        HojaVidaComponent
+        AppPersonalInformationComponent,
+        ProfessionalComponent,
+        AppCourseComponent,
+        AppProfessionalReferenceComponent,
+        AppAbilityComponent,
+        AppProfessionalExperienceComponent,
+        AppAcademicFormationComponent,
+        AppOportunitiesComponent
+
     ],
     providers: [DialogService, MessageService, ConfirmationService]
 })
-export class HojaVidaModule {
+export class ProfessionalModule {
 }

@@ -1,0 +1,142 @@
+
+
+<p-dialog [header]="headerDialogUser" [(visible)]="displayUser" modal="true" showEffect="fade">
+    <!--    <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">-->
+    <form [formGroup]="academicFormationForm">
+        <!--Institución-->
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="institution">Institución</label>
+                <p-dropdown id="institution" [options]="institutions"
+                            formControlName="institution_id"></p-dropdown>
+                <p-message severity="error" text="Institución es requerida"
+                           *ngIf="!academicFormationForm.controls['institution_id'].valid&&academicFormationForm.controls['institution_id'].dirty"></p-message>
+            </div>
+        <!--Carrera-->
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="career">Carrera</label>
+                <p-dropdown id="career" [options]="careers"
+                            formControlName="carrera_id"></p-dropdown>
+                <p-message severity="error" text="Carrera es requerida"
+                           *ngIf="!academicFormationForm.controls['career_id'].valid&&academicFormationForm.controls['career_id'].dirty"></p-message>
+            </div>
+        <!--Título-->
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="professionalDegree">Título profesional</label>
+                <p-dropdown id="professionalDegree" [options]="professionalDegrees"
+                            formControlName="professional_degree_id"></p-dropdown>
+                <p-message severity="error" text="Título profesional es requerido"
+                           *ngIf="!academicFormationForm.controls['professional_degree_id'].valid&&academicFormationForm.controls['professional_degree_id'].dirty"></p-message>
+            </div>
+    <!--Fecha Reg.-->
+            <div class="p-field p-col">
+                <label for="registrationDate">Fecha de Registro</label>
+                <p-calendar id="registrationDate" formControlName="registration_date" [monthNavigator]="true"
+                            [showIcon]="true" [yearNavigator]="true" 
+                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+                <p-message severity="error" text="La fecha de registro es requerida"
+                           *ngIf="!academicFormationForm.controls['registration_date'].valid&&academicFormationForm.controls['registration_date'].dirty"></p-message>
+            </div>
+        </div>
+        <!--Cód. Reg.-->
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="senescytCode">Código Senescyt</label>
+                <input id="senescytCode" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                       formControlName="senescyt_code">
+                <p-message severity="error" text="El Código Senescyt es requerido"
+                           *ngIf="!academicFormationForm.controls['senescyt_code'].valid&&academicFormationForm.controls['senescyt_code'].dirty"></p-message>
+            </div>
+
+        <!--Botones-->
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+            
+                <button type="button" pButton icon="pi pi-save" class="ui-button-success"
+                        [title]="!academicFormationForm.valid?'Debe llenar todos los campos':''"
+                         *ngIf="selectedAcademicFormation.id==null" [disabled]="!academicFormationForm.valid"
+                        label="Crear"></button>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    </form>
+    </p-dialog>
+    <p-confirmDialog [style]="{width: '425px'}">
+    </p-confirmDialog>
+    <p-toast key="tst"></p-toast>
+    <div class="p-grid ui-fluid">
+        <div class="p-lg-12 p-md-12 p-sm-12">
+            <p-message severity="info" text="No hay registros" *ngIf="academicFormations.length==0"></p-message>
+            <p-table #dt [columns]="colsAcademicFormation" styleClass="ui-table-cars" [value]="academicFormations"
+                     [paginator]="true"
+                     [rows]="5"
+                     [responsive]="true"
+                     dataKey="id"
+                     *ngIf="academicFormations.length>0">
+                <ng-template pTemplate="caption">
+                    <div class="p-grid">
+                        <div class="p-lg-12 p-md-12 p-sm-12">
+                            <h1>Formación Académica</h1>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns"
+                            [pSortableColumn]="col.field"
+                            [ngSwitch]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th style="width: 8em; text-align: center;">
+                            <button pButton type="button" icon="pi pi-user-plus"
+                                    class="ui-button-success"
+                                    (click)="selectAcademicFormation(null)"></button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                            <input *ngSwitchCase="'institution'" pInputText type="text"
+                                   placeholder="Buscar por nombre de la Institución"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                            <input *ngSwitchCase="'career'" pInputText type="text"
+                                   placeholder="Buscar por carrera"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                            <input *ngSwitchCase="'professional_degree'" pInputText type="text"
+                                   placeholder="Buscar por el primer nombre"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                            <input *ngSwitchCase="'registration_date'" pInputText type="date"
+                                   placeholder="Buscar por fecha de registro"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                            <input *ngSwitchCase="'senescyt_code'" pInputText type="text"
+                                   placeholder="Buscar por código"
+                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                   (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        </th>
+                        <th style="width: 8em;">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData>
+                    <tr>
+                        <td>{{rowData.institution}</td>
+                        <td>{{rowData.career}}</td>
+                        <td>{{rowData.professional_degree}}</td>
+                       
+                        <td>
+                            <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
+                                    style="margin-right: .5em" (click)="selectAcademicFormation(null);"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>

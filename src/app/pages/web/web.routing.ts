@@ -6,16 +6,10 @@ export const WebRoutes: Routes = [
         path: '',
         children: [
             {
-                path: 'mision',
-            //    component: AppAsistenciaLaboralComponent,
-                canActivate: [AuthGuard]
+                path: 'menu',
+                loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
+                // canActivate: [AuthGuard],
             },
-            {
-                path: 'historia',
-                //    component: AppAsistenciaLaboralComponent,
-                canActivate: [AuthGuard]
-            },
-
-        ]
-    }
+        ],
+    },
 ];

@@ -22,20 +22,14 @@
             <label for="newObservations">Nueva Observación</label>
             <br>
             <textarea id="newObservations" name="observations" autoResize="autoResize" pInputTextarea
-                      [(ngModel)]="workday.observations">
+                      [(ngModel)]="observations">
                 </textarea>
         </div>
         <div class="p-lg-12" *ngIf="selectedAttendance.observations">
             <label><b>Observaciones:</b></label>
             <br>
             <div *ngFor="let observation of selectedAttendance.observations">
-                <span *ngIf="observation[0].length>0">{{observation[0]}}</span>
-                <ul *ngIf="observation[0].length>0">
-                    <li>{{observation[1]}}</li>
-                    <li>{{observation[2]}}</li>
-                    <li>{{observation[3]}}</li>
-                    <li>{{observation[4]}}</li>
-                </ul>
+                <span *ngIf="observation.length>0">{{observation}}</span>
             </div>
         </div>
     </div>

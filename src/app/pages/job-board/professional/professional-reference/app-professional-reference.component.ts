@@ -4,14 +4,14 @@ import {User} from '../../../../models/authentication/models.index';
 import {ConfirmationService, MessageService, SelectItem} from 'primeng/api';
 import {AuthenticationServiceService} from '../../../../services/authentication/authentication-service.service';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {JobBoardServiceService} from '../../../../services/job-board/job-board-service.service';
+import {JobBoardService} from '../../../../services/job-board/job-board-service.service';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
-    selector: 'app-datos-personales',
-    templateUrl: './app-datos-personales.component.html',
+    selector: 'app-professional-reference',
+    templateUrl: './app-professional-reference.component.html',
 })
-export class AppDatosPersonalesComponent implements OnInit {
+export class AppProfessionalReferenceComponent implements OnInit {
     displayUser: boolean; // para visualizar el modal nuevo usuario - modificiar usuario
     ethnicOrigins: SelectItem[]; // para almacenar el catalogo de las etnias
     cantones: SelectItem[]; // para almacenar el catalogo de las los cantones
@@ -27,7 +27,7 @@ export class AppDatosPersonalesComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 private ignugService: IgnugServiceService,
-                private jobBoardService: JobBoardServiceService,
+                private jobBoardService: JobBoardService,
                 private spinnerService: NgxSpinnerService,
                 private authenticationService: AuthenticationServiceService,
                 private confirmationService: ConfirmationService,
@@ -47,17 +47,10 @@ export class AppDatosPersonalesComponent implements OnInit {
 
     buildFormUser() {
         this.userForm = this.fb.group({
-            first_name: ['', Validators.required],
-            first_lastname: ['', Validators.required],
-            identification: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
-            ethnic_origin_id: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            location_id: ['', Validators.required],
-            identification_type_id: ['', Validators.required],
-            sex_id: ['', Validators.required],
-            gender_id: ['', Validators.required],
-            birthdate: ['', Validators.required],
-
+            institution: ['', Validators.required],
+            position: ['', Validators.required],
+            contact: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
+            phone: ['', Validators.required],
         });
     }
 

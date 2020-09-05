@@ -327,7 +327,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                     horaActual.getMinutes().toString().length === 1 ? '0' + horaActual.getMinutes() : horaActual.getMinutes().toString();
                 const segundos =
                     horaActual.getSeconds().toString().length === 1 ? '0' + horaActual.getSeconds() : horaActual.getSeconds().toString();
-                workday.observations = '';
+                workday.observations = [];
                 workday.end_time = horas + ':' + minutos + ':' + segundos;
                 this.spinner.show();
                 this.attendanceService.update('workdays/end_day', {'workday': workday}).subscribe(

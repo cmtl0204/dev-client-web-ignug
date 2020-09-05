@@ -6,16 +6,16 @@
                     <h1>Hoja de Vida</h1>
                     <p-tabView>
                         <p-tabPanel header="Datos Personales" leftIcon="pi pi-id-card">
-                            <app-datos-personales></app-datos-personales>
+                            <app-personal-information></app-personal-information>
                         </p-tabPanel>
                         <p-tabPanel header="Formación Académica" leftIcon="pi pi-users">
-                            <app-datos-personales></app-datos-personales>
+                            <app-personal-information></app-personal-information>
                         </p-tabPanel>
                         <p-tabPanel header="Idiomas" leftIcon="pi pi-globe">
-                            <app-datos-personales></app-datos-personales>
+                            <app-personal-information></app-personal-information>
                         </p-tabPanel>
                         <p-tabPanel header="Idiomas" leftIcon="pi pi-globe">
-                            <app-datos-personales></app-datos-personales>
+                            <app-personal-information></app-personal-information>
                         </p-tabPanel>
                     </p-tabView>
                 </div>
@@ -35,7 +35,7 @@
 </div>
 
 <h3>Multiple Selection with Checkbox</h3>
-<p-tree [value]="cataloguesTree" selectionMode="checkbox" [(selection)]="selectedcataloguesTree"></p-tree>
+<p-tree [value]="cataloguesTree" selectionMode="checkbox" [(selection)]="selectedcataloguesTree" (click)="select()"></p-tree>
 <div>Selected Nodes:
     <ul>
         <li *ngFor="let file of selectedcataloguesTree">

@@ -1,0 +1,47 @@
+<p-blockUI [blocked]="blocked">
+    <div style="position:absolute;top:35%;left:50%">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</p-blockUI>
+
+<h1>Bolsa de Empleo</h1>
+<div class="p-grid">
+    <div class="p-col">
+        <h2>{{totalCompanies}}</h2>
+        <i class="pi pi-user" style="font-size: 3em"></i>
+        <h3>Empresas Registradas</h3>
+    </div>
+    <div class="p-col">
+        <h2>{{totalProffesionals}}</h2>
+        <i class="pi pi-users" style="font-size: 3em"></i>
+        <h3>Profesionales Vinculados</h3>
+    </div>
+    <div class="p-col">
+        <h2>{{totalOffers}}</h2>
+        <i class="pi pi-briefcase" style="font-size: 3em"></i>
+        <h3>Ofertas laborales</h3>
+    </div>
+</div>
+
+<div class="p-grid">
+    <div class="p-col-3">
+        <p-tree [value]="categories" [styleClass]="'my-tree'" selectionMode="checkbox" [(selection)]="categorySelected"></p-tree>
+    </div>
+    <div class="p-col-8">
+        <div class="ui-inputgroup">
+            <input type="text" pInputText placeholder="Keyword" [(ngModel)]="criterioBusqueda">
+            <button pButton type="button" icon="pi pi-search" class="ui-button-warn" (click)="filterPostulantsField()"></button>
+        </div>
+        <p-paginator></p-paginator>
+        <div class="p-grid">
+            <div class="p-col-4" *ngFor="let professional of professionals">
+                <p-card header="{{professional.academic_formations[0].professional_degree.name}}" subheader="Mi perfil">
+                    <div>{{professional.about_me}}</div>
+                    <p-footer>
+                        <button pButton type="button" label="Más información" icon="pi pi-info" style="margin-right: .25em"></button>
+                    </p-footer>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</div>

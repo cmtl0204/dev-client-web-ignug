@@ -55,6 +55,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     selectedAttendance: any;
     categories: TreeNode[];
     selectedCategories: TreeNode[];
+    observations: string;
 
     constructor(private eventService: EventService, private nodeService: NodeService, private breadcrumbService: BreadcrumbService,
                 private attendanceService: AttendanceServiceService, private spinner: NgxSpinnerService) {
@@ -171,7 +172,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         this.workday.id = this.selectedAttendance.workday_id;
         this.workday.start_time = this.selectedAttendance.start_time;
         this.workday.end_time = this.selectedAttendance.end_time;
-
+        this.workday.observations = [this.observations];
         this.spinner.show();
         this.attendanceService.update('workdays' + parameters, {'workday': this.workday}).subscribe(
             response => {
@@ -257,8 +258,8 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
 
     saveAsExcelFile(buffer: any, fileName: string): void {
         import('file-saver').then(FileSaver => {
-            let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-            let EXCEL_EXTENSION = '.xlsx';
+            const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+            const EXCEL_EXTENSION = '.xlsx';
             const data: Blob = new Blob([buffer], {
                 type: EXCEL_TYPE
             });
@@ -268,14 +269,9 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
 
     selectAttendance(attedance) {
         this.selectedAttendance = attedance;
-        this.workday.observations = '';
+        this.observations = '';
         if (this.selectedAttendance.observations) {
-            this.selectedAttendance.observations = attedance.observations.split('##');
-            let i = 0;
-            this.selectedAttendance.observations.forEach(observation => {
-                this.selectedAttendance.observations[i] = observation.split('#');
-                i++;
-            });
+
         }
     }
 }

@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
     providedIn: 'root'
 })
 
-export class JobBoardServiceService {
+export class JobBoardService {
     private headers: HttpHeaders;
 
     constructor(private _http: HttpClient, private router: Router) {

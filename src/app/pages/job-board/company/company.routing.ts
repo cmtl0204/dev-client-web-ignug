@@ -1,17 +1,16 @@
 import {Routes} from '@angular/router';
-
 import {AuthGuard} from '../../../shared/auth-guard/auth.guard';
-import {AppDatosPersonalesComponent} from './app-datos-personales/app-datos-personales.component';
-import {HojaVidaComponent} from './hoja-vida.component';
+import {CompanyComponent} from './company.component';
 
 
-export const HojaVidaRoutes: Routes = [
+
+export const CompanyRoutes: Routes = [
     {
         path: '',
         children: [
             {
                 path: '',
-                component: HojaVidaComponent,
+                component: CompanyComponent,
                 canActivate: [AuthGuard]
             },
         ]

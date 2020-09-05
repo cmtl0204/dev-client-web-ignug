@@ -1,0 +1,173 @@
+<!--<p-dialog [header]="headerDialogCourse" [(visible)]="displayCourse" modal="true" showEffect="fade">-->
+<form [formGroup]="courseForm" (ngSubmit)="onSubmitCourse($event)">
+    <!--<form [formGroup]="courseForm">-->
+    <!--institution y event_type-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="institution">Intitución</label>
+            <p-dropdown id="institution" [options]="institutions" formControlName="institution_id" filter="true">
+                <ng-template let-institution pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{institution.label}}</span>
+                </ng-template>
+                <ng-template let-institution pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{institution.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            <div *ngIf="courseForm.get('institution_id').errors && courseForm.get('institution_id').touched">
+                <p-message severity="error" text="La institución es requerido"
+                           *ngIf="courseForm.get('institution_id').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="event_type">Tipo Evento</label>
+            <p-dropdown id="event_type" [options]="eventTypes"
+                        formControlName="event_type_id"></p-dropdown>
+            <div *ngIf="courseForm.get('event_type_id').errors && courseForm.get('event_type_id').touched">
+                <p-message severity="error" text="El tipo de evento es requerido"
+                           *ngIf="courseForm.get('event_type_id').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--event_name-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="event_name">Nombre del Evento</label>
+            <input id="event_name" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                   formControlName="event_name">
+            <div *ngIf="courseForm.get('event_name').errors && courseForm.get('event_name').touched">
+                <p-message severity="error" text="El nombre del evento es requerido"
+                           *ngIf="courseForm.get('event_name').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--start_date y finish_date-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="start_date">Fecha Inicio</label>
+            <p-calendar id="start_date" formControlName="start_date" [monthNavigator]="true"
+                        [showIcon]="true" [yearNavigator]="true" [yearRange]="validationStart_date"
+                        dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+            <div *ngIf="courseForm.get('start_date').errors && courseForm.get('start_date').touched">
+                <p-message severity="error" text="La fecha es requerido"
+                           *ngIf="courseForm.get('start_date').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="finish_date">Fecha Fin</label>
+            <p-calendar id="finish_date" formControlName="finish_date" [monthNavigator]="true"
+                        [showIcon]="true" [yearNavigator]="true" [yearRange]="validationFinish_date"
+                        dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+            <div *ngIf="courseForm.get('finish_date').errors && courseForm.get('finish_date').touched">
+                <p-message severity="error" text="La fecha es requerido"
+                           *ngIf="courseForm.get('finish_date').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--hours y type_certification-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="hours">Horas</label>
+            <input id="hours" type="number" size="30" pInputText pKeyFilter="money" maxlength="30"
+                   formControlName="hours">
+            <div *ngIf="courseForm.get('hours').errors && courseForm.get('hours').touched">
+                <p-message severity="error" text="Las Horas son requeridos"
+                           *ngIf="courseForm.get('hours').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="type_certification">Tipo de Certificado</label>
+            <p-dropdown id="type_certification" [options]="typeCertifications"
+                        formControlName="type_certification_id"></p-dropdown>
+            <div *ngIf="courseForm.get('type_certification_id').errors && courseForm.get('type_certification_id').touched">
+                <p-message severity="error" text="El tipo de certificado es requerido"
+                           *ngIf="courseForm.get('type_certification_id').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--Botones-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <button type="submit" pButton icon="pi pi-save" class="ui-button-success" label="Guardar"></button>
+        </div>
+    </div>
+</form>
+<!--</p-dialog>-->
+
+<p-confirmDialog [style]="{width: '425px'}">
+</p-confirmDialog>
+<p-toast key="tst"></p-toast>
+<div class="p-grid ui-fluid">
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <p-message severity="info" text="No hay registros" *ngIf="courses.length==0"></p-message>
+        <p-table #dt [columns]="colsCourse" styleClass="ui-table-cars" [value]="courses"
+                 [paginator]="true"
+                 [rows]="5"
+                 [responsive]="true"
+                 dataKey="id"
+                 *ngIf="courses.length>0">
+            <ng-template pTemplate="caption">
+                <div class="p-grid">
+                    <div class="p-lg-12 p-md-12 p-sm-12">
+                        <h1>Cursos</h1>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns"
+                        [pSortableColumn]="col.field"
+                        [ngSwitch]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th style="width: 8em; text-align: center;">
+                        <button pButton type="button" icon="pi pi-user-plus"
+                                class="ui-button-success"
+                                (click)="selectCourse(null)"></button>
+                    </th>
+                </tr>
+                <!--Botones <tr>
+                   <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                       <input *ngSwitchCase="'institution'" pInputText type="text"
+                              placeholder="Buscar por número de identificación"
+                              class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                              (input)="dt.filter($event.target.value, col.field, 'contains')">
+                       <input *ngSwitchCase="'first_lastname'" pInputText type="text"
+                              placeholder="Buscar por el primer apellido"
+                              class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                              (input)="dt.filter($event.target.value, col.field, 'contains')">
+                       <input *ngSwitchCase="'first_name'" pInputText type="text"
+                              placeholder="Buscar por el primer nombre"
+                              class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                              (input)="dt.filter($event.target.value, col.field, 'contains')">
+                       <input *ngSwitchCase="'email'" pInputText type="text"
+                              placeholder="Buscar por correo"
+                              class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                              (input)="dt.filter($event.target.value, col.field, 'contains')">
+                   </th>
+
+                   <th style="width: 8em;">
+                   </th>
+               </tr>-->
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>{{rowData.institution}}</td>
+                    <td>{{rowData.event_name}}</td>
+                    <td>
+                        <textarea pInputTextarea autoResize="autoResize" readonly
+                                  style="border: 0px">{{rowData.email}}</textarea>
+                    </td>
+                    <td>
+                        <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
+                                style="margin-right: .5em" (click)="selectCourse(rowData);"></button>
+                        <button pButton type="button" class="ui-button-danger" (click)="deleteCourse(rowData)"
+                                icon="pi pi-trash"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

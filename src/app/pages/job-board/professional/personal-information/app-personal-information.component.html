@@ -1,0 +1,149 @@
+<!--p-dialog [header]="headerDialogUser" [(visible)]="displayUser" modal="true" showEffect="fade"-->
+<form [formGroup]="userForm" (ngSubmit)="onSubmitUser($event)">
+    <!--    <form [formGroup]="userForm">-->
+    <!--IdentificationType y Identification-->
+    <div class="p-fluid p-formgrid p-grid">
+
+        <div class="p-field p-col">
+            <label for="identification">Identificacion</label>
+            <input id="identification" type="text" pInputText pKeyFilter="pnum" maxlength="10"
+                   formControlName="identification">
+            <div *ngIf="userForm.get('identification').errors && userForm.get('identification').touched">
+                <p-message severity="error" text="El número de documento es requerido"
+                           *ngIf="userForm.get('identification').hasError('required')"></p-message>
+                <p-message severity="error" text="Debe ingresar mínimo 9 dígitos"
+                           *ngIf="userForm.get('identification').hasError('minlength')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--Firstname y FirstLastName-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="firstName">Primer Nombre</label>
+            <input id="firstName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                   formControlName="first_name">
+            <div *ngIf="userForm.get('first_name').errors && userForm.get('first_name').touched">
+                <p-message severity="error" text="El nombre es requerido"
+                           *ngIf="userForm.get('first_name').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="secondName">Segundo Nombre</label>
+            <input id="secondName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                   formControlName="second_name">
+            <div *ngIf="userForm.get('second_name').errors && userForm.get('second_name').touched">
+                <p-message severity="error" text="El nombre es requerido"
+                           *ngIf="userForm.get('second_name').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="firstLastName">Primer Apellido</label>
+            <input id="firstLastName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                   formControlName="first_lastname">
+            <div *ngIf="userForm.get('first_lastname').errors && userForm.get('first_lastname').touched">
+                <p-message severity="error" text="El apellido es requerido"
+                           *ngIf="userForm.get('first_lastname').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="secondLastName">Segundo Apellido</label>
+            <input id="secondLastName" type="text" size="30" pInputText pKeyFilter="alpha" maxlength="30"
+                   formControlName="second_lastname">
+            <div *ngIf="userForm.get('second_lastname').errors && userForm.get('second_lastname').touched">
+                <p-message severity="error" text="El apellido es requerido"
+                           *ngIf="userForm.get('second_lastname').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--Email y Birthdate-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="email">Correo Institucional</label>
+            <input id="email" type="text" size="30" pInputText pKeyFilter="email"
+                   formControlName="email">
+            <div *ngIf="userForm.get('email').errors && userForm.get('email').touched">
+                <p-message severity="error" text="El email es requerido"
+                           *ngIf="userForm.get('email').hasError('required')"></p-message>
+                <p-message severity="error" text="Email no válido"
+                           *ngIf="userForm.get('email').hasError('email')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="birthdate">Fecha de Nacimiento</label>
+            <p-calendar id="birthdate" formControlName="birthdate" [monthNavigator]="true"
+                        [showIcon]="true" [yearNavigator]="true" [yearRange]="validationBirthdate"
+                        dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+            <div *ngIf="userForm.get('birthdate').errors && userForm.get('birthdate').touched">
+                <p-message severity="error" text="La fecha de nacimiento es requerido"
+                           *ngIf="userForm.get('birthdate').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--Sex y Gender-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="sex">Sexo</label>
+            <p-dropdown id="sex" [options]="sexs"
+                        formControlName="sex_id"></p-dropdown>
+            <div *ngIf="userForm.get('sex_id').errors && userForm.get('sex_id').touched">
+                <p-message severity="error" text="El tipo de sexo es requerido"
+                           *ngIf="userForm.get('sex_id').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="gender">Género</label>
+            <p-dropdown id="gender" [options]="genders"
+                        formControlName="gender_id"></p-dropdown>
+            <div *ngIf="userForm.get('gender_id').errors && userForm.get('gender_id').touched">
+                <p-message severity="error" text="El género es requerido"
+                           *ngIf="userForm.get('gender_id').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--EthnicOrigin y Location-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="ethnic_origin">Etnia</label>
+            <p-dropdown id="ethnic_origin" [options]="ethnicOrigins"
+                        formControlName="ethnic_origin_id"></p-dropdown>
+            <div *ngIf="userForm.get('ethnic_origin_id').errors && userForm.get('ethnic_origin_id').touched">
+                <p-message severity="error" text="La etnia es requerido"
+                           *ngIf="userForm.get('ethnic_origin_id').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="location">Ubicación</label>
+            <p-dropdown id="location" [options]="cantones" formControlName="location_id" filter="true">
+                <ng-template let-canton pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{canton.label}}</span>
+                </ng-template>
+                <ng-template let-canton pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{canton.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            <div *ngIf="userForm.get('location_id').errors && userForm.get('location_id').touched">
+                <p-message severity="error" text="La ubicación es requerido"
+                           *ngIf="userForm.get('location_id').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--XyY-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="phone">Etnia</label>
+            <input id="phone" formControlName="phone"/>
+            <div *ngIf="userForm.get('phone').errors && userForm.get('phone').touched">
+                <p-message severity="error" text="La etnia es requerido"
+                           *ngIf="userForm.get('phone').hasError('required')"></p-message>
+            </div>
+        </div>
+    </div>
+    <!--Botones-->
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <button type="submit" pButton icon="pi pi-save" class="ui-button-success" label="Actualizar"></button>
+        </div>
+    </div>
+</form>

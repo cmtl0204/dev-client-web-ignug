@@ -1,0 +1,56 @@
+<div class="p-grid p-fluid">
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i>Empleador:</span>
+            <input type="text" pInputText placeholder="Nombre del Empleador">         
+        </div>
+    </div>
+                
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i>Cargo:</span>
+            <input type="text" pInputText placeholder="Cargo del Empleador">      
+        </div>
+    </div>
+</div>
+
+<div class="p-grid p-fluid">
+    <h5>Descripcion del cargo</h5>
+<textarea rows="5" cols="30" pInputTextarea></textarea>
+</div>
+
+
+<h5>Trabaja actualmente aqui</h5>
+<div class="p-field-checkbox">
+<!--    <p-checkbox [(ngModel)]="checked" binary="true" inputId="binary"></p-checkbox>-->
+<!--    <label for="binary">{{checked}}</label>-->
+</div>
+
+<br>
+<div class="p-grid p-fluid">
+    <div class="p-field p-col">
+        <label for="start_date">Fecha Inicio</label>
+        <p-calendar id="start_date" formControlName="start_date" [monthNavigator]="true"
+                    [showIcon]="true" [yearNavigator]="true" [yearRange]="validationStart_date"
+                    dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+        <div *ngIf="false">
+            <p-message severity="error" text="La fecha es requerido"
+                       *ngIf="false"></p-message>
+        </div>
+    </div>
+    <div class="p-field p-col">
+        <label for="finish_date">Fecha Fin</label>
+        <p-calendar id="finish_date" formControlName="finish_date" [monthNavigator]="true"
+                    [showIcon]="true" [yearNavigator]="true" [yearRange]="validationFinish_date"
+                    dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd"></p-calendar>
+        <div *ngIf="false">
+            <p-message severity="error" text="La fecha es requerido"
+                       *ngIf=""></p-message>
+        </div>
+    </div>
+</div>
+
+<div class="p-grid p-fluid">
+    <h5>Motivo de la salida</h5>
+<textarea rows="5" cols="30" pInputTextarea></textarea>
+</div>

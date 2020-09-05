@@ -1,0 +1,112 @@
+
+<!--p-dialog [header]="headerDialogUser" [(visible)]="displayUser" modal="true" showEffect="fade"-->
+<form [formGroup]="userForm" (ngSubmit)="onSubmitUser($event)">
+    <!--    <form [formGroup]="userForm">-->
+    <!--IdentificationType y Identification-->
+    <div class="p-fluid p-formgrid p-grid">
+
+        <div class="p-field p-col">
+            <label for="identificationType">Categorias</label>
+            <p-dropdown id="identificationType" [options]="identificationTypes"
+                        formControlName="identification_type_id"></p-dropdown>
+            <div *ngIf="userForm.get('identification_type_id').errors && userForm.get('identification_type_id').touched">
+                <p-message severity="error" text="Tipo de documento es requerido"
+                           *ngIf="userForm.get('identification_type_id').hasError('required')"></p-message>
+            </div>
+        </div>
+        <div class="p-field p-col">
+            <label for="identification">Descripcion</label>
+            <input id="identification" type="text" pInputText pKeyFilter="pnum" maxlength="10"
+                   formControlName="identification">
+            <div *ngIf="userForm.get('identification').errors && userForm.get('identification').touched">
+                <p-message severity="error" text="El número de documento es requerido"
+                           *ngIf="userForm.get('identification').hasError('required')"></p-message>
+                <p-message severity="error" text="Debe ingresar mínimo 9 dígitos"
+                           *ngIf="userForm.get('identification').hasError('minlength')"></p-message>
+            </div>
+        </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <button type="submit" pButton icon="pi pi-save" class="ui-button-success" label="Agregar"></button>
+        </div>
+    </div>
+    
+</form>
+<!--/p-dialog-->
+<p-confirmDialog [style]="{width: '425px'}">
+</p-confirmDialog>
+<p-toast key="tst"></p-toast>
+<div class="p-grid ui-fluid">
+<div class="p-lg-12 p-md-12 p-sm-12">
+    <p-message severity="info" text="No hay registros" *ngIf="users.length==0"></p-message>
+    <p-table #dt [columns]="colsUser" styleClass="ui-table-cars" [value]="users"
+             [paginator]="true"
+             [rows]="5"
+             [responsive]="true"
+             dataKey="id"
+             *ngIf="users.length>0">
+        <ng-template pTemplate="caption">
+            <div class="p-grid">
+                <div class="p-lg-12 p-md-12 p-sm-12">
+                    <h1>Usuarios</h1>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns"
+                    [pSortableColumn]="col.field"
+                    [ngSwitch]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th style="width: 8em; text-align: center;">
+                    <button pButton type="button" icon="pi pi-user-plus"
+                            class="ui-button-success"
+                            (click)="selectUser(null)"></button>
+                </th>
+            </tr>
+
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                    <input *ngSwitchCase="'identification'" pInputText type="text"
+                           placeholder="Buscar por número de identificación"
+                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    <input *ngSwitchCase="'first_lastname'" pInputText type="text"
+                           placeholder="Buscar por el primer apellido"
+                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    <input *ngSwitchCase="'first_name'" pInputText type="text"
+                           placeholder="Buscar por el primer nombre"
+                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    <input *ngSwitchCase="'email'" pInputText type="text"
+                           placeholder="Buscar por correo"
+                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                </th>
+                <th style="width: 8em;">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>{{rowData.category}}</td>
+                <td>{{rowData.description}}</td>
+                <td>
+                    <textarea pInputTextarea autoResize="autoResize" readonly
+                              style="border: 0px">{{rowData.email}}</textarea>
+                </td>
+                <td>
+                    <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
+                            style="margin-right: .5em" (click)="selectUser(rowData);"></button>
+                    <button pButton type="button" class="ui-button-danger" (click)="deleteUser(rowData)"
+                            icon="pi pi-trash"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>

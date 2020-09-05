@@ -2,9 +2,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {WebRoutes} from './web.routing';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CompanyRoutes} from './company.routing';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {ConfirmationService, MessageService} from 'primeng/api';
 // Modulos Externos
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MultiSelectModule} from 'primeng/multiselect';
@@ -39,12 +40,14 @@ import {PickListModule} from 'primeng/picklist';
 import {OrderListModule} from 'primeng/orderlist';
 import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
-import {AccordionModule, DialogService, TabViewModule} from 'primeng';
+import {AccordionModule, DialogService, MessageModule, StepsModule, TabViewModule} from 'primeng';
 import {DialogModule} from 'primeng/dialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {MegaMenuModule} from 'primeng/megamenu';
+import {AppMyProfessionalsComponent} from './my-professionals/app.my-professionals.component';
+import {CompanyComponent} from './company.component';
+import {AppPersonalInformationComponent} from './personal-information/app.personal-information.component';
 
 // Mis componentes
 
@@ -52,7 +55,7 @@ import {MegaMenuModule} from 'primeng/megamenu';
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(WebRoutes),
+        RouterModule.forChild(CompanyRoutes),
         FormsModule,
         AutoCompleteModule,
         MultiSelectModule,
@@ -93,10 +96,17 @@ import {MegaMenuModule} from 'primeng/megamenu';
         AccordionModule,
         DialogModule,
         ConfirmDialogModule,
-        MegaMenuModule,
+        MessageModule,
+        KeyFilterModule,
+        ReactiveFormsModule,
+        StepsModule
     ],
-    declarations: [],
-    providers: [DialogService],
+    declarations: [
+        AppMyProfessionalsComponent,
+        CompanyComponent,
+        AppPersonalInformationComponent
+    ],
+    providers: [DialogService, MessageService, ConfirmationService]
 })
-export class WebModule {
+export class CompanyModule {
 }

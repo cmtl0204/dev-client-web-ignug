@@ -9,7 +9,7 @@ export class Workday {
     duration: string;
     end_time: string;
     description: string;
-    observations: string;
+    observations: string[];
     type: Catalogue;
     type_id: number;
     state: State;

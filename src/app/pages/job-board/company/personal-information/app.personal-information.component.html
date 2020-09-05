@@ -1,0 +1,141 @@
+<div class="card mt-1">
+    <div class="card-body">
+        <form name="empresaform" method="post" #formCtrl="ngForm">
+            <div class="row mt-1">
+                <div class="col-lg-2 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-12 mt-3 text-center">
+                            <div class="group-form">
+                                <!--<img src="{{company.avatar}}" class="rounded-circle" width="100px" height="100px" title="100 X 100">-->
+                                <!--<input type="file" class="form-control btn-light" id="logo" accept="image/*"-->
+                                <!--([ngModel])="company.avatar" formenctype="multipart/form-data">-->
+                            </div>
+                            <div class="group-form mt-5">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <button type="submit" class="col-lg-12 btn btn-success mr-1"
+                                                (click)="updateCompany()"
+                                                [disabled]="formCtrl.form.invalid">
+                                            <i class="fa fa-fw fa-save"></i>&nbsp;Actualizar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son
+                                            obligatorios</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-sm-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <!--Identificacion-->
+                            <div class="form-group">
+                                <label for="identificacion">
+                                    <b class="text-danger">*</b> Indentificación:
+                                </label>
+                                <input type="text" class="form-control" id="identificacion" name="identificacion"
+                                       placeholder="Ej. 1234567890001"  required>
+                            </div>
+                            <!--Nombre Comercial-->
+                            <div class="form-group">
+                                <label for="nombreComercial">
+                                    <b class="text-danger">*</b> Nombre Comercial:
+                                </label>
+                                <input type="text" class="form-control text-uppercase" id="nombreComercial"
+                                       name="nombreComercial"
+                                       placeholder="NOMBRE COMERCIAL" maxlength="150" [(ngModel)]="company.trade_name"
+                                       required>
+                            </div>
+                            <!--Naturaleza-->
+                            <div class="form-group">
+                                <label for="naturaleza">
+                                    <b class="text-danger">*</b> Naturaleza:
+                                </label>
+                                <select class="form-control" id="naturaleza" name="naturaleza"
+                                         required>
+                                    <option value="" selected>SELECCIONE...</option>
+                                    <option value="PUBLICA">PÚBLICA</option>
+                                    <option value="PRIVADA">PRIVADA</option>
+                                    <option value="MIXTA">MIXTA</option>
+                                    <option value="TERCER SECTOR">TERCER SECTOR</option>
+                                    <option value="ORGANISMOS INTERNACIONALES">ORGANISMOS INTERNACIONALES</option>
+                                    <option value="OTRO">OTRO</option>
+                                </select>
+                            </div>
+                            <!--Actividad Economica-->
+                            <div class="form-group">
+                                <label for="actividadEconomica">
+                                    <b class="text-danger">*</b> Actividad Económica: <span
+                                        class="small">({{company.comercial_activity.length}}
+                                    /500)</span>
+                                </label>
+                                <textarea rows="5" type="text" [(ngModel)]="company.comercial_activity"
+                                          class="form-control text-uppercase" required maxlength="500"
+                                          id="actividadEconomica" name="actividadEconomica"
+                                          placeholder="ACTIVIDAD ECONÓMICA"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Pagina Web-->
+                            <div class="form-group">
+                                <label for="paginaWeb">Página Web: <span class="small">({{company.web_page.length}}
+                                    /50)</span>
+                                </label>
+                                <input type="text" class="form-control text-lowercase" id="paginaWeb" name="paginaWeb"
+                                       placeholder="Ej. www.midominio.com" maxlength="50"
+                                       [(ngModel)]="company.web_page">
+                            </div>
+                            <!--Telefono Celular-->
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="telefonoCelular">Teléfono Celular:</label>
+                                        <input type="text" class="form-control" id="telefonoCelular"
+                                               name="telefonoCelular"
+                                               placeholder="Ej. 0987654321" maxlength="10" (paste)="false"
+                                        >
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="telefonoFijo">
+                                            <b class="text-danger">*</b> Teléfono Fijo:
+                                        </label>
+                                        <input type="text" class="form-control" id="telefonoFijo" name="telefonoFijo"
+                                               placeholder="Ej. 0234567890" maxlength="9"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Correo Electronico-->
+                            <div class="form-group">
+                                <label for="correoElectronico">
+                                    <b class="text-danger">*</b> Correo Electrónico:
+                                    <span class="small">({{company.web_page.length}}/50)</span>
+                                </label>
+                                <input type="email"
+                                       class="form-control text-lowercase" maxlength="50"
+                                       id="correoElectronico" name="correoElectronico"
+                                       placeholder="Ej. contacto@gmail.com" required>
+                            </div>
+                            <!--Direccion-->
+                            <div class="form-group">
+                                <label for="direccion">
+                                    <b class="text-danger">*</b> Dirección: <span class="small">(0
+                                    /300)</span>
+                                </label>
+                                <textarea rows="5" type="text"
+                                          class="form-control text-uppercase" maxlength="300"
+                                          id="direccion" name="direccion" required
+                                          placeholder="Provincia, Cantón, Calle Principal, Calle Secundaria, número de casa"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

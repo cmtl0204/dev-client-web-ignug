@@ -61,7 +61,7 @@ export const routes: Routes = [
     {
         path: 'app-job-board',
         component: BlankComponent,
-        loadChildren: () => import('./pages/job-board/job-board.module').then(m => m.JobBoardModule)
+        loadChildren: () => import('./pages/job-board/landing/landing.module').then(m => m.LandingModule)
     },
     {
         path: 'app-web',

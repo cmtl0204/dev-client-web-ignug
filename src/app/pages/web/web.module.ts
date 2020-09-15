@@ -46,7 +46,7 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MegaMenuModule} from 'primeng/megamenu';
 import {AppMenuComponent} from './administrator/app-menu/app.menu.component';
-import {AppAdministratorComponent} from './administrator/app-administrator/app.administrator.component';
+
 
 // Mis componentes
 
@@ -97,7 +97,7 @@ import {AppAdministratorComponent} from './administrator/app-administrator/app.a
         ConfirmDialogModule,
         MegaMenuModule,
     ],
-    declarations: [AppMenuComponent, AppAdministratorComponent],
+    declarations: [AppMenuComponent],
     providers: [DialogService],
 })
 export class WebModule {

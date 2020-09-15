@@ -1,0 +1,37 @@
+<div class="p-grid card">
+    <div class="p-col p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText class="p-mr-2" placeholder="User id" #element>
+            <button pButton type="button" label="Probar" (click)="getUserid(element.value)"></button>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<p-orderList [value]="companies" [listStyle]="{'height':'500px'}" header="Empresas interesadas" filterBy="trade_name"
+    filterPlaceholder="Búsqueda por nombre comercial" dragdrop="true"  >
+    <ng-template let-company pTemplate="item">
+
+        <div class="ui-helper-clearfix p-grid">
+            <div class="p-col">
+                <h2>Informacion de empresa.</h2>
+                <hr>
+                <p> <b>Nombre comercial: </b> {{ company.trade_name }} </p>
+                <p> <b>Actividad comercial: </b> {{ company.comercial_activity }} </p>
+                <p> <b>Página web: </b> {{ company.web_page }} </p>
+            </div>
+        </div>
+    </ng-template>
+</p-orderList>
+
+<!--modal para cuando no haya datos-->
+<p-dialog header="Sin compañias" [(visible)]="companiesTrue" [modal]="true" [style]="{width: '50vw'}"
+          [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+    <p>Por el momento no hay compañias interesadas.</p>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="companiesTrue=false" label="ok"></button>
+    </p-footer>
+</p-dialog>

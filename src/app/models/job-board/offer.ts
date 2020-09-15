@@ -1,31 +1,35 @@
-import {Catalogue, Company, Location} from './models.index';
+import {Catalogue, Company, Location, Category} from './models.index';
 import {State} from './../ignug/models.index';
 
 export class Offer {
     id: number;
-    company: Company;
-    code: string;
-    contact: string;
-    email: string;
-    phone: string;
+    company: Company; //Compania
+    code: string;//ya
+    contact: string;//ya
+    email: string;//ya
+    phone: string;//ya
     cell_phone: string;
-    contract_type: Catalogue;
-    position: string;
-    training_hours: string;
-    experience_time: string;
-    remuneration: string;
-    working_day: string;
-    number_jobs: string;
-    start_date: Date;
-    end_date: Date;
-    activities: string[];
-    aditional_information: string;
+    contract_type: string;
+    position: string;//ya
+    training_hours: string;//ya
+    experience_time: string;//ya
+    remuneration: string;//ya
+    working_day: string;//jornada
+    number_jobs: string;//ya
+    start_date: Date;//ya
+    finish_date: Date;//ya
+    activities: string;//ya
+    aditional_information: string;//ya
+    city: Location; // Provincia esta ubicacion debe tener nombre verdad mij en location entonces deberia venir cantton y provincia
+    state: State; // activo, inactivo
+    father_category: Category;
+    children_category: Category;
+    province: Location;
     location: Location;
-    state: State;
 
     constructor() {
         this.company = new Company();
-        this.contract_type = new Catalogue();
+        // this.contract_type = new Catalogue();
         this.location = new Location();
         this.state = new State();
     }

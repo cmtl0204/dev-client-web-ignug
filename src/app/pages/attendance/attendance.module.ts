@@ -42,6 +42,7 @@ import {OrderListModule} from 'primeng/orderlist';
 import {CarouselModule} from 'primeng/carousel';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {AccordionModule, DialogService, TabViewModule} from 'primeng';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {DialogModule} from 'primeng/dialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
@@ -95,7 +96,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     declarations: [
         AppAsistenciaLaboralComponent, AppAdministracionAsistenciaLaboralComponent
     ],
-    providers: [DialogService]
+    providers: [DialogService, MessageService, ConfirmationService]
 })
 export class AttendanceModule {
 }

@@ -75,6 +75,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {BlockUIModule} from 'primeng/blockui';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MessageService} from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -128,10 +129,11 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         BlockUIModule,
         ProgressSpinnerModule,
         PaginatorModule,
+        MegaMenuModule,
 
     ],
     declarations: [AppOffersComponent, AppProfessionalsComponent],
-    providers: []
+    providers: [MessageService]
 })
 export class LandingModule {
 }

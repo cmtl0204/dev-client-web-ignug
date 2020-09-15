@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BreadcrumbService} from '../../../shared/breadcrumb/breadcrumb.service';
 import {Car} from '../../../demo/domain/car';
-import {SelectItem, TreeNode} from 'primeng/api';
+import {MessageService, SelectItem, TreeNode} from 'primeng/api';
 import {CarService} from '../../../demo/service/carservice';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -34,9 +34,6 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     horaFinJornada: string;
     docenteAsistencia: Attendance;
     jornadaActividades: Array<Workday>;
-    jornadaActual: Workday;
-    almuerzoActual: Workday;
-    fechaActual: Date;
     events: any[];
     fullCalendarOptions: any;
     resumenAsistencias: any[];
@@ -57,7 +54,8 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     selectedCategories: TreeNode[];
     observations: string;
 
-    constructor(private eventService: EventService, private nodeService: NodeService, private breadcrumbService: BreadcrumbService,
+    constructor(private message: MessageService,
+                private eventService: EventService, private nodeService: NodeService, private breadcrumbService: BreadcrumbService,
                 private attendanceService: AttendanceServiceService, private spinner: NgxSpinnerService) {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.breadcrumbService.setItems([
@@ -158,7 +156,27 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         this.attendanceService.get('attendances/detail' + parametros).subscribe(
             response => {
                 if (response) {
-                    this.detalleAsistencias = response['data']['attendances'];
+                    const data = response['data']['attendances'];
+                    this.detalleAsistencias = [];
+                    data.forEach(attendance => {
+                        attendance.workdays.forEach(workday => {
+                            this.detalleAsistencias.push({
+                                'workday_id': workday.id,
+                                'date': attendance.date,
+                                'identification': attendance.teacher.user.identification,
+                                'first_lastname': attendance.teacher.user.first_lastname,
+                                'second_lastname': attendance.teacher.user.second_lastname,
+                                'first_name': attendance.teacher.user.first_name,
+                                'second_name': attendance.teacher.user.second_name,
+                                'type_workdays': workday.type.name,
+                                'start_time': workday.start_time,
+                                'end_time': workday.end_time,
+                                'duration': workday.duration,
+                                'observations': workday.observations,
+                            });
+                        });
+                    });
+                    console.log(this.detalleAsistencias[1].observations);
                     this.spinner.hide();
                 }
             }, error => {
@@ -168,21 +186,44 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     }
 
     updateWorkday(): void {
-        const parameters = '?user_id=' + this.user.id;
-        this.workday.id = this.selectedAttendance.workday_id;
-        this.workday.start_time = this.selectedAttendance.start_time;
-        this.workday.end_time = this.selectedAttendance.end_time;
-        this.workday.observations = [this.observations];
-        this.spinner.show();
-        this.attendanceService.update('workdays' + parameters, {'workday': this.workday}).subscribe(
-            response => {
-                this.obtenerJornadaActividadesDetalle();
-                this.spinner.hide();
-            }, error => {
-                this.obtenerJornadaActividadesDetalle();
-                this.spinner.hide();
-            }
-        );
+        if (this.observations.length > 0) {
+            const paramas = '?user_id=' + this.user.id;
+            this.workday.id = this.selectedAttendance.workday_id;
+            this.workday.start_time = this.selectedAttendance.start_time;
+            this.workday.end_time = this.selectedAttendance.end_time;
+            this.workday.observations = [this.observations];
+            this.spinner.show();
+            this.attendanceService.update('workdays' + paramas, {'workday': this.workday}).subscribe(
+                response => {
+                    this.message.add({
+                        key: 'tst',
+                        severity: 'success',
+                        summary: 'Cambio de hora correcto',
+                        detail: 'Se ha cambiado la hora correctamente'
+                    });
+                    this.displayWorkday = false;
+                    this.obtenerJornadaActividadesDetalle();
+                    this.spinner.hide();
+                }, error => {
+                    this.message.add({
+                        key: 'tst',
+                        severity: 'error',
+                        summary: 'Tenemos problemas con el servidor!',
+                        detail: 'Inténtalo de nuevo más tarde!'
+                    });
+                    this.displayWorkday = false;
+                    this.obtenerJornadaActividadesDetalle();
+                    this.spinner.hide();
+                }
+            );
+        } else {
+            this.message.add({
+                key: 'tst',
+                severity: 'error',
+                summary: 'Escriba un motivo',
+                detail: 'Debe escribir un motivo para el cambio de hora'
+            });
+        }
     }
 
     sumarHoras(duracion: string, totalHorasTrabajadas: string): string {
@@ -231,10 +272,6 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             this.sortOrder = 1;
             this.sortField = value;
         }
-    }
-
-    cambiarFiltro(event) {
-
     }
 
     exportPdf() {

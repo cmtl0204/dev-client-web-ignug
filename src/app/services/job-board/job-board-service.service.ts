@@ -79,4 +79,20 @@ export class JobBoardService {
         const expreg = /^[A-Z_ ]+([A-Z]+)*$/;
         return expreg.test(cadena.toUpperCase());
     }
+
+    applyPostulant(data: any, id: string) {
+        const url = environment.API_URL_JOB_BOARD + 'postulants/apply';
+        this.headers = new HttpHeaders().set('Api-Token', id);
+        return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+    }
+
+    validateAppliedOffer(userId: number, offerId: number,) {
+        this.headers = new HttpHeaders()
+            .set('X-Requested-With', 'XMLHttpRequest')
+            .append('Content-Type', 'application/json')
+            .append('Accept', 'application/json');
+
+        const url = environment.API_URL_JOB_BOARD + 'offers/opportunities/validateAppliedOffer?user_id=' + userId + '&offer_id=' + offerId;
+        return this._http.get(url, {headers: this.headers});
+    }
 }

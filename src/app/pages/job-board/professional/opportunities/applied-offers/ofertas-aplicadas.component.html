@@ -1,0 +1,79 @@
+<p-toast position="top-right" key="tl"></p-toast>
+<p-toast position="top-right" key="tst"></p-toast>
+<p-toast position="top-right" key="prb"></p-toast>
+
+<div class="p-grid card">
+    <div class="p-col p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText class="p-mr-2" placeholder="User id" #element>
+            <button pButton type="button" label="Enviar" (click)="getUserid(element.value)"></button>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<p-orderList [value]="opportunities" [listStyle]="{'height':'550px'}" header="Ofertas Aplicadas"
+             filterBy="activities,position,code"
+             filterPlaceholder="Búsqueda por actividades" dragdrop="true">
+    <ng-template let-opportunity pTemplate="item">
+
+        <div class="ui-helper-clearfix p-grid">
+            <div class="p-col">
+                <h2>Contrato de trabajo.</h2>
+                <hr>
+                <p><b>Cargo: </b> {{ opportunity.position }} </p>
+                <p><b>Código: </b> {{ opportunity.code }} </p>
+                <p><b>Salario: </b> {{ opportunity.remuneration }} </p>
+                <p><b>Remuneración: </b> {{ opportunity.remuneration }} </p>
+                <p><b>Días de trabajo: </b> {{ opportunity.working_day }} </p>
+                <p><b>Fecha de inicio: </b> {{ opportunity.start_date }} </p>
+                <p><b>Fecha de finalización: </b> {{ opportunity.finish_date }} </p>
+                <p><b>Actividades: </b> {{ opportunity.activities }} </p>
+            </div>
+            <div class="p-col">
+                <h2>Más información.</h2>
+                <hr>
+                <p><b>Horas de entrenamiento: </b> {{ opportunity.training_hours }} </p>
+                <p><b>Ofertas disponibles: </b> {{ opportunity.number_jobs }} </p>
+                <p><b>información adicional: </b> {{ opportunity.aditional_information }} </p>
+                <p><b>Tipo de contrato: </b> {{ opportunity.contract_type }} </p>
+                <p><b>Experiencia: </b> {{ opportunity.experience_time }} </p>
+            </div>
+            <div class="p-col">
+                <h2>Contacto.</h2>
+                <hr>
+                <p><b>Contacto: </b> {{ opportunity.contact }} </p>
+                <p><b>Teléfono: </b> {{ opportunity.phone }} </p>
+                <p><b>Celular: </b> {{ opportunity.cell_phone }} </p>
+                <p><b>email: </b> {{ opportunity.email }} </p>
+            </div>
+
+        </div>
+        <button pButton type="button" style="background-color: #ff0020" label="Desvincular" class="p-button-danger"
+                (click)="showModalDialog(opportunity.pivot)"></button>
+    </ng-template>
+</p-orderList>
+
+<!--modal para cuando no haya datos-->
+<p-dialog header="Sin ofertas." [(visible)]="opportunitiesTrue" [modal]="true" [style]="{width: '50vw'}"
+          [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+    <p>Este usuario no tiene ofertas aplicadas</p>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="opportunitiesTrue=false" label="ok"></button>
+    </p-footer>
+</p-dialog>
+
+<!--modal para la desvinculacion-->
+<p-dialog header="Desvincular a esta oferta" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+          [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+    <p>¿Esta completamente seguro de desvincularse de esta oferta?</p>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="displayModal=false;updateOffer()" label="Yes"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="displayModal=false" label="No"
+                class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>

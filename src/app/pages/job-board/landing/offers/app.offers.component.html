@@ -1,3 +1,13 @@
+<p-dialog header="Ofertas" [(visible)]="displayDialog" modal="true" showEffect="fade">
+    <form>
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText placeholder="Username">
+        </div>
+
+    </form>
+</p-dialog>
+<p-toast></p-toast>
 <h1 align="center" style="color: #784fcf; font-size: 48px;">Bolsa de Empleo - Ofertas</h1>
 
 <div class="p-col-12">
@@ -37,52 +47,53 @@
 
             </div>
             <div class="p-col-7">
-                <h1 style="color: #a689e6; font-size: 48px;">Ofertas Laborales</h1>
+                <br><br>
+                <h1 style="color: #a689e6; font-size: 48px">Ofertas Laborales</h1>
                 <p align="center" style="text-align: justify">
                     Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores
                     humanísticos, morales y éticos, basados en una formación de calidad y calidez acordes al Plan
                     Nacional del
                     Buen Vivir.
                 </p>
+                <br><br><br>
             </div>
         </div>
 
 
     </p-card>
+    <br>
 </div>
 <div class="p-col-12">
 
 
+
     <br>
     <div class="p-grid">
-        <div class="p-col-3">
-            <h3>Filtros</h3>
-            <p-tree [value]="categories" selectionMode="checkbox" [(selection)]="selectedCategories"></p-tree>
+        <div class="p-col-5">
+            <button pButton type="button" icon="pi pi-users" label="Todas las Ofertas" (click)="getOffers()" ></button>
+            <p-tree [value]="categories" selectionMode="single" [(selection)]="categorySelected" (click)="filterOffers()" [styleClass]="'my-tree'"></p-tree>
         </div>
-        <div class="p-col-9">
-
-
-            <br>
-            <br>
-            <p-dataView #dv [value]="offers" [paginator]="true" [rows]="3" paginatorPosition="both" filterBy="brand"
-                        [sortField]="sortField" [sortOrder]="sortOrder">
+        <div class="p-col-7">
+            <p-dataView #dv [value]="offers" [paginator]="true" [rows]="3" paginatorPosition="both" filterBy="position,activities,father_category.name,children_category.name,aditional_information,city.name,province.name"
+                [sortField]="sortField" [sortOrder]="sortOrder">
                 <p-header>
                     <div class="ui-helper-clearfix">
                         <div class="p-grid">
-                            <div class="p-col-12 p-md-4">
-                                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey"
-                                            placeholder="Filtrar por Categoria" (onChange)="onSortChange($event)"
-                                            [style]="{'min-width':'140px'}"></p-dropdown>
+                            <div class="p-col-12 filter-container">
+                                <div><span><br>{{categorySelected ? categorySelected.label : 'Todas las Ofertas Disponibles'}}</span></div>
                             </div>
-                            <div class="p-col-6 p-md-4 filter-container">
-                                <div style="position:relative">
-                                    <input type="search" pInputText placeholder="Buscar"
-                                           (input)="dv.filter($event.target.value)">
+                            <div class="p-col-12 filter-container" >
+                                <div style="position:relative;align-content: center;">
+                                    <input type="search" pInputText placeholder="Buscar (puesto, actividades, ciudad, campo laboral)"
+                                     (input)="dv.filter($event.target.value)"  class="p-col-5" style="text-align: center;">
                                 </div>
+                                
                             </div>
 
                         </div>
                     </div>
+
+                    
                 </p-header>
                 <ng-template let-offer pTemplate="listItem">
                     <div>
@@ -92,11 +103,10 @@
                                     <div class="p-col-10"><b>{{offer.position}}</b></div>
                                     <div class="p-col-10">{{offer.activities}}</div>
                                     <div class="p-col-10">{{offer.start_date}} - {{offer.finish_date}}</div>
-                                </div>
-                                <br>
+                                </div><br>
 
-                                <button pButton type="button" icon="pi pi-info"
-                                        (click)="selectOffer($event, offer)"></button>
+                                <button pButton type="button" icon="pi pi-info" label="Información"
+                                    (click)="selectOffer($event, offer)"></button>
 
                             </div>
                         </div>
@@ -104,50 +114,174 @@
                 </ng-template>
             </p-dataView>
 
-            <p-dialog header="Información" [(visible)]="displayDialog" [minY]="70" showEffect="fade" [modal]="true"
-                      [style]="{width: '500px'}" [contentStyle]="{padding: '2em', textAlign: 'left'}">
+            <p-dialog header="Información de la Oferta" [(visible)]="displayDialog" [minY]="70" showEffect="fade" [modal]="true"
+                [style]="{width: '750px'}" (onAfterHide)="onDialogHide()"
+                [contentStyle]="{padding: '2em', textAlign: 'left'}">
                 <div *ngIf="selectedOffer">
-                    <p>id: {{selectedOffer.id}}</p>
+                    <p-accordion>
+                        <p-accordionTab header="Perfil del Cargo" [selected]="true">
+                            <div class="ui-fluid">
+                                <div class="p-field">
 
-                    <p>company_id: {{selectedOffer.company}}</p>
+                                    <label for="firstname1">Cargo:</label>
+                                    <input id="firstname1" type="text" pInputText value="{{selectedOffer.position}}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Campo Amplio:</label>
+                                    <input id="firstname2" type="text" pInputText
+                                        value="{{selectedOffer.father_category.name}}" readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Campo Específico:</label>
+                                    <input id="lastname2" type="text" pInputText
+                                        value="{{selectedOffer.children_category.name}}" readonly>
+                                </div>
 
-                    <p>code: {{selectedOffer.code}}</p>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col">
+                                            <label for="firstname2">Jornada:</label>
+                                            <input id="firstname2" type="text" pInputText value="{{selectedOffer.code}}"
+                                                readonly>
+                                        </div>
+                                        <div class="p-field p-col">
+                                            <label for="lastname2">Puestos:</label>
+                                            <input id="lastname2" type="text" pInputText
+                                                value="{{selectedOffer.number_jobs}}" readonly>
+                                        </div>
 
-                    <p>contact: {{selectedOffer.contact}}</p>
+                                    </div>
+                                </div>
+                                <div class="p-field p-col">
+                                    <div class="ui-fluid p-formgrid p-grid">
+                                        <div class="p-field p-col">
+                                            <label for="firstname2">Remuneración:</label>
+                                            <input id="firstname2" type="text" pInputText
+                                                value="{{selectedOffer.remuneration}}" readonly>
+                                        </div>
+                                        <div class="p-field p-col">
+                                            <label for="lastname2">Tiempo Experiencia:</label>
+                                            <input id="lastname2" type="text" pInputText
+                                                value="{{selectedOffer.experience_time}}" readonly>
+                                        </div>
 
-                    <p>email: {{selectedOffer.email}}</p>
+                                    </div>
+                                </div>
 
-                    <p>phone: {{selectedOffer.phone}}</p>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Horas de Capacitación:</label>
+                                    <input id="firstname2" type="text" pInputText
+                                        value="{{selectedOffer.training_hours}}" readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                </div>
 
-                    <p>cell_phone: {{selectedOffer.cell_phone}}</p>
+                            </div>
+                            <div class="ui-fluid">
+                                <div class="p-field">
+                                    <label for="firstname1">Actividades:</label>
+                                    <textarea rows="2" cols="30" pInputTextarea autoResize="autoResize"
+                                        value="{{selectedOffer.activities}}" readonly></textarea> </div>
+                            </div>
+                            <div class="ui-fluid">
+                                <div class="p-field">
+                                    <label for="firstname1">Información Adicional:</label>
+                                    <textarea rows="2" cols="30" pInputTextarea autoResize="autoResize"
+                                        value="{{selectedOffer.aditional_information}}" readonly></textarea> </div>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Empresa">
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Código:</label>
+                                    <input id="firstname2" type="text" pInputText value="{{selectedOffer.code}}"
+                                        readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Contacto:</label>
+                                    <input id="lastname2" type="text" pInputText value="{{selectedOffer.contact}}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Provincia:</label>
+                                    <input id="firstname2" type="text" pInputText
+                                        value="{{selectedOffer.province.name}}" readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Correo:</label>
+                                    <input id="lastname2" type="text" pInputText value="{{selectedOffer.email}}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Cantón:
+                                    </label>
+                                    <input id="firstname2" type="text" pInputText value="{{selectedOffer.city.name}}"
+                                        readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Teléfono Fijo:
+                                    </label>
+                                    <input id="lastname2" type="text" pInputText value="{{selectedOffer.phone}}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Inicio Publicación:
+                                    </label>
+                                    <input id="firstname2" type="text" pInputText value="{{selectedOffer.start_date}}"
+                                        readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Teléfono Celular:
+                                    </label>
+                                    <input id="lastname2" type="text" pInputText value="{{selectedOffer.cell_phone}}"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="ui-fluid p-formgrid p-grid">
+                                <div class="p-field p-col">
+                                    <label for="firstname2">Fin Publicación:
+                                    </label>
+                                    <input id="firstname2" type="text" pInputText value="{{selectedOffer.finish_date}}"
+                                        readonly>
+                                </div>
+                                <div class="p-field p-col">
+                                    <label for="lastname2">Tipo Contrato:
+                                    </label>
+                                    <input id="lastname2" type="text" pInputText value="{{selectedOffer.contract_type}}"
+                                        readonly>
+                                </div>
+                            </div>
+                        </p-accordionTab>
 
-                    <p>contract_type: {{selectedOffer.contract_type}}</p>
 
-                    <p>position: {{selectedOffer.position}}</p>
+                    </p-accordion>
+                    <br><br>
+                    <div class="p-grid">
+                        <div class="p-col"></div>
+                        <div class="p-col">
+                            <button pButton type="button" icon="pi pi-check" label="Aplicar a Oferta"
+                                class="ui-button-success p-col-12" (click)="applyOffer()" *ngIf="!validateOffer">
+                            </button>
+                            <button pButton type="button" icon="pi pi-check" label="Oferta Aplicada"
+                                class="ui-button-primary p-col-12" (click)="applyOffer()" *ngIf="validateOffer" disabled>
+                            </button>
+                        </div>
+                        <div class="p-col"></div>
+                    </div>
 
-                    <p>training_hours: {{selectedOffer.training_hours}}</p>
-
-                    <p>experience_time: {{selectedOffer.experience_time}}</p>
-
-                    <p>remuneration: {{selectedOffer.remuneration}}</p>
-
-                    <p>working_day: {{selectedOffer.working_day}}</p>
-
-                    <p>number_jobs: {{selectedOffer.number_jobs}}</p>
-
-                    <p>start_date: {{selectedOffer.start_date}}</p>
-
-                    <p>finish_date: {{selectedOffer.end_date}}</p>
-
-                    <p>activities: {{selectedOffer.activities}}</p>
-
-                    <p>aditional_information: {{selectedOffer.aditional_information}}</p>
-
-                    <p>location_id: {{selectedOffer.location}}</p>
-
-                    <p>state_id: {{selectedOffer.state}}</p>
-
-                    <button type="button">Postular</button>
                 </div>
             </p-dialog>
 
@@ -157,7 +291,10 @@
     <br>
 
 </div>
-
+<br>
+<br>
+<br>
+<br>
 <div class="p-grid">
     <div class="p-col-2"></div>
     <p-card class="p-col-8">
@@ -170,4 +307,31 @@
 </div>
 
 <br>
+<br>
+<br>
+<br>
+<div class="p-grid" align="center">
+    <div class="p-col">
+        <h3>Empresas Registradas</h3>
 
+        <i class="pi pi-briefcase" style="font-size: 3em">
+            {{totalCompanies}}</i>
+    </div>
+    <div class="p-col">
+        <h3>Profesionales Vinculados</h3>
+
+        <i class="pi pi-users" style="font-size: 3em">
+            {{totalProffesionals}}</i>
+    </div>
+    <div class="p-col">
+        <h3>Ofertas laborales</h3>
+
+        <i class="pi pi-user" style="font-size: 3em">
+            {{totalOffers}}
+        </i>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>

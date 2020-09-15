@@ -54,7 +54,9 @@ import {AppProfessionalReferenceComponent} from './professional-reference/app-pr
 import {AppAbilityComponent} from './ability/app.ability.component';
 import {AppProfessionalExperienceComponent} from './profesional-experience/app.professional-experience.component';
 import {AppAcademicFormationComponent} from './academic-formation/app.academic-formation.component';
-import {AppOportunitiesComponent} from './oportunities/app.oportunities.component';
+import {AppOportunitiesComponent} from './opportunities/app.oportunities.component';
+import {AppInterestedCompaniesComponent} from './opportunities/interested-companies/app.interested-companies.component';
+import {AppAppliedOffersComponent} from './opportunities/applied-offers/app.applied-offers.component';
 
 
 @NgModule({
@@ -114,7 +116,9 @@ import {AppOportunitiesComponent} from './oportunities/app.oportunities.componen
         AppAbilityComponent,
         AppProfessionalExperienceComponent,
         AppAcademicFormationComponent,
-        AppOportunitiesComponent
+        AppOportunitiesComponent,
+        AppAppliedOffersComponent,
+        AppInterestedCompaniesComponent
 
     ],
     providers: [DialogService, MessageService, ConfirmationService]

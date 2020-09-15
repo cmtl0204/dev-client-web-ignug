@@ -1,3 +1,4 @@
+<p-toast key="tst"></p-toast>
 <p-dialog [header]="selectedAttendance.first_lastname + ' ' + selectedAttendance.first_name"
           [(visible)]="displayWorkday" modal="true" showEffect="fade"
           [style]="{width: '400px'}" *ngIf="selectedAttendance">
@@ -9,17 +10,15 @@
             <br>
             <input id="start_time" name="start_time" type="time" pInputText
                    [(ngModel)]="selectedAttendance.start_time">
-            {{selectedAttendance.start_time}}
         </div>
 
         <div class="p-lg-6">
             <label for="end_time">Hora Fin</label>
             <br>
             <input id="end_time" name="end_time" type="time" pInputText [(ngModel)]="selectedAttendance.end_time">
-            {{selectedAttendance.end_time}}
         </div>
         <div class="p-lg-12">
-            <label for="newObservations">Nueva Observación</label>
+            <label for="newObservations">Moitivo del cambio de hora:</label>
             <br>
             <textarea id="newObservations" name="observations" autoResize="autoResize" pInputTextarea
                       [(ngModel)]="observations">
@@ -29,13 +28,20 @@
             <label><b>Observaciones:</b></label>
             <br>
             <div *ngFor="let observation of selectedAttendance.observations">
-                <span *ngIf="observation.length>0">{{observation}}</span>
+                <div *ngIf="observation.length>0">
+                    <ul>
+                        <li *ngFor="let item of observation">
+                            {{item}}
+                        </li>
+                    </ul>
+                    <hr>
+                </div>
             </div>
         </div>
     </div>
     <p-footer>
-        <button type="button" pButton icon="pi pi-refresh" class="ui-button-success"
-                (click)="displayWorkday=false;updateWorkday()"
+        <button type="button" pButton icon="pi pi-refresh" class="ui-button-primary"
+                (click)="updateWorkday()"
                 label="Actualizar"></button>
     </p-footer>
 </p-dialog>
@@ -119,6 +125,13 @@
                                 </p-panel>
                             </div>
                         </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="columns.length">
+                                    No records found
+                                </td>
+                            </tr>
+                        </ng-template>
                     </p-dataView>
                 </p-tabPanel>
                 <p-tabPanel header="Detalle" leftIcon="pi pi-list">
@@ -199,9 +212,16 @@
                                 <td>{{rowData.end_time}}</td>
                                 <td>{{rowData.duration}}</td>
                                 <td>
-                                    <button pButton type="button" class="ui-button-success" icon="pi pi-search"
+                                    <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
                                             style="margin-right: .5em"
                                             (click)="displayWorkday=true;selectAttendance(rowData)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="columns.length">
+                                    No records found
                                 </td>
                             </tr>
                         </ng-template>

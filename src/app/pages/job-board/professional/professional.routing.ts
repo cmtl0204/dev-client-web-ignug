@@ -11,7 +11,7 @@ export const HojaVidaRoutes: Routes = [
             {
                 path: '',
                 component: ProfessionalComponent,
-                canActivate: [AuthGuard]
+                // canActivate: [AuthGuard]
             },
         ]
     }

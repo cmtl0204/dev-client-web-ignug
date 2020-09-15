@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BreadcrumbService} from '../../../shared/breadcrumb/breadcrumb.service';
 import {Car} from '../../../demo/domain/car';
-import {ConfirmationService, MessageService} from 'primeng/api';
 import {CarService} from '../../../demo/service/carservice';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -17,14 +16,14 @@ import {User} from '../../../models/authentication/user';
 import {Task} from '../../../models/attendance/task';
 import {Router} from '@angular/router';
 import {Role} from '../../../models/authentication/role';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 
 @Component({
     selector: 'app-asistencia-laboral',
     templateUrl: './app.asistencia-laboral.component.html',
     styleUrls: ['app.asistencia-laboral.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [MessageService, ConfirmationService]
+    encapsulation: ViewEncapsulation.None
 })
 
 export class AppAsistenciaLaboralComponent implements OnInit {

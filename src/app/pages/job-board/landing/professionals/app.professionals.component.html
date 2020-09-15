@@ -4,44 +4,174 @@
     </div>
 </p-blockUI>
 
-<h1>Bolsa de Empleo</h1>
 <div class="p-grid">
-    <div class="p-col">
-        <h2>{{totalCompanies}}</h2>
-        <i class="pi pi-user" style="font-size: 3em"></i>
-        <h3>Empresas Registradas</h3>
-    </div>
-    <div class="p-col">
-        <h2>{{totalProffesionals}}</h2>
-        <i class="pi pi-users" style="font-size: 3em"></i>
-        <h3>Profesionales Vinculados</h3>
-    </div>
-    <div class="p-col">
-        <h2>{{totalOffers}}</h2>
-        <i class="pi pi-briefcase" style="font-size: 3em"></i>
-        <h3>Ofertas laborales</h3>
-    </div>
+    <div class="p-col"></div>
+    <p-megaMenu class="p-col-10" [model]="items" [style]="{'background-color': '#ababac', 'text-color': 'white'}"></p-megaMenu>
+    <div class="p-col"></div>
 </div>
 
-<div class="p-grid">
-    <div class="p-col-3">
-        <p-tree [value]="categories" [styleClass]="'my-tree'" selectionMode="checkbox" [(selection)]="categorySelected"></p-tree>
+<div class="p-grid p-justify-center" style="text-align: center;">
+    <h1 class="col-6" style="font-size: 50px;">BOLSA DE EMPLEO - PROFESIONALES</h1>
+</div>
+
+<div class="p-grid p-justify-center" style="text-align: center; padding-bottom: 30px;">
+    <div class="p-col"></div>
+    <div class="p-col-8">
+        <p-card>
+            <p-header>
+                <div class="p-grid p-justify-center" style="text-align: center;">
+                    <div class="p-col">
+                        <p-card>
+                            <div class="pricing-card-title">
+                                <h1>
+                                    {{totalCompanies}}
+                                    <i class="pi pi-user" style="font-size: 1em"></i>
+                                </h1>
+                                <h3>Empresas Registradas</h3>
+                            </div>
+                        </p-card>
+                    </div>
+                    <div class="p-col">
+                        <p-card>
+                            <div class="pricing-card-title">
+                                <h1>
+                                    {{totalProffesionals}}
+                                    <i class="pi pi-users" style="font-size: 1em"></i>
+                                </h1>
+                                <h3>Profesionales Vinculados</h3>
+                            </div>
+                        </p-card>
+                    </div>
+                    <div class="p-col">
+                        <p-card>
+                            <div class="pricing-card-title">
+                                <h1>
+                                    {{totalOffers}}
+                                    <i class="pi pi-briefcase" style="font-size: 1em"></i>
+                                </h1>
+                                <h3>Ofertas laborales</h3>
+                            </div>
+                        </p-card>
+                    </div>
+                </div>
+            </p-header>
+            <div class="p-grid">
+                <div class="p-col">
+                    <img src="assets/jobBoard/img/BSCA EMPLEO.png" alt="BOLSA DE EMPLEO" style="width: 60%;">
+                </div>
+                <div class="p-col">
+                    <h1>Institutos Técnicos y Tecnológicos</h1>
+                    <p style="text-align: justify;">
+                        La formación técnica y tecnológica superior en la actualidad posee una enseñanza
+                        del 50% académico y el otro 50% es práctico, este proceso de aprendizaje es necesario
+                        para concebir el perfil adecuado para los nuevos profesionales que se forman en los
+                        Institutos Superiores Tecnológicos y que requiere el Ecuador.
+                    </p>
+                </div>
+            </div>
+        </p-card>
+    </div>
+    <div class="p-col"></div>
+</div>
+
+<div class="p-grid p-justify-center" style="text-align: center;">
+    <div class="p-col"></div>
+    <div class="p-col-3" style="text-align: left;">
+        <p-tree [value]="categories" [styleClass]="'my-tree'" selectionMode="checkbox"
+            (onNodeSelect)="filterPostulantsSingle()" [(selection)]="categorySelected"
+            (onNodeUnselect)="filterPostulantsSingle()"></p-tree>
     </div>
     <div class="p-col-8">
-        <div class="ui-inputgroup">
-            <input type="text" pInputText placeholder="Keyword" [(ngModel)]="criterioBusqueda">
-            <button pButton type="button" icon="pi pi-search" class="ui-button-warn" (click)="filterPostulantsField()"></button>
+        <div class="ui-inputgroup" style="padding-bottom: 20px;">
+            <input type="text" pInputText
+                placeholder="Ingrese su criterio de Búsqueda (Software, Asistente, Marketing, Etc)"
+                [(ngModel)]="criterioBusqueda" (change)="checkSearch()"
+                style="width: 100%; height: 40px; font-size: larger;">
+            <button pButton type="button" icon="pi pi-search" class="ui-button-warn"
+                (click)="filterPostulantsField()"></button>
         </div>
-        <p-paginator></p-paginator>
-        <div class="p-grid">
-            <div class="p-col-4" *ngFor="let professional of professionals">
-                <p-card header="{{professional.academic_formations[0].professional_degree.name}}" subheader="Mi perfil">
-                    <div>{{professional.about_me}}</div>
-                    <p-footer>
-                        <button pButton type="button" label="Más información" icon="pi pi-info" style="margin-right: .25em"></button>
-                    </p-footer>
-                </p-card>
+        <p-paginator [rows]="9" [totalRecords]="totalRecords" [pageLinkSize]="5" (onPageChange)="paginate($event)">
+        </p-paginator>
+        <div class="p-grid" >
+            <div class="p-col-12" *ngIf="professionals.length == 0" style="text-align: center; padding-top: 50px; width: 100%;">
+                <p-message class="p-col-12" severity="warn" text="No Hay Resultados Parecidos"></p-message>
+            </div>
+            <div class="p-col-4" *ngFor="let professional of professionals" style="padding-top: 30px;">
+                <div *ngIf="professional.academic_formations[0].category != null">
+                    <p-card header="{{professional.academic_formations[0].category.name}}" subheader="Mi perfil">
+                        <div>{{professional.about_me}}</div>
+                        <p-footer>
+                            <div class="g-grid">
+                                <button pButton type="button" label="Más información" icon="pi pi-info"
+                                    ></button>
+                            </div>
+                        </p-footer>
+                    </p-card>
+                </div>
             </div>
         </div>
     </div>
+    <div class="p-col"></div>
+</div>
+
+<div class="p-grid" style="text-align: center;">
+    <div class="p-col"></div>
+    <div id="multimedia" class="p-col-8">
+        <div class="section-title">
+            <h1>Conoce Más</h1>
+        </div>
+        <div class="multimedia-video-wrapper">
+            <iframe src="https://www.youtube.com/embed/DS99NxrWfw0" frameborder="0" allowfullscreen="true"
+                style="width: 100%; height: 25rem;"></iframe>
+        </div>
+    </div>
+    <div class="p-col"></div>
+</div>
+
+
+<div class="p-grid p-justify-center" style="text-align: center; padding-bottom: 20px;">
+    <div class="p-col-1"></div>
+    <div class="p-col">
+        <p-card>
+            <div class="pricing-card-title">
+                <h1>
+                    {{totalCompanies}}
+                    <i class="pi pi-user" style="font-size: 1em"></i>
+                </h1>
+                <h3>Empresas Registradas</h3>
+            </div>
+        </p-card>
+    </div>
+    <div class="p-col">
+        <p-card>
+            <div class="pricing-card-title">
+                <h1>
+                    {{totalProffesionals}}
+                    <i class="pi pi-users" style="font-size: 1em"></i>
+                </h1>
+                <h3>Profesionales Vinculados</h3>
+            </div>
+        </p-card>
+    </div>
+    <div class="p-col">
+        <p-card>
+            <div class="pricing-card-title">
+                <h1>
+                    {{totalOffers}}
+                    <i class="pi pi-briefcase" style="font-size: 1em"></i>
+                </h1>
+                <h3>Ofertas laborales</h3>
+            </div>
+        </p-card>
+    </div>
+    <div class="p-col-1"></div>
+</div>
+
+<div class="p-grid p-align-center" style="text-align: center; height: 100px; color: white; 
+background-color: #5b32b4 ;">
+    <div class="p-col"></div>
+    <div class="p-col">
+        © 2018 - 2019 Create by YaviracTec
+    </div>
+    <div class="p-col"></div>
 </div>

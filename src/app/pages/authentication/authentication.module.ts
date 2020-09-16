@@ -34,7 +34,8 @@ import {FormsModule} from '@angular/forms';
 import {AuthenticationRoutes} from './authentication.routing';
 import {TooltipModule} from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
-import {InputNumberModule, MessagesModule} from 'primeng';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {MessagesModule} from 'primeng/messages';
 
 @NgModule({
     imports: [

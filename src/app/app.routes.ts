@@ -17,6 +17,7 @@ import {DocumentationComponent} from './demo/view/documentation.component';
 import {AppMainComponent} from './layouts/full/app.main.component';
 import {BlankComponent} from './layouts/blank/blank.component';
 import {AuthGuard} from './shared/auth-guard/auth.guard';
+import {AppModule} from './app.module';
 
 export const routes: Routes = [
     {
@@ -72,4 +73,4 @@ export const routes: Routes = [
 
 ];
 
-export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'});
+export const AppRoutes: ModuleWithProviders<AppModule> = RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'});

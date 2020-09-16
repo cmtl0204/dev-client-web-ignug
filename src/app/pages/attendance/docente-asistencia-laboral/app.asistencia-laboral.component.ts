@@ -145,25 +145,29 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                     const actividades = new Array();
                     let i = 1;
                     asistencias.forEach(asistencia => {
-                        asistencia.workdays.forEach(actividad => {
-                            actividades.push(
-                                {
-                                    // 'id': actividad.id,
-                                    'id': i,
-                                    'title': 'Inicio ' + actividad.description,
-                                    'start': asistencia.date + 'T' + actividad.start_time
+                        if (asistencia.state != null) {
+                            asistencia.workdays.forEach(actividad => {
+                                if (actividad.state != null) {
+                                    actividades.push(
+                                        {
+                                            // 'id': actividad.id,
+                                            'id': i,
+                                            'title': 'Inicio ' + actividad.description,
+                                            'start': asistencia.date + 'T' + actividad.start_time
+                                        }
+                                    );
+                                    i++;
+                                    actividades.push(
+                                        {
+                                            // 'id': actividad.id,
+                                            'id': i,
+                                            'title': 'Fin ' + actividad.description,
+                                            'start': asistencia.date + 'T' + actividad.end_time
+                                        }
+                                    );
                                 }
-                            );
-                            i++;
-                            actividades.push(
-                                {
-                                    // 'id': actividad.id,
-                                    'id': i,
-                                    'title': 'Fin ' + actividad.description,
-                                    'start': asistencia.date + 'T' + actividad.end_time
-                                }
-                            );
-                        });
+                            });
+                        }
                     });
                     this.events = actividades;
                     this.spinner.hide();
@@ -306,6 +310,14 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                         if (error.status === 401) {
                             this.router.navigate(['/authentication/login']);
                         }
+                        this.message.add({
+                            key: 'tst',
+                            severity: 'error',
+                            summary: 'Oops ocurrió un problema!',
+                            detail: 'Inténtalo de nuevo',
+                            life: 5000
+                        });
+
                     }
                 );
             }
@@ -346,6 +358,13 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                         if (error.status === 401) {
                             this.router.navigate(['/authentication/login']);
                         }
+                        this.message.add({
+                            key: 'tst',
+                            severity: 'error',
+                            summary: 'Oops ocurrió un problema!',
+                            detail: 'Inténtalo de nuevo',
+                            life: 5000
+                        });
                     }
                 );
             }
@@ -409,6 +428,13 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                         if (error.status === 401) {
                             this.router.navigate(['/authentication/login']);
                         }
+                        this.message.add({
+                            key: 'tst',
+                            severity: 'error',
+                            summary: 'Oops ocurrió un problema!',
+                            detail: 'Inténtalo de nuevo',
+                            life: 5000
+                        });
                     }
                 );
             }

@@ -203,7 +203,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <tr>
                                 <td>{{rowData.date}}</td>
                                 <td>{{rowData.identification}}</td>
                                 <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>

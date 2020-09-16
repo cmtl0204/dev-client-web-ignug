@@ -159,22 +159,26 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
                     const data = response['data']['attendances'];
                     this.detalleAsistencias = [];
                     data.forEach(attendance => {
-                        attendance.workdays.forEach(workday => {
-                            this.detalleAsistencias.push({
-                                'workday_id': workday.id,
-                                'date': attendance.date,
-                                'identification': attendance.teacher.user.identification,
-                                'first_lastname': attendance.teacher.user.first_lastname,
-                                'second_lastname': attendance.teacher.user.second_lastname,
-                                'first_name': attendance.teacher.user.first_name,
-                                'second_name': attendance.teacher.user.second_name,
-                                'type_workdays': workday.type.name,
-                                'start_time': workday.start_time,
-                                'end_time': workday.end_time,
-                                'duration': workday.duration,
-                                'observations': workday.observations,
+                        if (attendance.state != null) {
+                            attendance.workdays.forEach(workday => {
+                                if (workday.state != null && workday.type.state != null) {
+                                    this.detalleAsistencias.push({
+                                        'workday_id': workday.id,
+                                        'date': attendance.date,
+                                        'identification': attendance.teacher.user.identification,
+                                        'first_lastname': attendance.teacher.user.first_lastname,
+                                        'second_lastname': attendance.teacher.user.second_lastname,
+                                        'first_name': attendance.teacher.user.first_name,
+                                        'second_name': attendance.teacher.user.second_name,
+                                        'type_workdays': workday.type.name,
+                                        'start_time': workday.start_time,
+                                        'end_time': workday.end_time,
+                                        'duration': workday.duration,
+                                        'observations': workday.observations,
+                                    });
+                                }
                             });
-                        });
+                        }
                     });
                     console.log(this.detalleAsistencias[1].observations);
                     this.spinner.hide();

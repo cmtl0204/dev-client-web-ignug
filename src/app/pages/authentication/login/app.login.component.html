@@ -23,7 +23,7 @@
                                autocomplete="false"
                                (keypress)="validarSoloNumeros($event.key)"
                                tooltipEvent="focus"/>
-                        <i class="pi pi-id-card" style="font-size: 2em"></i>
+                        <i class="pi pi-id-card"></i>
                     </div>
 
                     <div class="login-input-wrapper">
@@ -31,8 +31,7 @@
                         <input [type]="flagPassword" id="password" placeholder="Ingrese su contraseña" pPassword
                                [(ngModel)]="user.password" tooltipEvent="focus" (keypress)="onLoggedin($event)"
                                [feedback]="false"/>
-                        <i class="pi pi-eye" (click)="flagPassword='text'" *ngIf="flagPassword=='password'"
-                           style="font-size: 2em"></i>
+                        <i class="pi pi-eye" (click)="flagPassword='text'" *ngIf="flagPassword=='password'"></i>
                         <i class="pi pi-eye-slash" (click)="flagPassword='password'" *ngIf="flagPassword=='text'"
                            style="font-size: 2em"></i>
                     </div>

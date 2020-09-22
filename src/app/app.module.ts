@@ -1,10 +1,16 @@
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 // PrimeNG Components for demos
 import {AccordionModule} from 'primeng/accordion';
@@ -111,7 +117,8 @@ import {BreadcrumbService} from './shared/breadcrumb/breadcrumb.service';
 import {MenuService} from './shared/menu/app.menu.service';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {SettingsService} from './services/ignug/settings.service';
-import {AttendanceServiceService} from './services/attendance/attendance-service.service';
+import {AttendanceService} from './services/attendance/attendance.service';
+
 
 @NgModule({
     imports: [
@@ -119,6 +126,13 @@ import {AttendanceServiceService} from './services/attendance/attendance-service
         FormsModule,
         AppRoutes,
         HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         BrowserAnimationsModule,
         AccordionModule,
         AutoCompleteModule,
@@ -216,7 +230,7 @@ import {AttendanceServiceService} from './services/attendance/attendance-service
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService, SettingsService,
-        AttendanceServiceService
+        AttendanceService
     ],
     bootstrap: [AppComponent]
 })

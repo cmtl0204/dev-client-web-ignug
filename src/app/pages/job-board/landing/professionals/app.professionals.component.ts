@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode, MegaMenuItem } from 'primeng/api';
-import { JobBoardService } from '../../../../services/job-board/job-board-service.service';
+import { JobBoardService } from '../../../../services/job-board/job-board.service';
 import { Professional } from '../../../../models/job-board/models.index';
 import { isUndefined, isError, isNullOrUndefined } from 'util';
 import { isEmpty } from 'rxjs/operators';

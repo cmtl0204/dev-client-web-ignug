@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AcademicFormation} from 'src/app/models/job-board/models.index';
-import {IgnugServiceService} from '../../../../services/ignug/ignug-service.service';
-import {JobBoardService} from 'src/app/services/job-board/job-board-service.service';
+import {IgnugService} from '../../../../services/ignug/ignug.service';
+import {JobBoardService} from 'src/app/services/job-board/job-board.service';
 import {ConfirmationService, MessageService, SelectItem} from 'primeng/api';
-import {AuthenticationServiceService} from '../../../../services/authentication/authentication-service.service';
+import {AuthenticationService} from '../../../../services/authentication/authentication.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {TableModule} from 'primeng/table';
@@ -27,10 +27,10 @@ export class AppAcademicFormationComponent implements OnInit {
     academicFormationForm: FormGroup;
 
     constructor(private messageService: MessageService,
-                private ignugService: IgnugServiceService,
+                private ignugService: IgnugService,
                 private jobBoardService: JobBoardService,
                 private spinnerService: NgxSpinnerService,
-                private authenticationService: AuthenticationServiceService,
+                private authenticationService: AuthenticationService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
         this.selectedAcademicFormation = new AcademicFormation();

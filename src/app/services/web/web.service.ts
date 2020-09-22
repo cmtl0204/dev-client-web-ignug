@@ -7,20 +7,19 @@ import {Router} from '@angular/router';
     providedIn: 'root'
 })
 
-export class IgnugServiceService {
-    private headers: HttpHeaders;
+export class WebService {
+    headers: HttpHeaders;
 
     constructor(private _http: HttpClient, private router: Router) {
 
     }
-
     get(url: string) {
         this.headers = new HttpHeaders()
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
         // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
-        url = environment.API_URL_IGNUG + url;
+        url = environment.API_URL_JOB_BOARD + url;
         return this._http.get(url, {headers: this.headers});
     }
 
@@ -60,7 +59,7 @@ export class IgnugServiceService {
         return this._http.post(url, data, {headers: this.headers});
     }
 
-    validarCorreoElectronico(correoElectronico: string) {
+    validarCorreoElectronico(correoElectronico: string): boolean {
         const expreg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (expreg.test(correoElectronico.toLowerCase())) {
             return true;
@@ -69,12 +68,12 @@ export class IgnugServiceService {
         }
     }
 
-    validarSoloNumeros(cadena: string) {
+    validarSoloNumeros(cadena: string): boolean {
         const expreg = /^[0-9]*$/;
         return expreg.test(cadena);
     }
 
-    validarSoloLetrasConEspacio(cadena: string) {
+    validarSoloLetrasConEspacio(cadena: string): boolean {
         const expreg = /^[A-Z_ ]+([A-Z]+)*$/;
         return expreg.test(cadena.toUpperCase());
     }

@@ -152,10 +152,11 @@
                                 </div>
                                 <div class="p-lg-2 p-md-2 p-sm-12">
                                     <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
-                                            (click)="exportExcel()" style="margin-right: 0.5em;"
+                                            (click)="exportExcel(this.detalleAsistencias)" style="margin-right: 0.5em;"
                                             class="ui-button-success"></button>
                                     <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF"
-                                            (click)="exportPdf()" class="ui-button-warning"></button>
+                                            (click)="exportPdf(this.detalleAsistencias,exportColumnsWokrdays)"
+                                            class="ui-button-warning"></button>
                                 </div>
                             </div>
                         </ng-template>
@@ -211,6 +212,95 @@
                                 <td>{{rowData.start_time}}</td>
                                 <td>{{rowData.end_time}}</td>
                                 <td>{{rowData.duration}}</td>
+                                <td>
+                                    <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
+                                            style="margin-right: .5em"
+                                            (click)="displayWorkday=true;selectAttendance(rowData)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="columns.length">
+                                    No records found
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="Actividades" leftIcon="pi pi-list">
+                    <p-table #dt [columns]="activitiesCols" styleClass="ui-table-cars" [value]="attendanceActivites"
+                             [paginator]="true"
+                             [responsive]="true"
+                             [rows]="10"
+                             dataKey="id" selectionMode="single" [(selection)]="selectedCar">
+                        <ng-template pTemplate="caption">
+                            <div class="p-grid">
+                                <div class="p-lg-10 p-md-10 p-sm-12">
+                                    <p-calendar selectionMode="range" [(ngModel)]="fechas"
+                                                (click)="filtrarFechas()"
+                                                icon="pi pi-calendar"
+                                                showIcon="true" styleClass="ui-calendar-w-btn"
+                                                placeholder="Rango de fechas">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-lg-2 p-md-2 p-sm-12">
+                                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                                            (click)="exportExcel(this.attendanceActivites)" style="margin-right: 0.5em;"
+                                            class="ui-button-success"></button>
+                                    <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                                            (click)="exportPdf(this.attendanceActivites,exportColumnsTasks)"
+                                            class="ui-button-warning"></button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                    {{col.header}}
+                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                </th>
+                                <th style="width: 8em; text-align: center;">
+                                    <button pButton type="button" icon="pi pi-cog"></button>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                    <!--                            <input *ngSwitchCase="'date'" pInputText type="date" placeholder="Starts with"-->
+                                    <!--                                   class="ui-column-filter" style="width: 100%; margin-top: 0;"-->
+                                    <!--                                   (input)="dt.filter($event.target.value, col.field, 'startsWith')">-->
+
+                                    <input *ngSwitchCase="'identification'" pInputText type="text"
+                                           placeholder="Buscar por número de identificación"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                    <input *ngSwitchCase="'first_lastname'" pInputText type="text"
+                                           placeholder="Buscar por el primer apellido"
+                                           class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                           (input)="dt.filter($event.target.value, col.field, 'contains')">
+                                </th>
+                                <th style="width: 8em;">
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr>
+                                <td>{{rowData.date}}</td>
+                                <td>{{rowData.identification}}</td>
+                                <td>{{rowData.first_lastname}} {{rowData.second_lastname}} {{rowData.first_name}} {{rowData.second_name}}</td>
+                                <td>
+                                    <b *ngIf="rowData.activities.length==0">
+                                        <i class="pi pi-exclamation-circle" style="font-size: 2em"></i>
+                                        No tiene actividades registradas
+                                    </b>
+                                    <ul>
+                                        <li *ngFor="let activity of rowData.activities">
+                                            <b>{{activity.percentage_advance}}% </b>
+                                            {{activity.type_workdays}}
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>{{rowData.percentage_advance}}</td>
                                 <td>
                                     <button pButton type="button" class="ui-button-primary" icon="pi pi-search"
                                             style="margin-right: .5em"

@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
     providedIn: 'root'
 })
 
-export class AuthenticationServiceService {
+export class AuthenticationService {
     headers: HttpHeaders;
 
     constructor(private _http: HttpClient) {

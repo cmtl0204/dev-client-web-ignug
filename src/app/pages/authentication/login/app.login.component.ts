@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {AuthenticationServiceService} from '../../../services/authentication/authentication-service.service';
+import {AuthenticationService} from '../../../services/authentication/authentication.service';
 import {Router} from '@angular/router';
 import {Message} from 'primeng/api';
 import {User} from '../../../models/authentication/user';
-import {IgnugServiceService} from '../../../services/ignug/ignug-service.service';
+import {IgnugService} from '../../../services/ignug/ignug.service';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +20,7 @@ export class AppLoginComponent {
     msgs: Message[] = [];
     user: User;
 
-    constructor(private authenticationService: AuthenticationServiceService, private ignugService: IgnugServiceService,
+    constructor(private authenticationService: AuthenticationService, private ignugService: IgnugService,
                 private spinner: NgxSpinnerService, private router: Router) {
         this.flagPassword = 'password';
         this.politicasPassword = new Array<string>();

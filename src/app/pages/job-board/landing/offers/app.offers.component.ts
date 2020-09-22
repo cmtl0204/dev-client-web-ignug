@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
-import { JobBoardService } from '../../../../services/job-board/job-board-service.service';
+import { JobBoardService } from '../../../../services/job-board/job-board.service';
 import { Offer } from '../../../../models/job-board/models.index';
 import { User } from '../../../../models/authentication/models.index';
 import { SelectItem } from 'primeng/api';

@@ -1,13 +1,13 @@
 import {State} from '../ignug/models.index';
 
 export class Catalogue {
-    id: number;
-    parent_code_id: Catalogue;
+    id?: number;
+    parent_code?: Catalogue;
     code: string;
     name: string;
-    description: string;
     type: string;
     icon: string;
-    state: State;
-    tasks: Array<Catalogue>;
+    state?: State;
+    tasks?: Array<Catalogue>;
+
 }

@@ -7,7 +7,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {EventService} from '../../../demo/service/eventservice';
 import {NodeService} from '../../../demo/service/nodeservice';
-import {AttendanceServiceService} from '../../../services/attendance/attendance-service.service';
+import {AttendanceService} from '../../../services/attendance/attendance.service';
 import {Attendance} from '../../../models/attendance/attendance';
 import {Workday} from '../../../models/attendance/workday';
 import {Catalogue} from '../../../models/attendance/catalogue';
@@ -73,7 +73,7 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                 private eventService: EventService,
                 private nodeService: NodeService,
                 private breadcrumbService: BreadcrumbService,
-                private attendanceService: AttendanceServiceService,
+                private attendanceService: AttendanceService,
                 private spinner: NgxSpinnerService,
                 private router: Router,
                 private confirmationService: ConfirmationService) {

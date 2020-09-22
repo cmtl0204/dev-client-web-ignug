@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {JobBoardService} from '../../../../services/job-board/job-board-service.service';
+import {JobBoardService} from '../../../../services/job-board/job-board.service';
 import {Company} from '../../../../models/job-board/models.index';
 
 

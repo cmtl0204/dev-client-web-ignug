@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgxSpinnerService} from 'ngx-spinner';
 
-import {JobBoardService} from '../../../../../services/job-board/job-board-service.service';
+import {JobBoardService} from '../../../../../services/job-board/job-board.service';
 import {MessageService} from 'primeng/api';
 
 @Component({

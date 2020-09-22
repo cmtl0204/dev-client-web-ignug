@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {IgnugServiceService} from '../../../../services/ignug/ignug-service.service';
+import {IgnugService} from '../../../../services/ignug/ignug.service';
 import {User} from '../../../../models/authentication/models.index';
 import {ConfirmationService, MessageService, SelectItem} from 'primeng/api';
-import {AuthenticationServiceService} from '../../../../services/authentication/authentication-service.service';
+import {AuthenticationService} from '../../../../services/authentication/authentication.service';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {JobBoardService} from '../../../../services/job-board/job-board-service.service';
+import {JobBoardService} from '../../../../services/job-board/job-board.service';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
@@ -26,10 +26,10 @@ export class AppProfessionalReferenceComponent implements OnInit {
     validationBirthdate: string;
 
     constructor(private messageService: MessageService,
-                private ignugService: IgnugServiceService,
+                private ignugService: IgnugService,
                 private jobBoardService: JobBoardService,
                 private spinnerService: NgxSpinnerService,
-                private authenticationService: AuthenticationServiceService,
+                private authenticationService: AuthenticationService,
                 private confirmationService: ConfirmationService,
                 private fb: FormBuilder) {
         this.buildFormUser();

@@ -37,6 +37,11 @@ export const routes: Routes = [
             {path: 'components/file', component: FileDemoComponent},
             {path: 'documentation', component: DocumentationComponent},
             {
+                path: 'ignug',
+                loadChildren: () => import('./pages/ignug/ignug.module').then(m => m.IgnugModule),
+                // canActivate: [AuthGuard]
+            },
+            {
                 path: 'attendance',
                 loadChildren: () => import('./pages/attendance/attendance.module').then(m => m.AttendanceModule),
                 canActivate: [AuthGuard]
@@ -51,7 +56,6 @@ export const routes: Routes = [
                 loadChildren: () => import('./pages/web/web.module').then(m => m.WebModule),
                 canActivate: [AuthGuard]
             },
-
         ]
     },
     {

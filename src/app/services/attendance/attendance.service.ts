@@ -6,7 +6,7 @@ import {environment} from '../../../environments/environment';
     providedIn: 'root'
 })
 
-export class AttendanceServiceService {
+export class AttendanceService {
     headers: HttpHeaders;
 
     constructor(private _http: HttpClient) {

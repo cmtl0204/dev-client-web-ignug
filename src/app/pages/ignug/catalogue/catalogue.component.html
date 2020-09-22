@@ -1,0 +1,177 @@
+<p-dialog [header]="headerDialogCatalogue" [(visible)]="displayFormCatalogue" modal="true" showEffect="fade"
+          styleClass="mydialog">
+    <form [formGroup]="formCatalogue" (ngSubmit)="onSubmitCatalogue($event)">
+        <p-card>
+            <p-header>
+                <h1 style="margin-left: .5em">{{"CATALOGUES"|translate}}</h1>
+            </p-header>
+            <div class="p-grid">
+                <div class="p-xl-12 p-sm-12" style="margin: .5em">
+            <span class="ui-float-label">
+                <p-dropdown id="float-input-parent" [options]="parentCodeCatalogues" formControlName="parent_code_id"
+                            filter="true" [disabled]="flagEditCatalogue"
+                            [pTooltip]="flagEditCatalogue?('CANNOT BE MODIFIED'|translate):('YOU WILL NOT BE ABLE TO MODIFY LATER'|translate)"
+                            [style]="{'width':'235px'}">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <i class="pi pi-{{item.code}}"></i>
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-icon pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;width: 125px;">
+                            <div>{{icon.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label for="float-input-parent">{{"SELECT PARENT CODE"|translate}}</label>
+            </span>
+                </div>
+
+                <div class="p-xl-12 p-sm-12" style="margin: .5em">
+            <span class="ui-float-label">
+                <input id="float-input-code" type="text" pInputText formControlName="code" size="30"
+                       [readOnly]="flagEditCatalogue"
+                       [pTooltip]="flagEditCatalogue?('CANNOT BE MODIFIED'|translate):('YOU WILL NOT BE ABLE TO MODIFY LATER'|translate)">
+                <label for="float-input-code">* {{"CODE"|translate}}</label>
+            </span>
+                    <div *ngIf="formCatalogue.get('code').errors && formCatalogue.get('code').touched">
+                        <p-message severity="warn" text="{{'CODE REQUIRED'|translate}}"
+                                   *ngIf="formCatalogue.get('code').hasError('required')"></p-message>
+                        <p-message severity="warn" text="Debe ingresar mínimo 5 dígitos"
+                                   *ngIf="formCatalogue.get('code').hasError('minlength')"></p-message>
+                    </div>
+                </div>
+
+                <div class="p-xl-12 p-sm-12" style="margin: .5em">
+            <span class="ui-float-label">
+                <input id="float-input-name" type="text" pInputText formControlName="name" size="30">
+                <label for="float-input-name">* {{"NAME"|translate}}</label>
+            </span>
+                    <div *ngIf="formCatalogue.get('name').errors && formCatalogue.get('name').touched">
+                        <p-message severity="warn" text="{{'NAME REQUIRED'|translate}}"
+                                   *ngIf="formCatalogue.get('name').hasError('required')"></p-message>
+                        <p-message severity="warn" text="Debe ingresar mínimo 5 dígitos"
+                                   *ngIf="formCatalogue.get('name').hasError('minlength')"></p-message>
+                    </div>
+                </div>
+
+                <div class="p-xl-12 p-sm-12" style="margin: .5em">
+            <span class="ui-float-label">
+                <p-dropdown id="float-input-type" [options]="types" formControlName="type"
+                            [style]="{'width':'235px'}"></p-dropdown>
+                <label for="float-input-type">* {{"SELECT TYPE"|translate}}</label>
+            </span>
+                    <div *ngIf="formCatalogue.get('type').errors && formCatalogue.get('type').touched">
+                        <p-message severity="warn" text="{{'TYPE REQUIRED'|translate}}"
+                                   *ngIf="formCatalogue.get('type').hasError('required')"></p-message>
+                    </div>
+                </div>
+
+                <div class="p-xl-12 p-sm-12" style="margin: .5em">
+            <span class="ui-float-label">
+                <p-dropdown id="float-input-icon" [options]="icons" formControlName="icon" filter="true"
+                            [style]="{'width':'235px'}">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <i class="pi pi-{{item.value}}"></i>
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-icon pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;width: 125px;">
+                            <i class="pi pi-{{icon.value}}"></i>
+                            <div style="font-size:10px;float:right;margin-top:4px">{{icon.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label for="float-input-icon">* {{"SELECT ICON"|translate}}</label>
+            </span>
+                    <div *ngIf="formCatalogue.get('icon').errors && formCatalogue.get('icon').touched">
+                        <p-message severity="warn" text="{{'ICON REQUIRED'|translate}}"
+                                   *ngIf="formCatalogue.get('icon').hasError('required')"></p-message>
+                    </div>
+                </div>
+            </div>
+            <p-footer>
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <button type="submit" pButton icon="pi pi-save" class="ui-button-primary"
+                                label="{{'SAVE'|translate}}"></button>
+                    </div>
+                </div>
+            </p-footer>
+        </p-card>
+    </form>
+</p-dialog>
+<p-confirmDialog [style]="{width: '425px'}">
+</p-confirmDialog>
+<p-toast key="tst"></p-toast>
+<div class="p-grid ui-fluid">
+    <div class="p-lg-12 p-md-12 p-sm-12">
+        <p-table #dt [columns]="colsCatalogue" styleClass="ui-table-cars" [value]="catalogues"
+                 [paginator]="true"
+                 [rows]="5"
+                 [responsive]="true"
+                 dataKey="id">
+            <ng-template pTemplate="caption">
+                <div class="p-grid">
+                    <div class="p-lg-12 p-md-12 p-sm-12">
+                        <h1>{{'CATALOGUES'|translate}}</h1>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns"
+                        [pSortableColumn]="col.field"
+                        [ngSwitch]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th style="width: 8em; text-align: center;">
+                        <button pButton type="button" icon="pi pi-plus" [pTooltip]="'NEW RECORD'|translate"
+                                class="ui-button-success"
+                                (click)="selectCatalogue(null);flagEditCatalogue = false;"></button>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                        <input *ngSwitchCase="'code'" pInputText type="text"
+                               [placeholder]="('SEARCH BY'|translate) + ' ' +('CODE'|translate)"
+                               class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                               (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'name'" pInputText type="text"
+                               [placeholder]="('SEARCH BY'|translate) + ' ' + ('NAME'|translate)"
+                               class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                               (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'type'" pInputText type="text"
+                               [placeholder]="('SEARCH BY'|translate) + ' ' + ('TYPE'|translate)"
+                               class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                               (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'icon'" pInputText type="text"
+                               [placeholder]="('SEARCH BY'|translate) + ' ' + ('ICON'|translate)"
+                               class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                               (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                    <th style="width: 8em;">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>{{rowData.code}}</td>
+                    <td>{{rowData.name}}</td>
+                    <td>{{rowData.type}}</td>
+                    <td>
+                        <i class="{{rowData.icon}}"></i>
+                    </td>
+                    <td>
+                        <button pButton type="button" class="ui-button-primary" icon="pi pi-user-edit"
+                                style="margin-right: .5em" [pTooltip]="'MODIFY RECORD'|translate"
+                                (click)="selectCatalogue(rowData);flagEditCatalogue = true;"></button>
+                        <button pButton type="button" class="ui-button-danger" [pTooltip]="'DELETE RECORD'|translate"
+                                (click)="deleteCatalogue(rowData)"
+                                icon="pi pi-trash"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

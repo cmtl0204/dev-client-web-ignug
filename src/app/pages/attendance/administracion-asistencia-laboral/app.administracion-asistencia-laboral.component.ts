@@ -8,7 +8,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {EventService} from '../../../demo/service/eventservice';
 import {NodeService} from '../../../demo/service/nodeservice';
-import {AttendanceServiceService} from '../../../services/attendance/attendance-service.service';
+import {AttendanceService} from '../../../services/attendance/attendance.service';
 import {Attendance} from '../../../models/attendance/attendance';
 import {Workday} from '../../../models/attendance/workday';
 import {Catalogue} from '../../../models/attendance/catalogue';
@@ -26,6 +26,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     selectedMultiSelectDocenteActividades: string[];
     actividadesSeleccionadas: any[];
     cols: any[];
+    activitiesCols: any[];
 
     docenteActividades: Array<Catalogue>;
     selectedCar: Car;
@@ -38,6 +39,8 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     fullCalendarOptions: any;
     resumenAsistencias: any[];
     detalleAsistencias: any[];
+    activities: any[];
+    attendanceActivites: any[];
     fechas: Date;
     sortField: string;
     sortOrder: number;
@@ -45,7 +48,8 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
     filterOptions: SelectItem[];
     sortKey: string;
     tipoFiltro: string;
-    exportColumns: any[];
+    exportColumnsWokrdays: any[];
+    exportColumnsTasks: any[];
     workday: Workday;
     user: User;
     displayWorkday: boolean;
@@ -56,7 +60,7 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
 
     constructor(private message: MessageService,
                 private eventService: EventService, private nodeService: NodeService, private breadcrumbService: BreadcrumbService,
-                private attendanceService: AttendanceServiceService, private spinner: NgxSpinnerService) {
+                private attendanceService: AttendanceService, private spinner: NgxSpinnerService) {
         this.user = JSON.parse(localStorage.getItem('user')) as User;
         this.breadcrumbService.setItems([
             {label: 'Control Asistencia'}
@@ -90,7 +94,14 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             {field: 'end_time', header: 'Hora Fin'},
             {field: 'duration', header: 'Duración'},
         ];
-        this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+        this.activitiesCols = [
+            {field: 'date', header: 'Fecha'},
+            {field: 'identification', header: 'Identificación'},
+            {field: 'first_lastname', header: 'Docente'},
+            {field: 'type_workdays', header: 'Tipo'},
+        ];
+        this.exportColumnsWokrdays = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+        this.exportColumnsTasks = this.activitiesCols.map(col => ({title: col.header, dataKey: col.field}));
         this.obtenerJornadaActividadesResumen();
         this.obtenerJornadaActividadesDetalle();
         this.fullCalendarOptions = {
@@ -157,9 +168,16 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
             response => {
                 if (response) {
                     const data = response['data']['attendances'];
+                    let identification = 0;
+                    let date = null;
                     this.detalleAsistencias = [];
+                    this.attendanceActivites = [];
                     data.forEach(attendance => {
+                        this.activities = [];
                         if (attendance.state != null) {
+                            identification = attendance.teacher.user.identification;
+                            date = attendance.date;
+
                             attendance.workdays.forEach(workday => {
                                 if (workday.state != null && workday.type.state != null) {
                                     this.detalleAsistencias.push({
@@ -178,9 +196,29 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
                                     });
                                 }
                             });
+                            attendance.tasks.forEach(task => {
+                                if (task.state != null && task.type.state != null) {
+                                    this.activities.push({
+                                        'task_id': task.id,
+                                        'type_workdays': task.type.name,
+                                        'description': task.description,
+                                        'percentage_advance': task.percentage_advance,
+                                        'observations': task.observations,
+                                    });
+                                }
+                            });
+                            this.attendanceActivites.push({
+                                'date': attendance.date,
+                                'identification': attendance.teacher.user.identification,
+                                'first_lastname': attendance.teacher.user.first_lastname,
+                                'second_lastname': attendance.teacher.user.second_lastname,
+                                'first_name': attendance.teacher.user.first_name,
+                                'second_name': attendance.teacher.user.second_name,
+                                'activities': this.activities.length > 0 ? this.activities : [],
+                            });
                         }
                     });
-                    console.log(this.detalleAsistencias[1].observations);
+                    console.log(this.attendanceActivites);
                     this.spinner.hide();
                 }
             }, error => {
@@ -278,19 +316,19 @@ export class AppAdministracionAsistenciaLaboralComponent implements OnInit {
         }
     }
 
-    exportPdf() {
+    exportPdf(data, exportColumns) {
         import('jspdf').then(jsPDF => {
             import('jspdf-autotable').then(x => {
                 const doc = new jsPDF.default(0, 0);
-                doc.autoTable(this.exportColumns, this.detalleAsistencias);
+                doc.autoTable(exportColumns, data);
                 doc.save('asistencias.pdf');
             });
         });
     }
 
-    exportExcel() {
+    exportExcel(data) {
         import('xlsx').then(xlsx => {
-            const worksheet = xlsx.utils.json_to_sheet(this.detalleAsistencias);
+            const worksheet = xlsx.utils.json_to_sheet(data);
             const workbook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
             const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
             this.saveAsExcelFile(excelBuffer, 'asistencias');

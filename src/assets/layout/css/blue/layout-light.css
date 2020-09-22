@@ -6890,8 +6890,8 @@ body.hidden-overflow {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .sidebar-menu-button,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button {
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button,
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -6909,14 +6909,14 @@ body.hidden-overflow {
     border-radius: 50%;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .sidebar-menu-button i,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button i,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button i {
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button i,
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button i {
     color: #4c566a;
     font-size: 26px;
   }
   .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .sidebar-menu-button:hover i,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button:hover i,
-.layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button:hover i {
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .megamenu-mobile-button:hover i,
+  .layout-wrapper .layout-topbar .layout-topbar-wrapper .layout-topbar-left .topbar-menu-mobile-button:hover i {
     color: #5e81ac;
     font-size: 26px;
   }
@@ -7777,10 +7777,10 @@ body.hidden-overflow {
 .layout-dashboard .statistics #dashboard-chart canvas {
   background-color: #ffffff 4%;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff 4%), to(#71B5C8 214%));
-  background-image: -webkit-linear-gradient(top, #ffffff 4%, #71B5C8 214%);
-  background-image: -moz-linear-gradient(top, #ffffff 4%, #71B5C8 214%);
-  background-image: -ms-linear-gradient(top, #ffffff 4%, #71B5C8 214%);
-  background-image: -o-linear-gradient(top, #ffffff 4%, #71B5C8 214%);
+  background-image: -webkit-linear-gradient(to bottom, #ffffff 4%, #71B5C8 214%);
+  background-image: -moz-linear-gradient(to bottom, #ffffff 4%, #71B5C8 214%);
+  background-image: -ms-linear-gradient(to bottom, #ffffff 4%, #71B5C8 214%);
+  background-image: -o-linear-gradient(to bottom, #ffffff 4%, #71B5C8 214%);
   background-image: linear-gradient(to bottom, #ffffff 4%, #71B5C8 214%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff 4%", endColorstr="#71B5C8 214%");
   background-color: #ffffff;
@@ -7879,10 +7879,10 @@ body.hidden-overflow {
 .layout-dashboard .news-row-wrapper .news-row .news.news-3 .news-title {
   background-color: #45b0d5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#45b0d5), to(#59c7ed 99%));
-  background-image: -webkit-linear-gradient(top, #45b0d5, #59c7ed 99%);
-  background-image: -moz-linear-gradient(top, #45b0d5, #59c7ed 99%);
-  background-image: -ms-linear-gradient(top, #45b0d5, #59c7ed 99%);
-  background-image: -o-linear-gradient(top, #45b0d5, #59c7ed 99%);
+  background-image: -webkit-linear-gradient(to bottom, #45b0d5, #59c7ed 99%);
+  background-image: -moz-linear-gradient(to bottom, #45b0d5, #59c7ed 99%);
+  background-image: -ms-linear-gradient(to bottom, #45b0d5, #59c7ed 99%);
+  background-image: -o-linear-gradient(to bottom, #45b0d5, #59c7ed 99%);
   background-image: linear-gradient(to bottom, #45b0d5, #59c7ed 99%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#45b0d5", endColorstr="#59c7ed 99%");
 }
@@ -8387,10 +8387,10 @@ body.hidden-overflow {
   width: 100%;
   background-color: transparent;
   background-image: -webkit-gradient(linear, left bottom, left top, from(#ffffff), to(transparent));
-  background-image: -webkit-linear-gradient(bottom, #ffffff, transparent);
-  background-image: -moz-linear-gradient(bottom, #ffffff, transparent);
-  background-image: -ms-linear-gradient(bottom, #ffffff, transparent);
-  background-image: -o-linear-gradient(bottom, #ffffff, transparent);
+  background-image: -webkit-linear-gradient(to top, #ffffff, transparent);
+  background-image: -moz-linear-gradient(to top, #ffffff, transparent);
+  background-image: -ms-linear-gradient(to top, #ffffff, transparent);
+  background-image: -o-linear-gradient(to top, #ffffff, transparent);
   background-image: linear-gradient(to top, #ffffff, transparent);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="transparent");
   position: absolute;
@@ -8514,10 +8514,10 @@ body.hidden-overflow {
   height: 125px;
   background-color: #2e3440;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#2e3440), to(#eceff4));
-  background-image: -webkit-linear-gradient(top, #2e3440, #eceff4);
-  background-image: -moz-linear-gradient(top, #2e3440, #eceff4);
-  background-image: -ms-linear-gradient(top, #2e3440, #eceff4);
-  background-image: -o-linear-gradient(top, #2e3440, #eceff4);
+  background-image: -webkit-linear-gradient(to bottom, #2e3440, #eceff4);
+  background-image: -moz-linear-gradient(to bottom, #2e3440, #eceff4);
+  background-image: -ms-linear-gradient(to bottom, #2e3440, #eceff4);
+  background-image: -o-linear-gradient(to bottom, #2e3440, #eceff4);
   background-image: linear-gradient(to bottom, #2e3440, #eceff4);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2e3440", endColorstr="#eceff4");
   -moz-border-radius: 50%;
@@ -8530,11 +8530,11 @@ body.hidden-overflow {
   height: 150px;
   background-color: #f2c260;
   background-image: -webkit-gradient(linear, right top, left top, from(#f2c260), to(#ebcb8b));
-  background-image: -webkit-linear-gradient(right, #f2c260, #ebcb8b);
-  background-image: -moz-linear-gradient(right, #f2c260, #ebcb8b);
-  background-image: -ms-linear-gradient(right, #f2c260, #ebcb8b);
-  background-image: -o-linear-gradient(right, #f2c260, #ebcb8b);
-  background-image: linear-gradient(right, #f2c260, #ebcb8b);
+  background-image: -webkit-linear-gradient(to left, #f2c260, #ebcb8b);
+  background-image: -moz-linear-gradient(to left, #f2c260, #ebcb8b);
+  background-image: -ms-linear-gradient(to left, #f2c260, #ebcb8b);
+  background-image: -o-linear-gradient(to left, #f2c260, #ebcb8b);
+  background-image: linear-gradient(to left, #f2c260, #ebcb8b);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f2c260", endColorstr="#ebcb8b", gradientType="1");
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -8619,10 +8619,10 @@ body.hidden-overflow {
 .layout-dashboard .card-graph.graph-1 .graph-header .graph .graph-center {
   background-color: #eceff4;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eceff4), to(#ffffff));
-  background-image: -webkit-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -moz-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -ms-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -o-linear-gradient(top, #eceff4, #ffffff);
+  background-image: -webkit-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -moz-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -ms-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -o-linear-gradient(to bottom, #eceff4, #ffffff);
   background-image: linear-gradient(to bottom, #eceff4, #ffffff);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#eceff4", endColorstr="#ffffff");
 }
@@ -8649,11 +8649,11 @@ body.hidden-overflow {
 .layout-dashboard .card-graph.graph-2 .graph-header .graph .graph-border {
   background-color: #4c566a;
   background-image: -webkit-gradient(linear, left top, right top, from(#4c566a), to(#2e3440));
-  background-image: -webkit-linear-gradient(left, #4c566a, #2e3440);
-  background-image: -moz-linear-gradient(left, #4c566a, #2e3440);
-  background-image: -ms-linear-gradient(left, #4c566a, #2e3440);
-  background-image: -o-linear-gradient(left, #4c566a, #2e3440);
-  background-image: linear-gradient(left, #4c566a, #2e3440);
+  background-image: -webkit-linear-gradient(to right, #4c566a, #2e3440);
+  background-image: -moz-linear-gradient(to right, #4c566a, #2e3440);
+  background-image: -ms-linear-gradient(to right, #4c566a, #2e3440);
+  background-image: -o-linear-gradient(to right, #4c566a, #2e3440);
+  background-image: linear-gradient(to right, #4c566a, #2e3440);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4c566a", endColorstr="#2e3440", gradientType="1");
 }
 .layout-dashboard .card-graph.graph-2 .graph-content {
@@ -8675,10 +8675,10 @@ body.hidden-overflow {
 .layout-dashboard .card-graph.graph-3 .graph-header .graph .graph-center {
   background-color: #eceff4;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eceff4), to(#ffffff));
-  background-image: -webkit-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -moz-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -ms-linear-gradient(top, #eceff4, #ffffff);
-  background-image: -o-linear-gradient(top, #eceff4, #ffffff);
+  background-image: -webkit-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -moz-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -ms-linear-gradient(to bottom, #eceff4, #ffffff);
+  background-image: -o-linear-gradient(to bottom, #eceff4, #ffffff);
   background-image: linear-gradient(to bottom, #eceff4, #ffffff);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#eceff4", endColorstr="#ffffff");
 }
@@ -8727,10 +8727,10 @@ body.hidden-overflow {
 .layout-dashboard .card-graph.graph-4 .graph-content .graph-icon {
   background-color: #45b0d5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#45b0d5), to(#59c7ed));
-  background-image: -webkit-linear-gradient(top, #45b0d5, #59c7ed);
-  background-image: -moz-linear-gradient(top, #45b0d5, #59c7ed);
-  background-image: -ms-linear-gradient(top, #45b0d5, #59c7ed);
-  background-image: -o-linear-gradient(top, #45b0d5, #59c7ed);
+  background-image: -webkit-linear-gradient(to bottom, #45b0d5, #59c7ed);
+  background-image: -moz-linear-gradient(to bottom, #45b0d5, #59c7ed);
+  background-image: -ms-linear-gradient(to bottom, #45b0d5, #59c7ed);
+  background-image: -o-linear-gradient(to bottom, #45b0d5, #59c7ed);
   background-image: linear-gradient(to bottom, #45b0d5, #59c7ed);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#45b0d5", endColorstr="#59c7ed");
 }
@@ -8906,7 +8906,7 @@ body.hidden-overflow {
   align-items: center;
 }
 .login-body .login-content .login-panel .login-panel-content .logo img {
-  width: 250px;
+  width: 80px;
 }
 .login-body .login-content .login-panel .login-panel-content h1 {
   font-size: 42px;
@@ -9216,10 +9216,10 @@ body.hidden-overflow {
 .exception-body.notfound::after {
   background-color: #444c5b -9%;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#444c5b -9%), to(#20252e));
-  background-image: -webkit-linear-gradient(top, #444c5b -9%, #20252e);
-  background-image: -moz-linear-gradient(top, #444c5b -9%, #20252e);
-  background-image: -ms-linear-gradient(top, #444c5b -9%, #20252e);
-  background-image: -o-linear-gradient(top, #444c5b -9%, #20252e);
+  background-image: -webkit-linear-gradient(to bottom, #444c5b -9%, #20252e);
+  background-image: -moz-linear-gradient(to bottom, #444c5b -9%, #20252e);
+  background-image: -ms-linear-gradient(to bottom, #444c5b -9%, #20252e);
+  background-image: -o-linear-gradient(to bottom, #444c5b -9%, #20252e);
   background-image: linear-gradient(to bottom, #444c5b -9%, #20252e);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#444c5b -9%", endColorstr="#20252e");
 }
@@ -9245,10 +9245,10 @@ body.hidden-overflow {
 .exception-body.error::after {
   background-color: #5b4444 -9%;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#5b4444 -9%), to(#20262e));
-  background-image: -webkit-linear-gradient(top, #5b4444 -9%, #20262e);
-  background-image: -moz-linear-gradient(top, #5b4444 -9%, #20262e);
-  background-image: -ms-linear-gradient(top, #5b4444 -9%, #20262e);
-  background-image: -o-linear-gradient(top, #5b4444 -9%, #20262e);
+  background-image: -webkit-linear-gradient(to bottom, #5b4444 -9%, #20262e);
+  background-image: -moz-linear-gradient(to bottom, #5b4444 -9%, #20262e);
+  background-image: -ms-linear-gradient(to bottom, #5b4444 -9%, #20262e);
+  background-image: -o-linear-gradient(to bottom, #5b4444 -9%, #20262e);
   background-image: linear-gradient(to bottom, #5b4444 -9%, #20262e);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b4444 -9%", endColorstr="#20262e");
 }
@@ -9275,10 +9275,10 @@ body.hidden-overflow {
 .exception-body.access::after {
   background-color: #5b5544 -9%;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#5b5544 -9%), to(#20262e));
-  background-image: -webkit-linear-gradient(top, #5b5544 -9%, #20262e);
-  background-image: -moz-linear-gradient(top, #5b5544 -9%, #20262e);
-  background-image: -ms-linear-gradient(top, #5b5544 -9%, #20262e);
-  background-image: -o-linear-gradient(top, #5b5544 -9%, #20262e);
+  background-image: -webkit-linear-gradient(to bottom, #5b5544 -9%, #20262e);
+  background-image: -moz-linear-gradient(to bottom, #5b5544 -9%, #20262e);
+  background-image: -ms-linear-gradient(to bottom, #5b5544 -9%, #20262e);
+  background-image: -o-linear-gradient(to bottom, #5b5544 -9%, #20262e);
   background-image: linear-gradient(to bottom, #5b5544 -9%, #20262e);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5544 -9%", endColorstr="#20262e");
 }
@@ -10016,9 +10016,9 @@ body.hidden-overflow {
 .layout-config-button {
   display: block;
   position: fixed;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
   background-color: #fafafa;
   text-align: center;
   top: 650px;

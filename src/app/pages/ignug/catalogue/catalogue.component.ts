@@ -162,7 +162,6 @@ export class CatalogueComponent implements OnInit {
             this._translate.stream('NEW RECORD').subscribe(response => {
                 this.headerDialogCatalogue = response;
             });
-
         }
         this.displayFormCatalogue = true;
     }
@@ -176,7 +175,6 @@ export class CatalogueComponent implements OnInit {
         }).subscribe(
             response => {
                 this.catalogues.unshift(this.selectedCatalogue);
-
                 this._spinnerService.hide();
                 this._messageService.add({
                     key: 'tst',
@@ -276,5 +274,4 @@ export class CatalogueComponent implements OnInit {
             parent_code: {id: this.formCatalogue.controls['parent_code_id'].value},
         } as Catalogue;
     }
-
 }

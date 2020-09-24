@@ -109,7 +109,7 @@ export class AppMenuComponent implements OnInit {
         }
         if (this.role.code === '2') {
             this.model = [
-                {label: 'Catalogues', icon: 'pi pi-fw pi-list', routerLink: ['/ignug/catalogues']},
+                // {label: 'Catalogues', icon: 'pi pi-fw pi-list', routerLink: ['/ignug/catalogues']},
                 {label: 'Asistencia', icon: 'pi pi-fw pi-calendar', routerLink: ['/attendance/asistencia-laboral']},
                 {
                     label: 'Administración Asistencia',

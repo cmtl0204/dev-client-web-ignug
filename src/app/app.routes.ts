@@ -21,7 +21,8 @@ import {AppModule} from './app.module';
 
 export const routes: Routes = [
     {
-        path: '', component: AppMainComponent,
+        path: '',
+        component: AppMainComponent,
         children: [
             {path: '', component: DashboardDemoComponent, canActivate: [AuthGuard]},
             {path: 'components/sample', component: SampleDemoComponent},
@@ -54,7 +55,7 @@ export const routes: Routes = [
             {
                 path: 'web',
                 loadChildren: () => import('./pages/web/web.module').then(m => m.WebModule),
-                canActivate: [AuthGuard]
+                // canActivate: [AuthGuard]
             },
         ]
     },

@@ -9,6 +9,7 @@ export const environment = {
     API_URL_ATTENDANCE: 'http://127.0.0.1:8000/api/attendance/',
     API_URL_JOB_BOARD: 'http://127.0.0.1:8000/api/job_board/',
     API_URL_WEB: 'http://127.0.0.1:8000/api/web/',
+    API_URL_EVAL: 'http://127.0.0.1:8000/api/eval/',
 
     // API_URL_AUTHENTICATION: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/authentication/',
     // API_URL_IGNUG: 'http://www.pruebas.asistencia.yavirac.edu.ec/public/api/ignug/',

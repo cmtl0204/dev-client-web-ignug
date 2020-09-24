@@ -187,7 +187,14 @@ export class AppAsistenciaLaboralComponent implements OnInit {
         this.attendanceService.get('workdays/current_day' + parametros).subscribe(
             response => {
                 if (response['data']) {
-                    this.jornadaActividades = response['data']['attributes'];
+                    this.jornadaActividades = [];
+                    this.jornadaActual.state_id = 0;
+                    const jornadaActividades = response['data']['attributes'];
+                    jornadaActividades.forEach(jornada => {
+                        if (jornada.state) {
+                            this.jornadaActividades.push(jornada);
+                        }
+                    });
                     this.fechaActual = new Date(response['meta']['current_day']);
                     let totalHorasTrabajadas = '00:00:00';
                     let totalHorasAlmuerzo = '00:00:00';
@@ -310,13 +317,25 @@ export class AppAsistenciaLaboralComponent implements OnInit {
                         if (error.status === 401) {
                             this.router.navigate(['/authentication/login']);
                         }
-                        this.message.add({
-                            key: 'tst',
-                            severity: 'error',
-                            summary: 'Oops ocurrió un problema!',
-                            detail: 'Inténtalo de nuevo',
-                            life: 5000
-                        });
+                        if (error.status === 403) {
+                            this.message.add({
+                                key: 'tst',
+                                severity: 'error',
+                                summary: 'Oops ocurrió un problema!',
+                                detail: 'Ya tienes iniciada esta actividad',
+                                life: 7000
+                            });
+                        } else {
+                            this.message.add({
+                                key: 'tst',
+                                severity: 'error',
+                                summary: 'Oops ocurrió un problema!',
+                                detail: 'Inténtalo de nuevo',
+                                life: 5000
+                            });
+                        }
+                        this.obtenerJornadaActividadesDiaria();
+
 
                     }
                 );

@@ -26,25 +26,25 @@
             <h1>{{fechaActual|date:'fullDate'}}</h1>
             <div class="p-grid">
                 <div class="p-lg-6 p-md-6 p-sm-12">
-                    <span *ngIf="totalJornadas>=3 && jornadaActual.end_time!=null">
+                    <span *ngIf="totalJornadas>=2 && jornadaActual.end_time!=null">
                         Has alcanzado el número máximo de jornadas permitidas
                     </span>
                     <button pButton type="button" class="ui-button-primary" icon="pi pi-calendar"
                             label="Iniciar Jornada"
                             style="margin: .5em"
                             (click)="iniciarDocenteAsistencia('work','Jornada','pi pi-calendar')"
-                            *ngIf="totalJornadas<3 && jornadaActual.state_id == 0 || (jornadaActual.start_time==null && jornadaActual.end_time!=null)">
+                            *ngIf="totalJornadas<2 && jornadaActual.state_id == 0 || (jornadaActual.start_time==null && jornadaActual.end_time!=null)">
                     </button>
                     <button pButton type="button" class="ui-button-danger" icon="pi pi-calendar"
                             label="Finalizar Jornada"
                             style="margin: .5em" (click)="finalizarDocenteAsistencia(jornadaActual)"
-                            *ngIf="jornadaActual.state_id == 1">
+                            *ngIf="jornadaActual.state_id == 1 && totalAlmuerzos>0 && almuerzoActual.end_time!=null">
                     </button>
                     <button pButton type="button" class="ui-button-warning" label="Iniciar Almuerzo"
                             style="margin: .5em"
                             (click)="iniciarDocenteAsistencia('lunch','Almuerzo','pi pi-briefcase')"
                             icon="pi pi-briefcase"
-                            *ngIf="totalAlmuerzos==0">
+                            *ngIf="totalAlmuerzos==0 && totalJornadas>0">
                     </button>
                     <button pButton type="button" class="ui-button-danger" icon="pi pi-briefcase"
                             style="margin: .5em" label="Finalizar Almuerzo"

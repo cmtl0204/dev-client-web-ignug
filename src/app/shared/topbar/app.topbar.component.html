@@ -124,25 +124,26 @@
                 <!--                                </li>-->
                 <!--                            </ul>-->
                 <!--                        </li>-->
+                <!--******************************************************************************************************************************************************************-->
+<!--                <li #message class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === message}">-->
+<!--                    <a href="#" (click)="app.onTopbarItemClick($event,message)">-->
+<!--                        <i class="topbar-icon pi pi-globe"></i>-->
+<!--                    </a>-->
+<!--                    <ul class="fadeInDown">-->
+<!--                        <li class="layout-submenu-header">-->
+<!--                            <h1>{{"LANGUAGES"|translate}}</h1>-->
+<!--                        </li>-->
+<!--                        <li class="layout-submenu-item" *ngFor="let lang of langs" (click)="changeLang(lang)">-->
+<!--                            <img src="assets/i18n/{{lang}}.png" alt="mirage-layout" width="35"/>-->
+<!--                            <div class="menu-text">-->
+<!--                                <p>{{lang|translate}}</p>-->
+<!--                            </div>-->
+<!--                            <i class="pi pi-check" *ngIf="lang == selectedLang"></i>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
 
-                <li #message class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === message}">
-                    <a href="#" (click)="app.onTopbarItemClick($event,message)">
-                        <i class="topbar-icon pi pi-globe"></i>
-                    </a>
-                    <ul class="fadeInDown">
-                        <li class="layout-submenu-header">
-                            <h1>{{"LANGUAGES"|translate}}</h1>
-                        </li>
-                        <li class="layout-submenu-item" *ngFor="let lang of langs" (click)="changeLang(lang)">
-                            <img src="assets/i18n/{{lang}}.png" alt="mirage-layout" width="35"/>
-                            <div class="menu-text">
-                                <p>{{lang|translate}}</p>
-                            </div>
-                            <i class="pi pi-check" *ngIf="lang == selectedLang"></i>
-                        </li>
-                    </ul>
-                </li>
-
+                <!--******************************************************************************************************************************************************************-->
                 <!--                        <li #message class="topbar-item" [ngClass]="{'active-topmenuitem': app.activeTopbarItem === message}">-->
                 <!--                            <a href="#" (click)="app.onTopbarItemClick($event,message)">-->
                 <!--                                <i class="topbar-icon pi pi-inbox"></i>-->

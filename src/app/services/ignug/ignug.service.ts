@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class IgnugService {
     private headers: HttpHeaders;
 
-    constructor(private _http: HttpClient, private router: Router) {
+    constructor(private _http: HttpClient) {
 
     }
 
@@ -19,7 +19,7 @@ export class IgnugService {
             .set('X-Requested-With', 'XMLHttpRequest')
             .append('Content-Type', 'application/json')
             .append('Accept', 'application/json');
-        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
+         // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_IGNUG + url;
         return this._http.get(url, {headers: this.headers});
     }

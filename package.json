@@ -28,7 +28,7 @@
     "@fullcalendar/timegrid": "4.0.1",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
-    "chart.js": "2.7.3",
+    "chart.js": "2.9.4",
     "file-saver": "^2.0.2",
     "intl": "1.2.5",
     "jspdf": "^1.5.3",
